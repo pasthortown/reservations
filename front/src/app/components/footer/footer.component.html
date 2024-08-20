@@ -1,0 +1,57 @@
+<div class="bg-gray-100 py-4">
+  <div class="border-b-[1px] py-7">
+    <h1 class="text-xl px-5 md:px-7">Inspiration for future getaways</h1>
+    <app-slide-menu
+      [menuItems]="menuItems"
+      classForMenu="text-sm"
+    ></app-slide-menu>
+    <div
+      class="px-5 mt-10 grid grid-cols-2 gap-y-3 md:px-7 lg:grid-cols-3 xl:grid-cols-6"
+    >
+      @for (popular of popularItems; track $index) {
+      <div class="flex flex-col">
+        <span class="text-sm font-semibold">{{ popular.title }}</span>
+        <span class="text-sm font-medium opacity-60">{{
+          popular.subTitle
+        }}</span>
+      </div>
+      }
+    </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-3">
+    <div class="border-b-[1px] py-7 px-5 flex flex-col gap-3 md:px-7">
+      @for (support of supportItems; track $index) {
+      <span class="text-sm font-medium" [class.font-semibold]="$index === 0">{{
+        support
+      }}</span>
+      }
+    </div>
+    <div class="border-b-[1px] py-7 px-5 flex flex-col gap-3 md:px-7 lg:pl-3">
+      @for (hosting of hostingItems; track $index) {
+      <span class="text-sm font-medium" [class.font-semibold]="$index === 0">{{
+        hosting
+      }}</span>
+      }
+    </div>
+    <div class="border-b-[1px] py-7 px-5 flex flex-col gap-3 md:px-7 lg:pl-0">
+      @for (airbnb of airbnbItems; track $index) {
+      <span class="text-sm font-medium" [class.font-semibold]="$index === 0">{{
+        airbnb
+      }}</span>
+      }
+    </div>
+  </div>
+  <div
+    class="flex flex-col gap-2 border-b-[1px] py-5 px-5 md:px-7 md:items-center xl:flex-row xl:justify-start xl:items-end"
+  >
+    <div class="flex gap-2 items-center justify-start">
+      <img src="/img/earth.svg" class="w-4 h-4" />
+      <span class="text-sm font-medium">English (US)</span>
+      <span class="text-sm font-medium">đ VND</span>
+    </div>
+    <span class="text-sm font-medium">2024 Airbnb,Inc.</span>
+    <span class="text-sm font-medium"
+      >Terms . Sitemap . Privacy . Your privacy Choices</span
+    >
+  </div>
+</div>

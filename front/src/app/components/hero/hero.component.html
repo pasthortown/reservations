@@ -1,0 +1,12 @@
+<div class="w-full h-full">
+  @for (categoryItem of categoryItems; track $index) {
+  <h1 class="px-6 text-3xl">{{ categoryItem.categoryTitle }}</h1>
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+  >
+    @for (item of categoryItem.children; track $index) {
+    <app-hero-item [heroItem]="item"></app-hero-item>
+    }
+  </div>
+  }
+</div>

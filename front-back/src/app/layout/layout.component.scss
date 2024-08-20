@@ -1,0 +1,57 @@
+
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: hidden;
+}
+
+/* Estilos para la barra de desplazamiento */
+.main::-webkit-scrollbar {
+  width: 5px; /* Ancho de la scrollbar */
+}
+
+/* Estilos para el riel de la scrollbar */
+.main::-webkit-scrollbar-track {
+  background-color: transparent; /* Color de fondo */
+}
+
+/* Estilos para el thumb (agarre de la scrollbar) */
+.main::-webkit-scrollbar-thumb {
+  background-color: #343a40; /* Color del thumb */
+  border-radius: 0px 5px 5px 0px; /* Bordes redondeados */
+}
+
+/* Estilos para la esquina inferior derecha (para esquinas redondeadas) */
+.main::-webkit-scrollbar-corner {
+  background-color: transparent; /* Color de fondo */
+}
+
+/* Oculta las flechas de la scrollbar */
+.main::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Oculta las flechas de arriba */
+.main::-webkit-scrollbar-button:start {
+  display: none;
+}
+
+/* Oculta las flechas de abajo */
+.main::-webkit-scrollbar-button:end {
+  display: none;
+}
+
+.contenedor {
+  position: relative;
+  width: 100%;
+}
+
+app-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}

@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mdl-js {
+  overflow-x: hidden;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.menu-active::after {
+  content: "";
+  width: calc(100% - 1rem);
+  @apply block  h-[2px] bg-black mt-2 px-2 py-0;
+}
+.tab-bar {
+  @apply bg-white bottom-0 fixed w-full ease-in-out duration-300 shadow-lg;
+}
+
+.tab-bar.hidden {
+  @apply translate-y-full;
+}
+.transition-search-head {
+  transition-property: width, transform;
+  transition-duration: 0.4s, 0.2s;
+}
+.zoom-out-search-head {
+  transform: translate(-122px, -165px);
+  @apply absolute w-full;
+}
+.zoom-out-search-head .title-search-menu-hide {
+  @apply hidden;
+}
+.zoom-out-search-head .title-search-zoom-out {
+  @apply block overflow-hidden whitespace-nowrap text-ellipsis w-[18%];
+}
+.img-container:hover .btn-right {
+  @apply flex;
+}
+@media (min-width: 1024px) {
+  .zoom-out-search-head {
+    transform: translate(0, -165px);
+  }
+  .zoom-out-search-head .search-header {
+    @apply w-[415px] justify-center relative pr-5;
+  }
+  .zoom-out-search-head .search-header .btn-search {
+    @apply absolute right-4;
+  }
+}
+@media (min-width: 1440px) {
+  .zoom-out-search-head {
+    transform: translate(0, -130px);
+  }
+}

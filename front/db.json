@@ -1,0 +1,104 @@
+{
+  "categoryItems": [
+    {
+      "categoryTitle": "",
+      "children": [
+        {
+          "img": "/img/train-x-mansion.webp",
+          "title": "Train at the X-Mansion",
+          "hosted": "Hosted by Jubilee",
+          "status": "đ961,757 per guest"
+        },
+        {
+          "img": "/img/kevinhart.webp",
+          "title": "Go VIP with Kevin Hart",
+          "hosted": "Hosted by Kevin Hart",
+          "status": "Coming August 21"
+        },
+        {
+          "img": "/img/doja.webp",
+          "title": "Join a living room session with Doja",
+          "hosted": "Hosted by Doja Cat",
+          "status": "Coming October"
+        },
+        {
+          "img": "/img/purplerainhouse.webp",
+          "title": "Stay in Prince's Purple Rain house",
+          "hosted": "Hosted by Wendy and Lisa",
+          "status": "Coming October"
+        },
+        {
+          "img": "/img/janhvi.webp",
+          "title": "Live like Bollywood star Janhvi Kapoor",
+          "hosted": "Hosted by Janhvi Kapoor",
+          "status": "Sold out"
+        }
+      ]
+    },
+    {
+      "categoryTitle": "Past experiences",
+      "children": [
+        {
+          "img": "/img/olympicorsay.webp",
+          "title": "Open the Olympic Games at Musée d'Orsay",
+          "hosted": "Hosted by Mathieu Lehanneur",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/orsay.webp",
+          "title": "Wake up in the Musée d'Orsay",
+          "hosted": "Hosted by Mathieu Lehanneur",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/insideout.webp",
+          "title": "Make core memory with Inside out 2",
+          "hosted": "Hosted by Joy",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/supersuit.webp",
+          "title": "Design your Incredibles Supersuit",
+          "hosted": "Hosted by Edna Mode",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/feid.webp",
+          "title": "Go on tour with Feid",
+          "hosted": "Hosted by Feid",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/lame.webp",
+          "title": "Game with Khaby Lame",
+          "hosted": "Hosted by Khaby Lame",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/crash-x-mansion.webp",
+          "title": "Crash at the X-Mansion",
+          "hosted": "Hosted by Julbilee",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/ferrari.webp",
+          "title": "Spend the night in the Ferrari museum",
+          "hosted": "Hosted by Marc Genee",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/uphouse.webp",
+          "title": "Driff off in the Up house",
+          "hosted": "Hosted by Carl Ferdicksend",
+          "status": "Sold out"
+        },
+        {
+          "img": "/img/swamp.webp",
+          "title": "Shrek's swam",
+          "hosted": "Hosted by Shrek",
+          "status": "Sold out"
+        }
+      ]
+    }
+  ]
+}

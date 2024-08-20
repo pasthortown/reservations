@@ -1,0 +1,204 @@
+<div class="card mt-2">
+  <app-upload-files *ngIf="is_admin"
+    [accept]="'image/*'"
+    [disabled]="!editable"
+    [files]="portada"
+    [folder]="'fotografias_alojamientos'"
+    [is_on_table]="false"
+    [max_file_count]="1"
+    [max_file_size]="10"
+    [required]="true"
+    (files_uploaded)="cargar_portada($event)"
+  ></app-upload-files>
+  <div class="row" *ngIf="!is_admin && portada.length > 0">
+    <div class="col-12">
+      <img class="rounded mb-2" [src]="'data:' + portada[0].type + ';base64,' + portada[0].file_base64" style="height:200px; width:100%;"/>
+    </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title" *ngIf="!editable">{{place.nombre}}</h5>
+    <table class="table table-sm" *ngIf="!editable">
+      <thead>
+          <tr>
+            <td colspan="2"><small style="text-align: justify;">{{place.descripcion}}</small></td>
+          </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Personas</th><td>{{place.personas}}</td>
+        </tr>
+        <tr>
+          <th>Metros</th><td>{{place.metros}}m2</td>
+        </tr>
+        <tr>
+          <th>Habitaciones</th><td>{{place.habitaciones}}</td>
+        </tr>
+        <tr>
+          <th>Baños</th><td>{{place.banos}}</td>
+        </tr>
+        <tr>
+          <th>Por Noche</th><td>{{place.desde_noche}}$</td>
+        </tr>
+        <tr>
+          <th>Por Mes</th><td>{{place.desde_mes}}$</td>
+        </tr>
+        <tr>
+          <th>Hora Check-In</th><td>{{place.check_in_time}}</td>
+        </tr>
+        <tr>
+          <th>Hora Check-Out</th><td>{{place.check_out_time}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row" *ngIf="editable">
+      <div class="col-12">
+        <table class="table table-sm">
+          <thead>
+              <tr>
+                <th>Nombre</th><td><input type="text" class="form-control" [(ngModel)]="place.nombre"/></td>
+              </tr>
+              <tr>
+                <th>Descripción</th><td><textarea type="text" class="form-control" [(ngModel)]="place.descripcion"></textarea></td>
+              </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Personas</th><td><input type="number" class="form-control" [(ngModel)]="place.personas"/></td>
+            </tr>
+            <tr>
+              <th>Metros (m2)</th><td><input type="number" class="form-control" [(ngModel)]="place.metros"/></td>
+            </tr>
+            <tr>
+              <th>Habitaciones</th><td><input type="number" class="form-control" [(ngModel)]="place.habitaciones"/></td>
+            </tr>
+            <tr>
+              <th>Baños</th><td><input type="number" class="form-control" [(ngModel)]="place.banos"/></td>
+            </tr>
+            <tr>
+              <th>Por Noche ($)</th><td><input type="number" class="form-control" [(ngModel)]="place.desde_noche"/></td>
+            </tr>
+            <tr>
+              <th>Por Mes ($)</th><td><input type="number" class="form-control" [(ngModel)]="place.desde_mes"/></td>
+            </tr>
+            <tr>
+              <th>Galería</th><td></td>
+            </tr>
+            <tr>
+              <th>Hora Check-In</th><td><input type="time" class="form-control" [(ngModel)]="place.check_in_time"/></td>
+            </tr>
+            <tr>
+              <th>Hora Check-Out</th><td><input type="time" class="form-control" [(ngModel)]="place.check_out_time"/></td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <app-upload-files
+                  [accept]="'image/*,video/*'"
+                  [disabled]="!editable"
+                  [files]="galery"
+                  [folder]="'fotografias_alojamientos'"
+                  [is_on_table]="false"
+                  [max_file_count]="10"
+                  [max_file_size]="10"
+                  [required]="true"
+                  (files_uploaded)="cargar_galery($event)"
+                ></app-upload-files>
+              </td>
+            </tr>
+            <tr>
+              <th>Servicios</th><td>
+                <div class="input-group mb-3">
+                  <button class="input-group-text btn btn-secondary" id="basic-addon1" (click)="add_service(selected_service)"><i class="fas fa-add"></i> Agregar</button>
+                  <select class="form-control" #select_service (change)="do_select_service(select_service.value)">
+                    <option disabled selected>Seleccione el servicio que desea agregar...</option>
+                    <option [value]="service.item_id" *ngFor="let service of servicios">{{service.name}}</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-12" *ngFor="let service of place.servicios">
+                    <span class="badge text-bg-danger" (click)="delete_service(service.item_id)"><i class="fas fa-trash"></i></span>&nbsp;&nbsp;&nbsp;<i [class]="service.ico"></i> {{service.name}}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Condiciones</th><td>
+                <div class="input-group mb-3">
+                  <button class="input-group-text btn btn-secondary" id="basic-addon1" (click)="add_condition(selected_condition)"><i class="fas fa-add"></i> Agregar</button>
+                  <select class="form-control" #select_condition (change)="do_select_condition(select_condition.value)">
+                    <option disabled selected>Seleccione la condición que desea agregar...</option>
+                    <option [value]="condition.item_id" *ngFor="let condition of condiciones">{{condition.name}}</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="row">
+                  <div class="col-12" *ngFor="let condicion of place.condiciones">
+                    <span class="badge text-bg-danger" (click)="delete_condition(condicion.item_id)"><i class="fas fa-trash"></i></span>&nbsp;&nbsp;&nbsp;<i [class]="condicion.ico"></i> {{condicion.name}}
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="d-flex justify-content-between" *ngIf="!editable">
+        <div class="btn-group" role="group">
+          <button class="btn btn-warning" *ngIf="show_edit" (click)="submit_edit($event)"><i class="fas fa-edit"></i>&nbsp;Editar</button>
+          <button class="btn btn-primary" *ngIf="!show_edit" (click)="show_full_size(content_full_size)">Más Información</button>
+          <button class="btn btn-success" *ngIf="!show_edit" (click)="show_reserve(content_reserve)">Reservar</button>
+        </div>
+        <button class="btn btn-dark" (click)="show_map(content_map)">Ver en mapa</button>
+      </div>
+      <div class="d-flex justify-content-between" *ngIf="editable">
+        <div class="btn-group" role="group">
+          <button class="btn btn-primary" (click)="save_pace(place)"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+          <button class="btn btn-danger" (click)="submit_cancel($event)"><i class="fas fa-edit"></i>&nbsp;Cancelar</button>
+        </div>
+        <button class="btn btn-dark" (click)="show_map(content_map)">Ver en mapa</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content_full_size let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{place.nombre}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <app-fullsize [place]="place"></app-fullsize>
+    </div>
+  </div>
+</ng-template>
+<ng-template #content_reserve let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Reservar - {{place.nombre}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <app-reserve></app-reserve>
+    </div>
+  </div>
+</ng-template>
+<ng-template #content_map let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Ubicación - {{place.nombre}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <app-map [width]="'100%'" [height]="'400px'" [seleccionable]="editable" (coords_selected)="update_map_cords($event)" [markers]="[{place: place, position: place.ubication}]" [mapCenter]="place.ubication"></app-map>
+      </div>
+    </div>
+  </div>
+</ng-template>

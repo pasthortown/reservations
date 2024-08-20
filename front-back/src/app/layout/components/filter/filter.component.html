@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="input-group">
+        <ng-template #zone>Zonas</ng-template>
+        <select class="custom-select form-control" [ngbTooltip]="zone" id="zonas" [(ngModel)]="data.zona">
+          <option disabled>Seleccione...</option>
+          <option value="*">Todas las zonas</option>
+          <option *ngFor="let zona of zonas" [value]="zona.name">{{zona.name}}</option>
+        </select>
+        <ng-template #datein>Fecha de Visita</ng-template>
+        <input type="date" [ngbTooltip]="datein" class="form-control" placeholder="Fecha de Ingreso" [ngModel]="data.fecha_in | date: 'y-MM-dd'" (ngModelChange)="data.fecha_in = $event">
+        <ng-template #dateout>Fecha de Salida</ng-template>
+        <input type="date" [ngbTooltip]="dateout" class="form-control" placeholder="Fecha de Salida" [ngModel]="data.fecha_out | date: 'y-MM-dd'" (ngModelChange)="data.fecha_out = $event">
+        <ng-template #pax>Número de Personas</ng-template>
+        <input type="number" [ngbTooltip]="pax" min="1" max="10" step="1" class="form-control" placeholder="Número de Personas" [(ngModel)]="data.personas">
+        <ng-template #habitaciones>Número de Habitaciones</ng-template>
+        <input type="number" [ngbTooltip]="habitaciones" min="1" max="10" step="1" class="form-control" placeholder="Número de Habitaciones" [(ngModel)]="data.habitaciones">
+        <ng-template #search>Filtrar alojamientos</ng-template>
+        <ng-template #prices>Rango de Precios</ng-template>
+        <select class="custom-select form-control" [ngbTooltip]="prices" id="price" [(ngModel)]="data.precio">
+          <option disabled>Seleccione...</option>
+          <option value="*">Todos los precios</option>
+          <option *ngFor="let price of precios" [value]="price.name">{{price.name}}</option>
+        </select>
+        <button class="btn btn-dark" [ngbTooltip]="search" (click)="submit()"><i class="fas fa-search"></i> Buscar</button>
+      </div>
+    </div>
+  </div>
+</div>

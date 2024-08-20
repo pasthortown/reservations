@@ -1,0 +1,18 @@
+.navbar-logo {
+  display: flex;
+  justify-content: right;
+  padding: 10px;
+  width: 700px;
+}
+
+.navbar-logo-img {
+  width: 30%;
+  height: auto;
+}
+
+@media (max-width: 1300px) {
+  .navbar-logo {
+    width: 75vw;
+    justify-content: center;
+  }
+}

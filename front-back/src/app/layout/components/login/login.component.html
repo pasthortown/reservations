@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-12">
+    <div class="logo">
+      <img src="assets/logo_color.png" class="logo-img">
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input type="email" [(ngModel)]="data.email" class="form-control" id="email" placeholder="name@example.com" (keyup.enter)="password.focus()">
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="mb-3">
+      <label for="password" class="form-label" #password>Contraseña</label>
+      <input type="password" [(ngModel)]="data.password" class="form-control" id="password" (keyup.enter)="submit('login')">
+    </div>
+  </div>
+  <div class="col-12" *ngIf="alert.messages.length > 0">
+    <div class="alert alert-danger" role="alert">
+      <h6 class="alert-heading">Error en la autenticación</h6>
+      <ul>
+        <li *ngFor="let message of alert.messages">{{ message }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-12" style="text-align: right;">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-light text-primary" (click)="submit('password_recovery')" [disabled]="data.email == ''">Recuperar Contraseña</button>&nbsp;
+      <button type="button" class="btn btn-dark" (click)="submit('login')" [disabled]="data.password == '' || data.email == ''">Iniciar Sesión</button>
+    </div>
+  </div>
+</div>

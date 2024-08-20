@@ -1,0 +1,94 @@
+<div class="row" *ngIf="!is_on_table">
+  <div class="col-12" *ngIf="!disabled">
+    <ngx-file-drop dropZoneLabel="Arrastre los Archivos Aquí" (onFileDrop)="dropped($event)" accept="{{accept}}">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        <p class="col-12 text-center" (click)="openFileSelector()">
+          <span *ngIf="max_file_count > 1">
+            <small>Arrastre aquí el o los archivos que desea compartir.<br/>
+            Se acepta máximo {{max_file_size}}MB por cada Archivo.<br/>
+            Se aceptan máximo {{max_file_count}} archivos.</small>
+          </span>
+          <span *ngIf="max_file_count == 1">
+            <small>Arrastre aquí el archivo que desea compartir.<br/>
+            El archivo no deberá superar los {{max_file_size}}MB.</small>
+          </span>
+        </p>
+      </ng-template>
+    </ngx-file-drop>
+  </div>
+  <div class="col-12 mt-3">
+    <table class="table">
+      <thead>
+          <tr>
+              <th *ngIf="accept != 'image/*' && accept != 'image/*,video/*'"><small><strong>Archivos Cargados</strong></small></th>
+              <th *ngIf="accept == 'image/*' && max_file_count > 1" colspan="2"><small><strong>Fotografías</strong></small></th>
+              <th *ngIf="accept == 'image/*' && max_file_count == 1" colspan="2"><small><strong>Fotografía</strong></small></th>
+              <th *ngIf="accept == 'image/*,video/*'" colspan="2"><small><strong>Fotografías y Videos</strong></small></th>
+              <th colspan="2">&nbsp;<span *ngIf="files.length > max_file_count || (files.length == 0 && required) || !validate_file_size" class="ml-2 badge bg-danger text-light">Incorrecto</span></th>
+          </tr>
+      </thead>
+      <tbody class="upload-name-style">
+          <tr *ngFor="let item of files">
+              <td><small>{{ item.name }}</small></td>
+              <td *ngIf="accept == 'image/*'">
+                <img class="rounded mb-2" [src]="'data:' + item.type + ';base64,' + item.file_base64" style="max-height:400px; max-width:70%"/>
+              </td>
+              <td>&nbsp;<span *ngIf="item.size > (max_file_size*1024*1024)" class="ml-2 badge bg-danger">Mayor {{max_file_size}}MB</span></td>
+              <td>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-info" title="Descargar" (click)="download(item)">
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger" title="Eliminar" [disabled]="disabled" (click)="delete_file(item)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row" *ngIf="is_on_table">
+  <div class="col-12"><span *ngIf="files.length > max_file_count || (files.length == 0 && required) || !validate_file_size" class="ml-2 badge bg-danger text-light">Incorrecto</span></div>
+  <div class="col-12">
+    <ngx-file-drop dropZoneLabel="Arrastre los Archivos Aquí" (onFileDrop)="dropped($event)" accept="{{accept}}">
+      <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+        <p class="col-12 text-center" (click)="openFileSelector()">
+          <span *ngIf="max_file_count > 1">
+            <small>Arrastre aquí el o los archivos que desea compartir.<br/>
+            Se acepta máximo {{max_file_size}}MB por cada Archivo.<br/>
+            Se aceptan máximo {{max_file_count}} archivos.</small>
+          </span>
+          <span *ngIf="max_file_count == 1">
+            <small>Arrastre aquí el archivo que desea compartir.<br/>
+            El archivo no deberá superar los {{max_file_size}}MB.</small>
+          </span>
+        </p>
+      </ng-template>
+    </ngx-file-drop>
+  </div>
+  <div class="col-12">
+    <table class="table">
+      <tbody class="upload-name-style">
+          <tr *ngFor="let item of files">
+              <td><small>{{ item.name }}</small></td>
+              <td *ngIf="accept == 'image/*'">
+                <img class="rounded mb-2" [src]="'data:' + item.type + ';base64,' + item.file_base64" style="max-height:400px; max-width:600px"/>
+              </td>
+              <td>&nbsp;<span *ngIf="item.size > (max_file_size*1024*1024)" class="ml-2 badge bg-danger">Mayor {{max_file_size}}MB</span></td>
+              <td>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-info" title="Descargar" (click)="download(item)">
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger" title="Eliminar" [disabled]="disabled" (click)="delete_file(item)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="container mt-5">
+  <ngb-carousel *ngIf="media" [interval]="5000">
+    <ng-template ngbSlide *ngFor="let item of media; let i = index">
+      <div *ngIf="item.type.startsWith('image'); else videoTemplate">
+        <img [src]="'data:' + item.type + ';base64,' + item.file_base64" style="height:300px; width:100%;" class="d-block w-100">
+      </div>
+      <ng-template #videoTemplate>
+        <video style="height:300px; width:100%;" class="d-block w-100" controls autoplay muted>
+          <source [src]="'data:' + item.type + ';base64,' + item.file_base64" [type]="item.type">
+        </video>
+      </ng-template>
+    </ng-template>
+  </ngb-carousel>
+</div>
+<div class="row">
+  <div class="col-12">
+    <table class="table table-sm">
+      <thead>
+          <tr>
+            <td colspan="4"><br/><small style="text-align: justify;">{{place.descripcion}}</small><br/><br/></td>
+          </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Personas</th><td>{{place.personas}}</td><th>Habitaciones</th><td>{{place.habitaciones}}</td>
+        </tr>
+        <tr>
+          <th>Metros</th><td>{{place.metros}}m2</td><th>Baños</th><td>{{place.banos}}</td>
+        </tr>
+        <tr>
+          <th>Por Noche</th><td>{{place.desde_noche}}$</td><th>Por Mes</th><td>{{place.desde_mes}}$</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <table class="table table-sm">
+      <tbody>
+        <tr>
+          <th>Servicios</th>
+        </tr>
+        <tr *ngFor="let service of place.servicios">
+          <td><i [class]="service.ico"></i>&nbsp;{{service.name}} ({{service.description}})</td>
+        </tr>
+        <tr>
+          <th><br/>Condiciones</th>
+        </tr>
+        <tr *ngFor="let condicion of place.condiciones">
+          <td><i [class]="condicion.ico"></i>&nbsp;{{condicion.name}} ({{condicion.description}})</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
