@@ -27,12 +27,11 @@ import {
   FormLabelDirective
 } from '@coreui/angular';
 
-import { IconDirective, IconSetService } from '@coreui/icons-angular';
+import { IconDirective } from '@coreui/icons-angular';
 
 @Component({
   selector: 'app-zonas',
   standalone: true,
-  providers: [IconSetService],
   templateUrl: './zonas.component.html',
   styleUrl: './zonas.component.scss',
   imports: [ IconDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink]

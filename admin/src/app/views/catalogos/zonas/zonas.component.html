@@ -1,18 +1,18 @@
-<c-row class="g-3">
+<c-row class="g-3 mb-2">
   <c-col [sm]="7">
-
+    <button [cModalToggle]="modalXl.id" cButton title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
   </c-col>
   <c-col [sm]>
     <c-input-group>
       <span cInputGroupText>
-        <svg cIcon [name]="'cli-search'" [title]="'cli-search'" size="3xl"></svg>
+        <svg cIcon [name]="'cilSearch'" [title]="'cilSearch'" size="1xl"></svg>
       </span>
-      <input cFormControl id="autoSizingInputGroup" placeholder="Username" />
+      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" />
     </c-input-group>
   </c-col>
 </c-row>
 
-<button [cModalToggle]="modalXl.id" cButton>Extra large modal</button>
+
 <c-modal #modalXl id="modalXl" size="xl">
   <c-modal-header>
     <h5 cModalTitle>Extra large modal</h5>
@@ -49,6 +49,7 @@
   </tr>
   </tbody>
 </table>
+
 <c-pagination aria-label="Page navigation example">
   <li cPageItem>
     <a cPageLink aria-label="Previous" [routerLink]><span aria-hidden="true">&laquo;</span></a>
