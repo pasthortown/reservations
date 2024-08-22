@@ -34,12 +34,12 @@ export const navItems: INavData[] = [
       },
       {
         name: 'Servicios',
-        url: '/buttons/dropdowns',
+        url: '/catalogos/servicios',
         icon: 'nav-icon-bullet'
       },
       {
         name: 'Condiciones',
-        url: '/buttons/button-groups',
+        url: '/catalogos/condiciones',
         icon: 'nav-icon-bullet'
       }
     ]

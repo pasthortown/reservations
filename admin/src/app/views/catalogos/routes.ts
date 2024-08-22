@@ -25,6 +25,20 @@ export const routes: Routes = [
         data: {
           title: 'Precios'
         }
+      },
+      {
+        path: 'servicios',
+        loadComponent: () => import('./servicios/servicios.component').then(m => m.ServiciosComponent),
+        data: {
+          title: 'Servicios'
+        }
+      },
+      {
+        path: 'condiciones',
+        loadComponent: () => import('./condiciones/condiciones.component').then(m => m.CondicionesComponent),
+        data: {
+          title: 'Condiciones'
+        }
       }
     ]
   }
