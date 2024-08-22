@@ -12,24 +12,24 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Administrar',
-        url: '/base/accordion',
+        url: '/alojamientos/administrar',
         icon: 'nav-icon-bullet'
       },
     ]
   },
   {
     name: 'Catálogos',
-    url: '/buttons',
+    url: '/catalogos',
     iconComponent: { name: 'cil-folder-open' },
     children: [
       {
         name: 'Zonas',
-        url: '/buttons/buttons',
+        url: '/catalogos/zonas',
         icon: 'nav-icon-bullet'
       },
       {
         name: 'Precios',
-        url: '/buttons/button-groups',
+        url: '/catalogos/precios',
         icon: 'nav-icon-bullet'
       },
       {
