@@ -1,0 +1,118 @@
+version: '3'
+
+networks:
+  luxury_net:
+    ipam:
+      config:
+        - subnet: 192.168.96.0/24
+
+services:
+  auth:
+    image: luxury/auth:http
+    build:
+      context: ./backend/AuthWS/dockerImage/
+      dockerfile: auth-http.dockerfile
+    restart: always
+    ports:
+    - "5070:5050"
+    volumes: 
+    - ./Templates:/usr/src/app/Templates
+    env_file:
+    - ./variables.env
+    environment:
+      mongo_bdd: authentication
+      mongo_bdd_server: mongo
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.10
+    links:
+    - mongo
+  catalog:
+    image: luxury/catalog-admin:http
+    build:
+      context: ./backend/CatalogWS/dockerImage/
+      dockerfile: catalog-http.dockerfile
+    restart: always
+    ports:
+    - "5071:5050"
+    env_file:
+    - ./variables.env
+    environment:
+      mongo_bdd: catalog
+      mongo_bdd_server: mongo
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.11
+    links:
+    - mongo
+  file:
+    image: luxury/file-admin:http
+    build:
+      context: ./backend/FileWS/dockerImage/
+      dockerfile: file-http.dockerfile
+    restart: always
+    ports:
+    - "5072:5050"
+    env_file:
+    - ./variables.env
+    environment:
+      mongo_bdd: files
+      mongo_bdd_server: mongo
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.12
+    links:
+    - mongo
+  analytic:
+    image: luxury/analytic:http
+    build:
+      context: ./backend/AnalyticWS/dockerImage/
+      dockerfile: analytic-http.dockerfile
+    restart: always
+    ports:
+    - "5073:5050"
+    env_file:
+    - ./variables.env
+    environment:
+      mongo_bdd: catalog
+      mongo_bdd_server: mongo
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.13
+    links:
+    - mongo
+  mongo:
+    image: mongo:4.2.0
+    restart: always
+    volumes: 
+    - ./mongo_data:/data/db
+    env_file:
+    - ./variables.env
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.14
+  mongo_express:
+    image: mongo-express:latest
+    restart: always
+    ports:
+    - "9070:8081"
+    env_file:
+    - ./variables.env
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.15
+    links:
+    - mongo
+  front:
+    ports:
+    - "9090:80"
+    image: httpd:latest
+    restart: always
+    volumes:
+    - ./front/dist/luxuryreservations/:/usr/local/apache2/htdocs/luxuryreservations/
+    - ./assets:/usr/local/apache2/htdocs/assets/
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.16

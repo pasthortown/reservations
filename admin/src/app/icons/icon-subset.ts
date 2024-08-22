@@ -49,6 +49,7 @@ import {
   cilFile,
   cilGrid,
   cilHome,
+  cilFolderOpen,
   cilInbox,
   cilIndentDecrease,
   cilIndentIncrease,
@@ -93,7 +94,8 @@ import {
   cilUser,
   cilUserFemale,
   cilUserFollow,
-  cilUserUnfollow
+  cilUserUnfollow,
+  cilBuilding
 } from '@coreui/icons';
 
 import { signet } from './signet';
@@ -150,6 +152,8 @@ export const iconSubset = {
   cilFile,
   cilGrid,
   cilHome,
+  cilBuilding,
+  cilFolderOpen,
   cilInbox,
   cilIndentDecrease,
   cilIndentIncrease,
