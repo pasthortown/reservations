@@ -5,39 +5,38 @@
         <c-card-group>
           <c-card class="p-4">
             <c-card-body>
-              <form cForm>
+
                 <h1>Te damos la Bienvenida</h1>
                 <p class="text-body-secondary">Accede con tu cuenta</p>
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input autoComplete="username" cFormControl placeholder="Correo Electrónico" />
+                  <input autoComplete="username" cFormControl [(ngModel)]="data.email"  placeholder="Correo Electrónico" />
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
-                  <input
-                    autoComplete="current-password"
+                  <input autoComplete="current-password"
                     cFormControl
+                    [(ngModel)]="data.password"
                     placeholder="Contraseña"
                     type="password"
                   />
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">
-                    <button cButton class="px-4" color="primary">
+                    <button cButton class="px-4" color="primary" (click)="login()">
                       Iniciar Sesión
                     </button>
                   </c-col>
                   <c-col class="text-right" xs="6">
-                    <button cButton class="px-0" color="link">
+                    <button cButton class="px-0" color="link" (click)="password_recovery()">
                       No recuerdas tu contraseña?
                     </button>
                   </c-col>
                 </c-row>
-              </form>
             </c-card-body>
           </c-card>
           <c-card [ngStyle]="{'minWidth.%': 44}" class="py-5" style="background-color: rgb(233, 233, 233);">

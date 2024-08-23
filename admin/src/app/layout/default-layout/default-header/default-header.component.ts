@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, Input } from '@angular/core';
+import { Component, computed, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import {
   AvatarComponent,
   BadgeComponent,
@@ -34,7 +34,9 @@ import { delay, filter, map, tap } from 'rxjs/operators';
   standalone: true,
   imports: [ContainerComponent, HeaderTogglerDirective, SidebarToggleDirective, IconDirective, HeaderNavComponent, NavItemComponent, NavLinkDirective, RouterLink, RouterLinkActive, NgTemplateOutlet, BreadcrumbRouterComponent, ThemeDirective, DropdownComponent, DropdownToggleDirective, TextColorDirective, AvatarComponent, DropdownMenuDirective, DropdownHeaderDirective, DropdownItemDirective, BadgeComponent, DropdownDividerDirective, ProgressBarDirective, ProgressComponent, NgStyle]
 })
-export class DefaultHeaderComponent extends HeaderComponent {
+export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
+
+  user: any = null;
 
   readonly #activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   readonly #colorModeService = inject(ColorModeService);
@@ -71,6 +73,11 @@ export class DefaultHeaderComponent extends HeaderComponent {
   }
 
   @Input() sidebarId: string = 'sidebar1';
+
+  ngOnInit(): void {
+    this.user = JSON.parse(sessionStorage.getItem('user') as any);
+    console.log(this.user);
+  }
 
   logout() {
     sessionStorage.clear();
