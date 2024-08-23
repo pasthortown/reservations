@@ -6,13 +6,13 @@
           <c-card class="p-4">
             <c-card-body>
               <form cForm>
-                <h1>Login</h1>
-                <p class="text-body-secondary">Sign In to your account</p>
+                <h1>Te damos la Bienvenida</h1>
+                <p class="text-body-secondary">Accede con tu cuenta</p>
                 <c-input-group class="mb-3">
                   <span cInputGroupText>
                     <svg cIcon name="cilUser"></svg>
                   </span>
-                  <input autoComplete="username" cFormControl placeholder="Username" />
+                  <input autoComplete="username" cFormControl placeholder="Correo Electrónico" />
                 </c-input-group>
                 <c-input-group class="mb-4">
                   <span cInputGroupText>
@@ -21,32 +21,33 @@
                   <input
                     autoComplete="current-password"
                     cFormControl
-                    placeholder="Password"
+                    placeholder="Contraseña"
                     type="password"
                   />
                 </c-input-group>
                 <c-row>
                   <c-col xs="6">
                     <button cButton class="px-4" color="primary">
-                      Login
+                      Iniciar Sesión
                     </button>
                   </c-col>
                   <c-col class="text-right" xs="6">
                     <button cButton class="px-0" color="link">
-                      Forgot password?
+                      No recuerdas tu contraseña?
                     </button>
                   </c-col>
                 </c-row>
               </form>
             </c-card-body>
           </c-card>
-          <c-card [ngStyle]="{'minWidth.%': 44}" class="text-white bg-primary py-5">
+          <c-card [ngStyle]="{'minWidth.%': 44}" class="py-5" style="background-color: rgb(233, 233, 233);">
             <c-card-body class="text-center">
               <div>
-                <h2>Sign up</h2>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.
+                <div style="width: 100%; text-align: center;">
+                  <img src="/assets/images/logo_color.png" class="col-6"/>
+                </div>
+                <p style="text-align: justify;">
+                  ¡Bienvenidos a Luxury Stays! Descubre los mejores departamentos de arriendo en España, donde el lujo y la comodidad se encuentran en cada rincón. Explora nuestra exclusiva selección de propiedades y encuentra el lugar perfecto para tu próxima estadía. Tu experiencia de alojamiento en España comienza aquí. ¡Bienvenidos a un nuevo estándar de lujo!
                 </p>
               </div>
             </c-card-body>
