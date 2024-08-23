@@ -36,10 +36,5 @@ export const navItems: INavData[] = [
         icon: 'nav-icon-bullet'
       }
     ]
-  },
-  {
-    name: 'Reportes',
-    iconComponent: { name: 'cil-chart-pie' },
-    url: '/charts'
   }
 ];

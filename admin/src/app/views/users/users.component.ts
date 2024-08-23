@@ -38,14 +38,14 @@ import { IconDirective } from '@coreui/icons-angular';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-alojamientos',
+  selector: 'app-users',
   standalone: true,
-  templateUrl: './alojamientos.component.html',
-  styleUrl: './alojamientos.component.scss',
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.scss',
   providers:[CatalogService],
   imports: [ FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, IconDirective, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink]
 })
-export class AlojamientosComponent implements OnInit{
+export class UsersComponent {
 
   constructor(private catalogService: CatalogService) {}
 
