@@ -1,1 +1,61 @@
-<p>servicios works!</p>
+<c-row class="g-3 mb-2">
+  <c-col [sm]="7">
+    <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button (click)="service_selected = { name: '', ico: '', description: '' }" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+        <button [cModalToggle]="modalXl.id" [disabled]="service_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+      </c-button-group>
+    </c-button-toolbar>
+  </c-col>
+  <c-col [sm]>
+    <c-input-group>
+      <span cInputGroupText>
+        <svg cIcon [name]="'cilSearch'" [title]="'cilSearch'" size="1xl"></svg>
+      </span>
+      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" [(ngModel)]="filter" (keyup)="filterData()"/>
+    </c-input-group>
+  </c-col>
+</c-row>
+
+
+<c-modal #modalXl id="modalXl" size="xl">
+  <c-modal-header>
+    @if (service_selected.name == '') {
+      <h5 cModalTitle>Nuevo Servicio</h5>
+    }
+    @if (service_selected.name !== '') {
+      <h5 cModalTitle>Edición de Servicio</h5>
+    }
+  </c-modal-header>
+  <c-modal-body>...</c-modal-body>
+</c-modal>
+
+<div class="row" style="max-height: 50vh; overflow-y: auto;">
+  <table cTable hover>
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Icono</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripción</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (service of servicios_shown; track $index) {
+      <tr (click)="service_selected = service" [class]="{'row_selected': service_selected == service}">
+        <th scope="row">
+          @if (service_selected == service){
+            <i class="fa-regular fa-hand-point-right"></i>
+          }
+          @if (service_selected !== service){
+            {{$index + 1}}
+          }
+        </th>
+        <th><i [class]="service.ico"></i></th>
+        <td>{{service.name}}</td>
+        <td>{{service.description}}</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>

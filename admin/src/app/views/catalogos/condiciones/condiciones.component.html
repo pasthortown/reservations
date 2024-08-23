@@ -1,1 +1,61 @@
-<p>condiciones works!</p>
+<c-row class="g-3 mb-2">
+  <c-col [sm]="7">
+    <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button (click)="condition_selected = { name: '', ico: '', description: '' }" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+        <button [cModalToggle]="modalXl.id" [disabled]="condition_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+      </c-button-group>
+    </c-button-toolbar>
+  </c-col>
+  <c-col [sm]>
+    <c-input-group>
+      <span cInputGroupText>
+        <svg cIcon [name]="'cilSearch'" [title]="'cilSearch'" size="1xl"></svg>
+      </span>
+      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" [(ngModel)]="filter" (keyup)="filterData()"/>
+    </c-input-group>
+  </c-col>
+</c-row>
+
+<c-modal #modalXl id="modalXl" size="xl">
+  <c-modal-header>
+    @if (condition_selected.name == '') {
+      <h5 cModalTitle>Nueva Condición</h5>
+    }
+    @if (condition_selected.name !== '') {
+      <h5 cModalTitle>Edición de Condición</h5>
+    }
+  </c-modal-header>
+  <c-modal-body>...</c-modal-body>
+</c-modal>
+
+<div class="row" style="max-height: 50vh; overflow-y: auto;">
+  <table cTable hover>
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Icono</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripción</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (condition of condiciones_shown; track $index) {
+      <tr (click)="condition_selected = condition" [class]="{'row_selected': condition_selected == condition}">
+        <th scope="row">
+          @if (condition_selected == condition){
+            <i class="fa-regular fa-hand-point-right"></i>
+          }
+          @if (condition_selected !== condition){
+            {{$index + 1}}
+          }
+        </th>
+        <th><i [class]="condition.ico"></i></th>
+        <td>{{condition.name}}</td>
+        <td>{{condition.description}}</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
+

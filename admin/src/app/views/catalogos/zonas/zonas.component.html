@@ -1,69 +1,57 @@
 <c-row class="g-3 mb-2">
   <c-col [sm]="7">
-    <button [cModalToggle]="modalXl.id" cButton title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+    <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button (click)="zone_selected = { name: '' }" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+        <button [cModalToggle]="modalXl.id" [disabled]="zone_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+      </c-button-group>
+    </c-button-toolbar>
   </c-col>
   <c-col [sm]>
     <c-input-group>
       <span cInputGroupText>
         <svg cIcon [name]="'cilSearch'" [title]="'cilSearch'" size="1xl"></svg>
       </span>
-      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" />
+      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" [(ngModel)]="filter" (keyup)="filterData()"/>
     </c-input-group>
   </c-col>
 </c-row>
 
-
 <c-modal #modalXl id="modalXl" size="xl">
   <c-modal-header>
-    <h5 cModalTitle>Extra large modal</h5>
+    @if (zone_selected.name == '') {
+      <h5 cModalTitle>Nueva Zona</h5>
+    }
+    @if (zone_selected.name !== '') {
+      <h5 cModalTitle>Edición de Zona</h5>
+    }
   </c-modal-header>
   <c-modal-body>...</c-modal-body>
 </c-modal>
 
-<table cTable hover>
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Class</th>
-    <th scope="col">Heading</th>
-    <th scope="col">Heading</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <th scope="row">1</th>
-    <td>Mark</td>
-    <td>Otto</td>
-    <td>&#64;mdo</td>
-  </tr>
-  <tr>
-    <th scope="row">2</th>
-    <td>Jacob</td>
-    <td>Thornton</td>
-    <td>&#64;fat</td>
-  </tr>
-  <tr>
-    <th scope="row">3</th>
-    <td colSpan="2">Larry the Bird</td>
-    <td>&#64;twitter</td>
-  </tr>
-  </tbody>
-</table>
+<div class="row" style="max-height: 50vh; overflow-y: auto;">
+  <table cTable hover>
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (zone of zonas_shown; track $index) {
+      <tr (click)="zone_selected = zone" [class]="{'row_selected': zone_selected == zone}">
+        <th scope="row">
+          @if (zone_selected == zone){
+            <i class="fa-regular fa-hand-point-right"></i>
+          }
+          @if (zone_selected !== zone){
+            {{$index + 1}}
+          }
+        </th>
+        <td>{{zone.name}}</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
 
-<c-pagination aria-label="Page navigation example">
-  <li cPageItem>
-    <a cPageLink aria-label="Previous" [routerLink]><span aria-hidden="true">&laquo;</span></a>
-  </li>
-  <li cPageItem>
-    <a cPageLink [routerLink]>1</a>
-  </li>
-  <li cPageItem>
-    <a cPageLink [routerLink]>2</a>
-  </li>
-  <li cPageItem>
-    <a cPageLink [routerLink]>3</a>
-  </li>
-  <li cPageItem>
-    <a cPageLink aria-label="Next" [routerLink]><span aria-hidden="true">&raquo;</span></a>
-  </li>
-</c-pagination>

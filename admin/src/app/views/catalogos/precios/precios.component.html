@@ -1,1 +1,57 @@
-<p>precios works!</p>
+<c-row class="g-3 mb-2">
+  <c-col [sm]="7">
+    <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button (click)="price_selected = { name: '' }" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+        <button [cModalToggle]="modalXl.id" [disabled]="price_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+      </c-button-group>
+    </c-button-toolbar>
+  </c-col>
+  <c-col [sm]>
+    <c-input-group>
+      <span cInputGroupText>
+        <svg cIcon [name]="'cilSearch'" [title]="'cilSearch'" size="1xl"></svg>
+      </span>
+      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" [(ngModel)]="filter" (keyup)="filterData()"/>
+    </c-input-group>
+  </c-col>
+</c-row>
+
+
+<c-modal #modalXl id="modalXl" size="xl">
+  <c-modal-header>
+    @if (price_selected.name == '') {
+      <h5 cModalTitle>Nuevo Precio</h5>
+    }
+    @if (price_selected.name !== '') {
+      <h5 cModalTitle>Edición de Precio</h5>
+    }
+  </c-modal-header>
+  <c-modal-body>...</c-modal-body>
+</c-modal>
+
+<div class="row" style="max-height: 50vh; overflow-y: auto;">
+  <table cTable hover>
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Descripción</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (price of precios_shown; track $index) {
+      <tr (click)="price_selected = price" [class]="{'row_selected': price_selected == price}">
+        <th scope="row">
+          @if (price_selected == price){
+            <i class="fa-regular fa-hand-point-right"></i>
+          }
+          @if (price_selected !== price){
+            {{$index + 1}}
+          }
+        </th>
+        <td>{{price.name}}</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
