@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { CatalogService } from './../../../../../../front-back/src/app/services/catalog.service';
+import { CatalogService } from 'src/app/services/catalog.service';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
