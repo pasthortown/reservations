@@ -2,8 +2,9 @@
   <c-col [sm]="7">
     <c-button-toolbar aria-label="Toolbar with button groups" role="group">
       <c-button-group aria-label="Basic example" class="me-2" role="group">
-        <button (click)="service_selected = { name: '', ico: '', description: '' }" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
-        <button [cModalToggle]="modalXl.id" [disabled]="service_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+        <button (click)="new_item()" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+        <button (click)="is_new = false" [cModalToggle]="modalXl.id" [disabled]="service_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+        <button (click)="delete_item(service_selected, 'servicios')" [disabled]="service_selected.name == ''" cButton color="danger" title="Eliminar"><svg cIcon [name]="'cilTrash'" [title]="'cilTrash'" size="1xl"></svg></button>
       </c-button-group>
     </c-button-toolbar>
   </c-col>
@@ -18,7 +19,7 @@
 </c-row>
 
 
-<c-modal #modalXl id="modalXl" size="xl">
+<c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
   <c-modal-header>
     @if (service_selected.name == '') {
       <h5 cModalTitle>Nuevo Servicio</h5>
@@ -26,8 +27,36 @@
     @if (service_selected.name !== '') {
       <h5 cModalTitle>Edición de Servicio</h5>
     }
+    <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
-  <c-modal-body>...</c-modal-body>
+  <c-modal-body>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingInput" [(ngModel)]="service_selected.ico" placeholder="Icono del Servicio" type="text" />
+      <label cLabel for="floatingInput">Icono del Servicio</label>
+    </div>
+    <c-input-group class="mb-3">
+      <span cInputGroupText>
+        <i [class]="service_selected.ico"></i>
+      </span>
+      <input disabled cFormControl id="autoSizingInputGroup" placeholder="Vista previa del Icono" [(ngModel)]="service_selected.ico"/>
+    </c-input-group>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingInput" [(ngModel)]="service_selected.name" placeholder="Texto Corto del Servicio" type="text" />
+      <label cLabel for="floatingInput">Texto Corto del Servicio</label>
+    </div>
+    <div [cFormFloating]="true" class="mb-3">
+      <textarea cFormControl id="floatingInput" [(ngModel)]="service_selected.description" placeholder="Descripción del Servicio"></textarea>
+      <label cLabel for="floatingInput">Descripción del Servicio</label>
+    </div>
+    <c-row class="g-3 mb-2">
+      <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+        <c-button-group aria-label="Basic example" class="m-auto" role="group">
+          <button (click)="save()" cButton color="primary" title="Guardar"><svg cIcon [name]="'cilSave'" [title]="'cilSave'" size="1xl"></svg> Guardar</button>
+          <button (click)="cancelar()" cButton color="danger" title="Cancelar"><svg cIcon [name]="'cilX'" [title]="'cilX'" size="1xl"></svg> Cancelar</button>
+        </c-button-group>
+      </c-button-toolbar>
+    </c-row>
+  </c-modal-body>
 </c-modal>
 
 <div class="row" style="max-height: 50vh; overflow-y: auto;">
