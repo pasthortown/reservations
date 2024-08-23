@@ -90,7 +90,7 @@ export class ZonasComponent implements OnInit{
 
   save() {
     if (this.is_new) {
-      this.upload_item([this.zone_selected], 'zonas');
+      this.upload_item(this.zone_selected, 'zonas');
     } else {
       this.update_item(this.zone_selected, 'zonas');
     }

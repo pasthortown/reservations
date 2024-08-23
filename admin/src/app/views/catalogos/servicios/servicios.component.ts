@@ -92,7 +92,7 @@ export class ServiciosComponent implements OnInit {
 
   save() {
     if (this.is_new) {
-      this.upload_item([this.service_selected], 'servicios');
+      this.upload_item(this.service_selected, 'servicios');
     } else {
       this.update_item(this.service_selected, 'servicios');
     }

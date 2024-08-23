@@ -92,7 +92,7 @@ export class CondicionesComponent implements OnInit {
 
   save() {
     if (this.is_new) {
-      this.upload_item([this.condition_selected], 'condiciones');
+      this.upload_item(this.condition_selected, 'condiciones');
     } else {
       this.update_item(this.condition_selected, 'condiciones');
     }

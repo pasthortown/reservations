@@ -90,7 +90,7 @@ export class PreciosComponent implements OnInit {
 
   save() {
     if (this.is_new) {
-      this.upload_item([this.price_selected], 'precios');
+      this.upload_item(this.price_selected, 'precios');
     } else {
       this.update_item(this.price_selected, 'precios');
     }

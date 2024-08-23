@@ -4,7 +4,7 @@
       <c-button-group aria-label="Basic example" class="me-2" role="group">
         <button (click)="new_item()" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
         <button (click)="is_new = false" [cModalToggle]="modalXl.id" [disabled]="zone_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
-        <button (click)="delete_item(zone_selected, 'precios')" [disabled]="zone_selected.name == ''" cButton color="danger" title="Eliminar"><svg cIcon [name]="'cilTrash'" [title]="'cilTrash'" size="1xl"></svg></button>
+        <button (click)="delete_item(zone_selected, 'zonas')" [disabled]="zone_selected.name == ''" cButton color="danger" title="Eliminar"><svg cIcon [name]="'cilTrash'" [title]="'cilTrash'" size="1xl"></svg></button>
       </c-button-group>
     </c-button-toolbar>
   </c-col>
