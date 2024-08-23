@@ -7,15 +7,8 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Alojamientos',
-    url: '/base',
+    url: '/alojamientos',
     iconComponent: { name: 'cil-building' },
-    children: [
-      {
-        name: 'Administrar',
-        url: '/alojamientos/administrar',
-        icon: 'nav-icon-bullet'
-      },
-    ]
   },
   {
     name: 'Catálogos',

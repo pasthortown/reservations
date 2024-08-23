@@ -1,25 +1,13 @@
+import { AlojamientosComponent } from './alojamientos.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
     path: '',
+    component: AlojamientosComponent,
     data: {
       title: 'Alojamientos'
-    },
-    children: [
-      {
-        path: '',
-        redirectTo: 'alojamientos',
-        pathMatch: 'full'
-      },
-      {
-        path: 'administrar',
-        loadComponent: () => import('./administrar/administrar.component').then(m => m.AdministrarComponent),
-        data: {
-          title: 'Administrar'
-        }
-      }
-    ]
+    }
   }
 ];
 
