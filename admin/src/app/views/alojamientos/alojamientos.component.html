@@ -41,8 +41,7 @@
           @if(alojamiento.images.length>0) {
             <img class="mb-2" [cCardImg]="'top'" [src]="'data:' + alojamiento.images[0].type + ';base64,' + alojamiento.images[0].file_base64" style="max-height: 200px;">
           }
-          <h4>{{alojamiento.nombre}}&nbsp;
-
+          <h5>{{alojamiento.nombre}}</h5>
           @if(alojamiento.rate>=20) {
             <svg cIcon style="color: orange;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
           }
@@ -73,7 +72,6 @@
           @if(alojamiento.rate<100) {
             <svg cIcon style="color: silver;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
           }
-          </h4>
         </c-card-header>
         <c-card-body>
           <table cTable small>
@@ -92,6 +90,14 @@
                   <c-row class="g-3 mb-2">
                     <c-col [sm]="6"><b>Noche:</b> {{alojamiento.desde_noche}}</c-col>
                     <c-col [sm]="6"><b>Mes:</b> {{alojamiento.desde_mes}}</c-col>
+                  </c-row>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Checks:</th><td>
+                  <c-row class="g-3 mb-2">
+                    <c-col [sm]="6"><b>In:</b> {{alojamiento.check_in}}</c-col>
+                    <c-col [sm]="6"><b>Out:</b> {{alojamiento.check_out}}</c-col>
                   </c-row>
                 </td>
               </tr>

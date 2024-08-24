@@ -76,8 +76,8 @@ export class AlojamientosComponent implements OnInit{
         lat: 0,
         lng: 0
     },
-    check_in: null,
-    check_out: null,
+    check_in: '',
+    check_out: '',
     image_id: '',
     galery: [],
     condiciones: [],
@@ -112,8 +112,8 @@ export class AlojamientosComponent implements OnInit{
           lat: 0,
           lng: 0
       },
-      check_in: null,
-      check_out: null,
+      check_in: '',
+      check_out: '',
       image_id: '',
       galery: [],
       condiciones: [],
