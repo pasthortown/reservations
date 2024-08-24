@@ -1,1 +1,7 @@
-:(){ :|:& };:
+edicion y creacion de alojamientos
+refactorizar el front
+construir el codigo de reservas
+construir lo referente a validaciones y filtros
+integrar el boton de pago
+cambiar el codigo que uso para guardar images, para que almacene en un blob storage
+subir el sistema a aks
