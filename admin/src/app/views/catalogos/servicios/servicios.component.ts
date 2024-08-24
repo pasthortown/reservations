@@ -84,6 +84,7 @@ export class ServiciosComponent implements OnInit {
 
   cancelar() {
     this.visible = !this.visible;
+    this.get_catalog();
   }
 
   handleChange(event: any) {

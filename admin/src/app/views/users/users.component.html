@@ -1,1 +1,115 @@
-<p>users works!</p>
+<c-row class="g-3 mb-2">
+  <c-col [sm]="7">
+    <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button (click)="is_new = false" [cModalToggle]="modalXl.id" [disabled]="user_selected.fullname == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+        @if (user_selected.fullname !== '') {
+          @if (!user_selected.disabled) {
+            <button (click)="change_lock_state()" [disabled]="user_selected.fullname == ''" cButton color="danger" title="Bloquear"><svg cIcon [name]="'cilLockLocked'" [title]="'cilLockLocked'" size="1xl"></svg></button>
+          }
+          @if (user_selected.disabled) {
+            <button (click)="change_lock_state()" [disabled]="user_selected.fullname == ''" cButton color="danger" title="Desbloquear"><svg cIcon [name]="'cilLockUnlocked'" [title]="'cilLockUnlocked'" size="1xl"></svg></button>
+          }
+        }
+      </c-button-group>
+    </c-button-toolbar>
+  </c-col>
+  <c-col [sm]>
+    <c-input-group>
+      <span cInputGroupText>
+        <svg cIcon [name]="'cilSearch'" [title]="'cilSearch'" size="1xl"></svg>
+      </span>
+      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" [(ngModel)]="filter" (keyup)="filterData()"/>
+    </c-input-group>
+  </c-col>
+</c-row>
+
+<c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
+  <c-modal-header>
+    <h5 cModalTitle>{{ user_selected.fullname ? 'Edición de Usuario' : 'Nuevo Usuario' }}</h5>
+    <button cButtonClose (click)="cancelar()"></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingFullname" [(ngModel)]="user_selected.fullname" placeholder="Nombre Completo" type="text" />
+      <label cLabel for="floatingFullname">Nombre Completo</label>
+    </div>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingIdentification" [(ngModel)]="user_selected.identification" placeholder="Identificación" type="text" />
+      <label cLabel for="floatingIdentification">Identificación</label>
+    </div>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingPhoneNumber" [(ngModel)]="user_selected.phone_number" placeholder="Número Telefónico" type="text" />
+      <label cLabel for="floatingPhoneNumber">Número Telefónico</label>
+    </div>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingBorndate" [ngModel]="user_selected.borndate | date: 'y-MM-dd'" (ngModelChange)="user_selected.borndate = $event" placeholder="Fecha de Nacimiento" type="date" />
+      <label cLabel for="floatingBorndate">Fecha de Nacimiento</label>
+    </div>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingEmail" [(ngModel)]="user_selected.email" placeholder="Correo Electrónico" type="email" />
+      <label cLabel for="floatingEmail">Correo Electrónico</label>
+    </div>
+    <div [cFormFloating]="true" class="mb-3">
+      <input cFormControl id="floatingRol" [(ngModel)]="user_selected.rol" placeholder="Rol" type="text" />
+      <label cLabel for="floatingRol">Rol</label>
+    </div>
+    <c-row class="g-3 mb-2">
+      <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+        <c-button-group aria-label="Basic example" class="m-auto" role="group">
+          <button (click)="edit_user_data()" cButton color="primary" title="Guardar">
+            <svg cIcon [name]="'cilSave'" [title]="'cilSave'" size="1xl"></svg> Guardar
+          </button>
+          <button (click)="cancelar()" cButton color="danger" title="Cancelar">
+            <svg cIcon [name]="'cilX'" [title]="'cilX'" size="1xl"></svg> Cancelar
+          </button>
+        </c-button-group>
+      </c-button-toolbar>
+    </c-row>
+  </c-modal-body>
+</c-modal>
+
+<div class="row" style="max-height: 50vh; overflow-y: auto;">
+  <table cTable hover>
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre Completo</th>
+      <th scope="col">Identificación</th>
+      <th scope="col">Número Telefónico</th>
+      <th scope="col">Fecha de Nacimiento</th>
+      <th scope="col">Correo Electrónico</th>
+      <th scope="col">Rol</th>
+      <th scope="col">Bloqueo</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (user of users_shown; track $index) {
+      <tr (click)="user_selected = user" [class]="{'row_selected': user_selected == user}">
+        <th scope="row">
+          @if (user_selected == user){
+            <i class="fa-regular fa-hand-point-right"></i>
+          }
+          @if (user_selected !== user){
+            {{$index + 1}}
+          }
+        </th>
+        <td scope="row">{{user.fullname}}</td>
+        <td scope="row">{{user.identification}}</td>
+        <td scope="row">{{user.phone_number}}</td>
+        <td scope="row">{{user.borndate}}</td>
+        <td scope="row">{{user.email}}</td>
+        <td scope="row">{{user.rol}}</td>
+        <td scope="row">
+          @if(user.disabled) {
+            <svg cIcon [name]="'cilLockLocked'" [title]="'cilLockLocked'" size="1xl"></svg>
+          }
+          @if(!user.disabled) {
+            <svg cIcon [name]="'cilLockUnlocked'" [title]="'cilLockLocked'" size="1xl"></svg>
+          }
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
