@@ -82,6 +82,7 @@ export class AlojamientosComponent implements OnInit{
     galery: [],
     condiciones: [],
     servicios: [],
+    portada: null,
     images: [],
     rate: 0,
     comments: []
@@ -118,6 +119,7 @@ export class AlojamientosComponent implements OnInit{
       galery: [],
       condiciones: [],
       servicios: [],
+      portada: null,
       images: [],
       rate: 0,
       comments: []
@@ -148,8 +150,15 @@ export class AlojamientosComponent implements OnInit{
       this.alojamientos.forEach((alojamiento: any) => {
         alojamiento.images = [];
         alojamiento.rate=0;
+        if(alojamiento.galery) {
+          alojamiento.galery.forEach((element: any) => {
+            this.fileService.get_file('fotografias_alojamientos', element).then(r => {
+              alojamiento.images.push(r.response);
+            }).catch( e => console.log(e) );
+          });
+        }
         this.fileService.get_file('fotografias_alojamientos', alojamiento.image_id).then(r => {
-          alojamiento.images.push(r.response)
+          alojamiento.portada = r.response;
         }).catch( e => console.log(e) );
       });
       this.filterData();
@@ -180,6 +189,7 @@ export class AlojamientosComponent implements OnInit{
 
   delete_item(item: any, catalog: string) {
     this.catalogService.delete_item(catalog, item.item_id).then(r => {
+      this.fileService.delete_file('fotografias_alojamientos', item.image_id);
       this.get_catalog();
     }).catch( e => console.log(e) );
   }
