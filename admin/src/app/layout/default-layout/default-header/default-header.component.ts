@@ -76,7 +76,6 @@ export class DefaultHeaderComponent extends HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user') as any);
-    console.log(this.user);
   }
 
   logout() {

@@ -1,3 +1,4 @@
+import { FilesService } from 'src/app/services/file.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CatalogService } from 'src/app/services/catalog.service';
 import { Component, OnInit } from '@angular/core';
@@ -31,7 +32,17 @@ import {
   FormFloatingDirective,
   FormDirective,
   FormSelectDirective,
-  FormLabelDirective
+  FormLabelDirective,
+  CardBodyComponent,
+  CardComponent,
+  CardFooterComponent,
+  CardGroupComponent,
+  CardHeaderComponent,
+  CardImgDirective,
+  CardLinkDirective,
+  CardSubtitleDirective,
+  CardTextDirective,
+  CardTitleDirective
 } from '@coreui/angular';
 
 import { IconDirective } from '@coreui/icons-angular';
@@ -42,8 +53,9 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './alojamientos.component.html',
   styleUrl: './alojamientos.component.scss',
-  providers:[CatalogService],
-  imports: [ FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, IconDirective, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink]
+  providers:[CatalogService, FilesService],
+  imports: [
+    CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, IconDirective, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink]
 })
 export class AlojamientosComponent implements OnInit{
   filter = '';
@@ -64,12 +76,13 @@ export class AlojamientosComponent implements OnInit{
         lat: 0,
         lng: 0
     },
-    image_id: ''
+    image_id: '',
+    images: []
   };
   public visible = false;
   is_new = false;
 
-  constructor(private catalogService: CatalogService) {}
+  constructor(private catalogService: CatalogService, private fileService: FilesService) {}
 
   ngOnInit(): void {
     this.get_catalog();
@@ -92,7 +105,8 @@ export class AlojamientosComponent implements OnInit{
           lat: 0,
           lng: 0
       },
-      image_id: ''
+      image_id: '',
+      images: []
     };
     let output_model = {
       nombre: true,
@@ -110,6 +124,12 @@ export class AlojamientosComponent implements OnInit{
     }
     this.catalogService.get_items('alojamientos', output_model).then( r => {
       this.alojamientos = r.response;
+      this.alojamientos.forEach((alojamiento: any) => {
+        alojamiento.images = [];
+        this.fileService.get_file('fotografias_alojamientos', alojamiento.image_id).then(r => {
+          alojamiento.images.push(r.response)
+        }).catch( e => console.log(e) );
+      });
       this.filterData();
     }).catch( e => console.log(e) );
   }
