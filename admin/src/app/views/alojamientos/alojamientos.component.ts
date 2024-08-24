@@ -76,8 +76,15 @@ export class AlojamientosComponent implements OnInit{
         lat: 0,
         lng: 0
     },
+    check_in: null,
+    check_out: null,
     image_id: '',
-    images: []
+    galery: [],
+    condiciones: [],
+    servicios: [],
+    images: [],
+    rate: 0,
+    comments: []
   };
   public visible = false;
   is_new = false;
@@ -105,8 +112,15 @@ export class AlojamientosComponent implements OnInit{
           lat: 0,
           lng: 0
       },
+      check_in: null,
+      check_out: null,
       image_id: '',
-      images: []
+      galery: [],
+      condiciones: [],
+      servicios: [],
+      images: [],
+      rate: 0,
+      comments: []
     };
     let output_model = {
       nombre: true,
@@ -120,12 +134,20 @@ export class AlojamientosComponent implements OnInit{
       latitude: true,
       longitude: true,
       ubication: true,
-      image_id: true
+      check_in: true,
+      check_out: true,
+      image_id: true,
+      galery: true,
+      condiciones: true,
+      servicios: true,
+      rate: true,
+      comments: true
     }
     this.catalogService.get_items('alojamientos', output_model).then( r => {
       this.alojamientos = r.response;
       this.alojamientos.forEach((alojamiento: any) => {
         alojamiento.images = [];
+        alojamiento.rate=0;
         this.fileService.get_file('fotografias_alojamientos', alojamiento.image_id).then(r => {
           alojamiento.images.push(r.response)
         }).catch( e => console.log(e) );
