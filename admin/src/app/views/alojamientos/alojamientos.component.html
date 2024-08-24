@@ -1,1 +1,42 @@
-<p>alojamientos works!</p>
+<c-row class="g-3 mb-2">
+  <c-col [sm]="7">
+    <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button (click)="new_item()" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+        <button (click)="is_new = false" [cModalToggle]="modalXl.id" [disabled]="alojamiento_selected.nombre == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+        <button (click)="delete_item(alojamiento_selected, 'alojamientos')" [disabled]="alojamiento_selected.nombre == ''" cButton color="danger" title="Eliminar"><svg cIcon [name]="'cilTrash'" [title]="'cilTrash'" size="1xl"></svg></button>
+      </c-button-group>
+    </c-button-toolbar>
+  </c-col>
+  <c-col [sm]>
+    <c-input-group>
+      <span cInputGroupText>
+        <svg cIcon [name]="'cilSearch'" [title]="'cilSearch'" size="1xl"></svg>
+      </span>
+      <input cFormControl id="autoSizingInputGroup" placeholder="Buscar" [(ngModel)]="filter" (keyup)="filterData()"/>
+    </c-input-group>
+  </c-col>
+</c-row>
+
+<c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
+  <c-modal-header>
+    @if (alojamiento_selected.nombre == '') {
+      <h5 cModalTitle>Nuevo Alojamiento</h5>
+    }
+    @if (alojamiento_selected.nombre !== '') {
+      <h5 cModalTitle>Edición de Alojamiento</h5>
+    }
+    <button cButtonClose (click)="cancelar()"></button>
+  </c-modal-header>
+  <c-modal-body>
+    cuerpo
+  </c-modal-body>
+</c-modal>
+
+<c-row class="g-3 mb-2">
+  @for(alojamiento of alojamientos_shown; track $index){
+    <c-col [sm]="3">
+      {{alojamiento.nombre}}
+    </c-col>
+  }
+</c-row>
