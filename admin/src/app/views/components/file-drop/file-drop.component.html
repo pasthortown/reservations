@@ -1,0 +1,73 @@
+<div class="row">
+  @if(!disabled) {
+    <div class="col-12">
+      <ngx-file-drop dropZoneLabel="Arrastre los Archivos Aquí" (onFileDrop)="dropped($event)" accept="{{accept}}">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+          <p class="col-12 text-center" (click)="openFileSelector()">
+            @if(max_file_count > 1) {
+              <span>
+                <small>Arrastre aquí el o los archivos que desea compartir.<br/>
+                Se acepta máximo {{max_file_size}}MB por cada Archivo.<br/>
+                Se aceptan máximo {{max_file_count}} archivos.</small>
+              </span>
+            }
+            @if(max_file_count == 1) {
+              <span>
+                <small>Arrastre aquí el archivo que desea compartir.<br/>
+                El archivo no deberá superar los {{max_file_size}}MB.</small>
+              </span>
+            }
+          </p>
+        </ng-template>
+      </ngx-file-drop>
+    </div>
+  }
+  <div class="col-12 mt-3">
+    <table class="table">
+      <thead>
+          <tr>
+            @if(accept != 'image/*' && accept != 'image/*,video/*') {
+              <th><small><strong>Archivos Cargados</strong></small></th>
+            }
+            @if(accept == 'image/*' && max_file_count > 1) {
+              <th colspan="2"><small><strong>Fotografías</strong></small></th>
+            }
+            @if(accept == 'image/*' && max_file_count == 1) {
+              <th colspan="2"><small><strong>Fotografía</strong></small></th>
+            }
+            @if(accept == 'image/*,video/*') {
+              <th colspan="2"><small><strong>Fotografías y Videos</strong></small></th>
+            }
+            @if(files.length > max_file_count || (files.length == 0 && required) || !validate_file_size) {
+              <th colspan="2">&nbsp;<span class="ml-2 badge bg-danger text-light">Incorrecto</span></th>
+            }
+          </tr>
+      </thead>
+      <tbody class="upload-name-style">
+          @for(item of files; track $index) {
+            <tr>
+              <td><small>{{ item.name }}</small></td>
+              @if(accept == 'image/*') {
+                <td>
+                  <img class="rounded mb-2" [src]="'data:' + item.type + ';base64,' + item.file_base64" style="max-height:400px; max-width:70%"/>
+                </td>
+              }
+              @if(item.size > (max_file_size*1024*1024)) {
+                <td>&nbsp;<span class="ml-2 badge bg-danger">Mayor {{max_file_size}}MB</span></td>
+              }
+              <td>
+                <div class="btn-group" role="group">
+                  <button type="button" class="btn btn-info" title="Descargar" (click)="download(item)">
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger" title="Eliminar" [disabled]="disabled" (click)="delete_file(item)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+          </tr>
+          }
+      </tbody>
+    </table>
+  </div>
+</div>
