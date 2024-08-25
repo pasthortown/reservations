@@ -42,36 +42,7 @@
             <img class="mb-2" [cCardImg]="'top'" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" style="max-height: 200px;">
           }
           <h5>{{alojamiento.nombre}}</h5>
-          @if(alojamiento.rate>=20) {
-            <svg cIcon style="color: orange;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate<20) {
-            <svg cIcon style="color: silver;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate>=40) {
-            <svg cIcon style="color: orange;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate<40) {
-            <svg cIcon style="color: silver;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate>=60) {
-            <svg cIcon style="color: orange;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate<60) {
-            <svg cIcon style="color: silver;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate>=80) {
-            <svg cIcon style="color: orange;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate<80) {
-            <svg cIcon style="color: silver;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate==100) {
-            <svg cIcon style="color: orange;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
-          @if(alojamiento.rate<100) {
-            <svg cIcon style="color: silver;" [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg>
-          }
+          <app-stars [rate]="alojamiento.rate"></app-stars>
         </c-card-header>
         <c-card-body>
           <table cTable small>
