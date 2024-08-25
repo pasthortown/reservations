@@ -89,11 +89,9 @@ export class AlojamientosComponent implements OnInit{
     },
     check_in: '',
     check_out: '',
-    image_id: '',
     galery: [],
     condiciones: [],
     servicios: [],
-    portada: null,
     images: [],
     rate: 0,
     comentarios: []
@@ -127,11 +125,9 @@ export class AlojamientosComponent implements OnInit{
       },
       check_in: '',
       check_out: '',
-      image_id: '',
       galery: [],
       condiciones: [],
       servicios: [],
-      portada: null,
       images: [],
       rate: 0,
       comentarios: []
@@ -148,7 +144,6 @@ export class AlojamientosComponent implements OnInit{
       ubication: true,
       check_in: true,
       check_out: true,
-      image_id: true,
       galery: true,
       condiciones: true,
       servicios: true,
@@ -176,9 +171,6 @@ export class AlojamientosComponent implements OnInit{
             }).catch( e => console.log(e) );
           });
         }
-        this.fileService.get_file('fotografias_alojamientos', alojamiento.image_id).then(r => {
-          alojamiento.portada = r.response;
-        }).catch( e => console.log(e) );
       });
       this.filterData();
     }).catch( e => console.log(e) );
@@ -287,6 +279,9 @@ export class AlojamientosComponent implements OnInit{
   }
 
   save() {
-
+    this.alojamiento_selected.galery.forEach((element: any) => {
+      this.fileService.delete_file('fotografias_alojamientos', element);
+    });
+    
   }
 }

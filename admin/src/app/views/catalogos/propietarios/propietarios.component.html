@@ -81,7 +81,11 @@
             {{$index + 1}}
           }
         </th>
-        <th></th>
+        <th>
+          @if( propietario.photo != null ) {
+            <img class="mb-2" [src]="'data:' + propietario.photo.type + ';base64,' + propietario.photo.file_base64" style="max-height: 100px; min-height: 100px; border-radius: 50%;">
+          }
+        </th>
         <td>{{propietario.name}}</td>
         <td>{{propietario.description}}</td>
       </tr>

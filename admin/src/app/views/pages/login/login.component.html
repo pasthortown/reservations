@@ -23,6 +23,7 @@
                     [(ngModel)]="data.password"
                     placeholder="Contraseña"
                     type="password"
+                    (keyup.enter)="login()"
                   />
                 </c-input-group>
                 <c-row>
