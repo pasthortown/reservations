@@ -36,17 +36,19 @@ import {
 
 import { IconDirective } from '@coreui/icons-angular';
 import { FormsModule } from '@angular/forms';
+import { FileDropComponent } from '../../components/file-drop/file-drop.component';
 
 @Component({
   selector: 'app-propietarios',
   standalone: true,
   providers:[CatalogService],
-  imports: [ FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, IconDirective, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink],
+  imports: [ FileDropComponent, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, IconDirective, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink],
   templateUrl: './propietarios.component.html',
   styleUrl: './propietarios.component.scss'
 })
 export class PropietariosComponent {
   filter = '';
+  fotografias = [];
   propietarios: any[] = [];
   propietarios_shown: any[] = [];
   propietario_selected: any = { name: '', photo_id: '', description: '', photo: null };
@@ -117,5 +119,11 @@ export class PropietariosComponent {
     this.catalogService.upload_items(catalog, [item]).then(r => {
       this.get_catalog();
     }).catch( e => console.log(e) );
+  }
+
+  cargar_fotografia(event: any) {
+    if (event.validated) {
+      this.fotografias = event.files;
+    }
   }
 }

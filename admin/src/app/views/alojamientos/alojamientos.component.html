@@ -21,10 +21,10 @@
 <c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
   <c-modal-header>
     @if (alojamiento_selected.nombre == '') {
-      <h5 cModalTitle>Nuevo Alojamiento</h5>
+      <h5 cModalTitle>Nuevo Inmueble</h5>
     }
     @if (alojamiento_selected.nombre !== '') {
-      <h5 cModalTitle>Edición de Alojamiento</h5>
+      <h5 cModalTitle>Edición de Inmueble</h5>
     }
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
@@ -32,10 +32,10 @@
     <c-row class="mb-2">
       <c-col [sm]="12">
         <h5 cLabel><b>Galería:</b></h5>
-        <small><p style="text-align: justify;">El primer archivo será establecido como portada del alojamiento.</p></small>
+        <small><p style="text-align: justify;">El primer archivo será establecido como portada del inmueble.</p></small>
         <app-file-drop
           [accept]="'image/*'"
-          [files]="portada"
+          [files]="galeria"
           [folder]="'fotografias_alojamientos'"
           [max_file_count]="1"
           [max_file_size]="10"
@@ -52,7 +52,7 @@
       <c-col [sm]="6">
         <div [cFormFloating]="true" class="mb-3">
           <select cSelect #select_propietario (change)="do_select_propietario(select_propietario.value)">
-            <option disabled selected>Seleccione al propietario del alojamiento...</option>
+            <option disabled selected>Seleccione al propietario del inmueble...</option>
             @for(propietario of propietarios; track $index) {
               <option [value]="propietario.item_id">{{propietario.name}}</option>
             }

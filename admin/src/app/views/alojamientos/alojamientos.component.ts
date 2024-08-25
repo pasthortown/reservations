@@ -63,8 +63,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class AlojamientosComponent implements OnInit{
   filter = '';
-  portada: any[] = [];
 
+  galeria: any[] = [];
   servicios: any[] = [];
   condiciones: any[] = [];
   propietarios: any[] = [];
@@ -215,7 +215,7 @@ export class AlojamientosComponent implements OnInit{
 
   cargar_portada(event: any) {
     if (event.validated) {
-      this.portada = event.files;
+      this.galeria = event.files;
     }
   }
 

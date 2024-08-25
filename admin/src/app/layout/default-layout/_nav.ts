@@ -6,8 +6,8 @@ export const navItems: INavData[] = [
     title: true
   },
   {
-    name: 'Alojamientos',
-    url: '/alojamientos',
+    name: 'Inmuebles',
+    url: '/inmuebles',
     iconComponent: { name: 'cil-building' },
   },
   {

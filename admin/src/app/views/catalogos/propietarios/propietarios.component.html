@@ -29,10 +29,18 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-    <div [cFormFloating]="true" class="mb-3">
-      <input cFormControl id="floatingInput" [(ngModel)]="propietario_selected.ico" placeholder="Icono de la Condición" type="text" />
-      <label cLabel for="floatingInput">Icono de la Condición</label>
-    </div>
+    <c-col [sm]="12">
+      <h5 cLabel><b>Fotografía:</b></h5>
+      <app-file-drop
+        [accept]="'image/*'"
+        [files]="fotografias"
+        [folder]="'fotografias_propietarios'"
+        [max_file_count]="1"
+        [max_file_size]="10"
+        [required]="true"
+        (files_uploaded)="cargar_fotografia($event)"
+      ></app-file-drop>
+    </c-col>
     <div [cFormFloating]="true" class="mb-3">
       <input cFormControl id="floatingInput" [(ngModel)]="propietario_selected.name" placeholder="Nombre Completo del Propietario" type="text" />
       <label cLabel for="floatingInput">Nombre Completo del Propietario</label>

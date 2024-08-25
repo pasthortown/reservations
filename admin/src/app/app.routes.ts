@@ -21,7 +21,7 @@ export const routes: Routes = [
         loadChildren: () => import('./views/users/routes').then((m) => m.routes)
       },
       {
-        path: 'alojamientos',
+        path: 'inmuebles',
         canActivate: [AuthGuard],
         loadChildren: () => import('./views/alojamientos/routes').then((m) => m.routes)
       },
