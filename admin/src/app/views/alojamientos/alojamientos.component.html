@@ -29,7 +29,124 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-    <app-file-drop></app-file-drop>
+    <c-row class="mb-2">
+      <c-col [sm]="12">
+        <h5 cLabel><b>Galería:</b></h5>
+        <small><p style="text-align: justify;">El primer archivo será establecido como portada del alojamiento.</p></small>
+        <app-file-drop
+          [accept]="'image/*'"
+          [files]="portada"
+          [folder]="'fotografias_alojamientos'"
+          [max_file_count]="1"
+          [max_file_size]="10"
+          [required]="true"
+          (files_uploaded)="cargar_portada($event)"
+        ></app-file-drop>
+      </c-col>
+      <c-col [sm]="12">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.nombre" placeholder="Título" type="text" />
+          <label cLabel for="floatingInput">Título</label>
+        </div>
+      </c-col>
+      <c-col [sm]="12">
+        <div [cFormFloating]="true" class="mb-3">
+          <textarea cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.descripcion" placeholder="Descripción" type="text"></textarea>
+          <label cLabel for="floatingInput">Descripción</label>
+        </div>
+      </c-col>
+      <c-col [sm]="4">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.personas" placeholder="Número de Personas" type="number"/>
+          <label cLabel for="floatingInput">Número de Personas</label>
+        </div>
+      </c-col>
+      <c-col [sm]="4">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.habitaciones" placeholder="Número de Habitaciones" type="number"/>
+          <label cLabel for="floatingInput">Número de Habitaciones</label>
+        </div>
+      </c-col>
+      <c-col [sm]="4">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.banos" placeholder="Número de Baños" type="number"/>
+          <label cLabel for="floatingInput">Número de Baños</label>
+        </div>
+      </c-col>
+      <c-col [sm]="4">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.metros" placeholder="Metros (m2)" type="number"/>
+          <label cLabel for="floatingInput">Metros (m2)</label>
+        </div>
+      </c-col>
+      <c-col [sm]="4">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.desde_noche" placeholder="Costo por Noche" type="number" step="0.01"/>
+          <label cLabel for="floatingInput">Costo por Noche</label>
+        </div>
+      </c-col>
+      <c-col [sm]="4">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.desde_mes" placeholder="Costo por Mes" type="number" step="0.01"/>
+          <label cLabel for="floatingInput">Costo por Mes</label>
+        </div>
+      </c-col>
+      <c-col [sm]="6">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.check_in" placeholder="Horario Check-In" type="time"/>
+          <label cLabel for="floatingInput">Horario Check-In</label>
+        </div>
+      </c-col>
+      <c-col [sm]="6">
+        <div [cFormFloating]="true" class="mb-3">
+          <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.check_out" placeholder="Horario Check-Out" type="time"/>
+          <label cLabel for="floatingInput">Horario Check-Out</label>
+        </div>
+      </c-col>
+    </c-row>
+    <c-col [sm]="12">
+      <h5 cLabel><b>Servicios:</b></h5>
+      <c-input-group class="mb-3">
+        <button cButton color="primary" cInputGroupText for="inputGroupSelect01" (click)="add_service(selected_service)">
+          <i class="fas fa-add"></i> Agregar
+        </button>
+        <select cSelect id="inputGroupSelect01" #select_service (change)="do_select_service(select_service.value)">
+          <option disabled selected>Seleccione el servicio que desea agregar...</option>
+          @for(service of servicios; track $index) {
+            <option [value]="service.item_id">{{service.name}}</option>
+          }
+        </select>
+      </c-input-group>
+    </c-col>
+    @for(service of alojamiento_selected.servicios; track $index) {
+    <c-col [sm]="12">
+      <c-badge color="danger" (click)="delete_service(service.item_id)"><i class="fas fa-trash"></i></c-badge>&nbsp;&nbsp;&nbsp;<i [class]="service.ico"></i> {{service.name}}
+    </c-col>
+    }
+    <c-col [sm]="12">
+      <h5 cLabel><b>Condiciones:</b></h5>
+      <c-input-group class="mb-3">
+        <button cButton color="primary" cInputGroupText for="inputGroupSelect01" (click)="add_condition(selected_condition)">
+          <i class="fas fa-add"></i> Agregar
+        </button>
+        <select cSelect id="inputGroupSelect01" #select_condition (change)="do_select_condition(select_condition.value)">
+          <option disabled selected>Seleccione el servicio que desea agregar...</option>
+          @for(condition of condiciones; track $index) {
+            <option [value]="condition.item_id">{{condition.name}}</option>
+          }
+        </select>
+      </c-input-group>
+    </c-col>
+    @for(condition of alojamiento_selected.condiciones; track $index) {
+    <c-col [sm]="12">
+      <c-badge color="danger" (click)="delete_condition(condition.item_id)"><i class="fas fa-trash"></i></c-badge>&nbsp;&nbsp;&nbsp;<i [class]="condition.ico"></i> {{condition.name}}
+    </c-col>
+    }
+
+
+
+
+
   </c-modal-body>
 </c-modal>
 
@@ -39,7 +156,7 @@
       <c-card class="mb-4" (click)="alojamiento_selected = alojamiento" [class]="{'card_selected': alojamiento_selected == alojamiento}">
         <c-card-header>
           @if(alojamiento.portada) {
-            <img class="mb-2" [cCardImg]="'top'" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" style="max-height: 200px;">
+            <img class="mb-2" [cCardImg]="'top'" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" style="max-height: 200px; min-height: 200px;">
           }
           <h5>{{alojamiento.nombre}}</h5>
           <app-stars [rate]="alojamiento.rate"></app-stars>
