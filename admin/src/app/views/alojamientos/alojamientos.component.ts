@@ -164,12 +164,14 @@ export class AlojamientosComponent implements OnInit{
       this.alojamientos.forEach((alojamiento: any) => {
         alojamiento.images = [];
         alojamiento.rate=0;
-        if(alojamiento.galery) {
-          alojamiento.galery.forEach((element: any) => {
-            this.fileService.get_file('fotografias_alojamientos', element).then(r => {
-              alojamiento.images.push(r.response);
-            }).catch( e => console.log(e) );
-          });
+        if (alojamiento.galery) {
+          if(alojamiento.galery.length > 0) {
+            alojamiento.galery.forEach((element: any) => {
+              this.fileService.get_file('fotografias_alojamientos', element).then(r => {
+                alojamiento.images.push(r.response);
+              }).catch( e => console.log(e) );
+            });
+          }
         }
       });
       this.filterData();
@@ -195,17 +197,53 @@ export class AlojamientosComponent implements OnInit{
   }
 
   new_item() {
-
+    this.alojamiento_selected = {
+      nombre: '',
+      personas: 0,
+      metros: 0,
+      habitaciones: 0,
+      banos: 0,
+      desde_noche: 0,
+      desde_mes: 0,
+      descripcion: '',
+      ubication: {
+          lat: 0,
+          lng: 0
+      },
+      check_in: '',
+      check_out: '',
+      galery: [],
+      condiciones: [],
+      servicios: [],
+      images: [],
+      rate: 0,
+      comentarios: []
+    };
+    this.is_new = true;
   }
 
-  delete_item(item: any, catalog: string) {
-    this.catalogService.delete_item(catalog, item.item_id).then(r => {
-      this.fileService.delete_file('fotografias_alojamientos', item.image_id);
+  update_item(item: any, catalog: string) {
+    this.catalogService.update_item(catalog, item.item_id, item).then(r => {
       this.get_catalog();
     }).catch( e => console.log(e) );
   }
 
-  cargar_portada(event: any) {
+  upload_item(item: any, catalog: string) {
+    this.catalogService.upload_items(catalog, [item]).then(r => {
+      this.get_catalog();
+    }).catch( e => console.log(e) );
+  }
+
+  delete_item(item: any, catalog: string) {
+    item.galery.forEach((element: any) => {
+      this.fileService.delete_file('fotografias_alojamientos', element.image_id);
+    });
+    this.catalogService.delete_item(catalog, item.item_id).then(r => {
+      this.get_catalog();
+    }).catch( e => console.log(e) );
+  }
+
+  cargar_galeria(event: any) {
     if (event.validated) {
       this.galeria = event.files;
     }
@@ -279,9 +317,41 @@ export class AlojamientosComponent implements OnInit{
   }
 
   save() {
+    let alojamiento_to_save: any = {
+      nombre: this.alojamiento_selected.nombre,
+      personas: this.alojamiento_selected.personas,
+      metros: this.alojamiento_selected.metros,
+      habitaciones: this.alojamiento_selected.habitaciones,
+      banos: this.alojamiento_selected.banos,
+      desde_noche: this.alojamiento_selected.desde_noche,
+      desde_mes: this.alojamiento_selected.desde_mes,
+      descripcion: this.alojamiento_selected.descripcion,
+      ubication: this.alojamiento_selected.ubication,
+      check_in: this.alojamiento_selected.check_in,
+      check_out: this.alojamiento_selected.check_out,
+      galery: [],
+      condiciones: this.alojamiento_selected.condiciones,
+      servicios: this.alojamiento_selected.servicios,
+      rate: this.is_new ? 0 : this.alojamiento_selected.rate,
+      comentarios: this.is_new ? [] : this.alojamiento_selected.comentarios
+    };
     this.alojamiento_selected.galery.forEach((element: any) => {
       this.fileService.delete_file('fotografias_alojamientos', element);
     });
-    
+    this.fileService.upload_files('fotografias_alojamientos', this.galeria).then( r_imagenes => {
+      if (r_imagenes.status == 200) {
+        alojamiento_to_save.galery = [];
+        r_imagenes.response.forEach((element: any) => {
+          alojamiento_to_save.galery.push(element.file_id)
+        });
+        if (this.is_new) {
+          this.upload_item(alojamiento_to_save, 'alojamientos');
+        } else {
+          alojamiento_to_save.item_id = this.alojamiento_selected.item_id;
+          this.update_item(alojamiento_to_save, 'alojamientos');
+        }
+      }
+    }).catch( e => console.log(e) );
+    this.visible = !this.visible;
   }
 }

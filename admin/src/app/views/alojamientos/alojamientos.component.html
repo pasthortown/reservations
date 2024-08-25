@@ -37,10 +37,10 @@
           [accept]="'image/*'"
           [files]="galeria"
           [folder]="'fotografias_alojamientos'"
-          [max_file_count]="1"
-          [max_file_size]="10"
+          [max_file_count]="30"
+          [max_file_size]="40"
           [required]="true"
-          (files_uploaded)="cargar_portada($event)"
+          (files_uploaded)="cargar_galeria($event)"
         ></app-file-drop>
       </c-col>
       <c-col [sm]="6">
@@ -134,7 +134,7 @@
       <c-badge color="danger" (click)="delete_service(service.item_id)"><i class="fas fa-trash"></i></c-badge>&nbsp;&nbsp;&nbsp;<i [class]="service.ico"></i> {{service.name}}
     </c-col>
     }
-    <c-col [sm]="12">
+    <c-col [sm]="12" class="mt-2">
       <h5 cLabel><b>Condiciones:</b></h5>
       <c-input-group class="mb-3">
         <button cButton color="primary" cInputGroupText for="inputGroupSelect01" (click)="add_condition(selected_condition)">
@@ -167,7 +167,7 @@
 <c-row class="g-3 mb-2" style="max-height: 75vh; overflow-y: auto;">
   @for(alojamiento of alojamientos_shown; track $index){
     <c-col [lg]="4">
-      <c-card class="mb-4" (click)="alojamiento_selected = alojamiento" [class]="{'card_selected': alojamiento_selected == alojamiento}">
+      <c-card class="mb-4" (click)="alojamiento_selected = alojamiento; galeria = alojamiento.images" [class]="{'card_selected': alojamiento_selected == alojamiento}">
         <c-card-header>
           @if(alojamiento.images.length > 0) {
             <img class="mb-2" [cCardImg]="'top'" [src]="'data:' + alojamiento.images[0].type + ';base64,' + alojamiento.images[0].file_base64" style="max-height: 200px; min-height: 200px;">
