@@ -67,8 +67,10 @@ export class AlojamientosComponent implements OnInit{
 
   servicios: any[] = [];
   condiciones: any[] = [];
+  propietarios: any[] = [];
   selected_service: any = null;
   selected_condition: any = null;
+  selected_propietario: any = null;
 
   alojamientos: any[] = [];
   alojamientos_shown: any[] = [];
@@ -106,6 +108,7 @@ export class AlojamientosComponent implements OnInit{
   }
 
   get_catalog() {
+    this.propietarios = [];
     this.servicios = [];
     this.condiciones=[];
     this.alojamientos = [];
@@ -152,6 +155,9 @@ export class AlojamientosComponent implements OnInit{
       rate: true,
       comentarios: true
     }
+    this.catalogService.get_items('propietarios', { name: true }).then( r => {
+      this.propietarios = r.response;
+    }).catch( e => console.log(e) );
     this.catalogService.get_items('servicios', { name: true, ico: true, description: true }).then( r => {
       this.servicios = r.response;
     }).catch( e => console.log(e) );
@@ -229,6 +235,13 @@ export class AlojamientosComponent implements OnInit{
     });
   }
 
+  do_select_propietario(propietario_id: string) {
+    this.propietarios.forEach((propietario: any) => {
+      if (propietario.item_id == propietario_id) {
+        this.selected_propietario = propietario;
+      }
+    });
+  }
   add_condition(condition: any) {
     if (this.selected_condition == null) {
       return;
@@ -271,5 +284,9 @@ export class AlojamientosComponent implements OnInit{
 
   delete_condition(condition_id: string) {
     this.alojamiento_selected.condiciones = this.alojamiento_selected.condiciones.filter((condicion: any) => condicion.item_id !== condition_id);
+  }
+
+  save() {
+
   }
 }

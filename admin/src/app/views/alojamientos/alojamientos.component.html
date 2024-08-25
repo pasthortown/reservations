@@ -43,10 +43,21 @@
           (files_uploaded)="cargar_portada($event)"
         ></app-file-drop>
       </c-col>
-      <c-col [sm]="12">
+      <c-col [sm]="6">
         <div [cFormFloating]="true" class="mb-3">
           <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.nombre" placeholder="Título" type="text" />
           <label cLabel for="floatingInput">Título</label>
+        </div>
+      </c-col>
+      <c-col [sm]="6">
+        <div [cFormFloating]="true" class="mb-3">
+          <select cSelect #select_propietario (change)="do_select_propietario(select_propietario.value)">
+            <option disabled selected>Seleccione al propietario del alojamiento...</option>
+            @for(propietario of propietarios; track $index) {
+              <option [value]="propietario.item_id">{{propietario.name}}</option>
+            }
+          </select>
+          <label cLabel for="floatingInput">Propietario</label>
         </div>
       </c-col>
       <c-col [sm]="12">
@@ -142,11 +153,14 @@
       <c-badge color="danger" (click)="delete_condition(condition.item_id)"><i class="fas fa-trash"></i></c-badge>&nbsp;&nbsp;&nbsp;<i [class]="condition.ico"></i> {{condition.name}}
     </c-col>
     }
-
-
-
-
-
+    <c-row class="g-3 mb-2">
+      <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+        <c-button-group aria-label="Basic example" class="m-auto" role="group">
+          <button (click)="save()" cButton color="primary" title="Guardar"><svg cIcon [name]="'cilSave'" [title]="'cilSave'" size="1xl"></svg> Guardar</button>
+          <button (click)="cancelar()" cButton color="danger" title="Cancelar"><svg cIcon [name]="'cilX'" [title]="'cilX'" size="1xl"></svg> Cancelar</button>
+        </c-button-group>
+      </c-button-toolbar>
+    </c-row>
   </c-modal-body>
 </c-modal>
 

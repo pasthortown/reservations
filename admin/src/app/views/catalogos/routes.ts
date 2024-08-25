@@ -13,6 +13,13 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        path: 'propietarios',
+        loadComponent: () => import('./propietarios/propietarios.component').then(m => m.PropietariosComponent),
+        data: {
+          title: 'Propietarios'
+        }
+      },
+      {
         path: 'zonas',
         loadComponent: () => import('./zonas/zonas.component').then(m => m.ZonasComponent),
         data: {

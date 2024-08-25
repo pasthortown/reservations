@@ -16,6 +16,11 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-folder-open' },
     children: [
       {
+        name: 'Propietarios',
+        url: '/catalogos/propietarios',
+        icon: 'nav-icon-bullet'
+      },
+      {
         name: 'Zonas',
         url: '/catalogos/zonas',
         icon: 'nav-icon-bullet'

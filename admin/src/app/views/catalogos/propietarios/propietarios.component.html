@@ -3,8 +3,8 @@
     <c-button-toolbar aria-label="Toolbar with button groups" role="group">
       <c-button-group aria-label="Basic example" class="me-2" role="group">
         <button (click)="new_item()" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
-        <button (click)="is_new = false" [cModalToggle]="modalXl.id" [disabled]="condition_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
-        <button (click)="delete_item(condition_selected, 'condiciones')" [disabled]="condition_selected.name == ''" cButton color="danger" title="Eliminar"><svg cIcon [name]="'cilTrash'" [title]="'cilTrash'" size="1xl"></svg></button>
+        <button (click)="is_new = false" [cModalToggle]="modalXl.id" [disabled]="propietario_selected.name == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
+        <button (click)="delete_item(propietario_selected, 'propietarios')" [disabled]="propietario_selected.name == ''" cButton color="danger" title="Eliminar"><svg cIcon [name]="'cilTrash'" [title]="'cilTrash'" size="1xl"></svg></button>
       </c-button-group>
     </c-button-toolbar>
   </c-col>
@@ -20,32 +20,26 @@
 
 <c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
   <c-modal-header>
-    @if (condition_selected.name == '') {
-      <h5 cModalTitle>Nueva Condición</h5>
+    @if (propietario_selected.name == '') {
+      <h5 cModalTitle>Nuevo Propietario</h5>
     }
-    @if (condition_selected.name !== '') {
-      <h5 cModalTitle>Edición de Condición</h5>
+    @if (propietario_selected.name !== '') {
+      <h5 cModalTitle>Edición de Propietario</h5>
     }
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
     <div [cFormFloating]="true" class="mb-3">
-      <input cFormControl id="floatingInput" [(ngModel)]="condition_selected.ico" placeholder="Icono de la Condición" type="text" />
+      <input cFormControl id="floatingInput" [(ngModel)]="propietario_selected.ico" placeholder="Icono de la Condición" type="text" />
       <label cLabel for="floatingInput">Icono de la Condición</label>
     </div>
-    <c-input-group class="mb-3">
-      <span cInputGroupText>
-        <i [class]="condition_selected.ico"></i>
-      </span>
-      <input disabled cFormControl id="autoSizingInputGroup" placeholder="Vista previa del Icono" [(ngModel)]="condition_selected.ico"/>
-    </c-input-group>
     <div [cFormFloating]="true" class="mb-3">
-      <input cFormControl id="floatingInput" [(ngModel)]="condition_selected.name" placeholder="Texto Corto de la Condición" type="text" />
-      <label cLabel for="floatingInput">Texto Corto de la Condición</label>
+      <input cFormControl id="floatingInput" [(ngModel)]="propietario_selected.name" placeholder="Nombre Completo del Propietario" type="text" />
+      <label cLabel for="floatingInput">Nombre Completo del Propietario</label>
     </div>
     <div [cFormFloating]="true" class="mb-3">
-      <textarea cFormControl id="floatingInput" [(ngModel)]="condition_selected.description" placeholder="Descripción de la Condición"></textarea>
-      <label cLabel for="floatingInput">Descripción de la Condición</label>
+      <textarea cFormControl id="floatingInput" [(ngModel)]="propietario_selected.description" placeholder="Descripción del Propietario"></textarea>
+      <label cLabel for="floatingInput">Descripción del Propietario</label>
     </div>
     <c-row class="g-3 mb-2">
       <c-button-toolbar aria-label="Toolbar with button groups" role="group">
@@ -63,25 +57,25 @@
     <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Icono</th>
-      <th scope="col">Texto Corto</th>
+      <th scope="col">Fotografía</th>
+      <th scope="col">Nombre Completo</th>
       <th scope="col">Descripción</th>
     </tr>
     </thead>
     <tbody>
-    @for (condition of condiciones_shown; track $index) {
-      <tr (click)="condition_selected = condition" [class]="{'row_selected': condition_selected == condition}">
+    @for (propietario of propietarios_shown; track $index) {
+      <tr (click)="propietario_selected = propietario" [class]="{'row_selected': propietario_selected == propietario}">
         <th scope="row">
-          @if (condition_selected == condition){
+          @if (propietario_selected == propietario){
             <i class="fa-regular fa-hand-point-right"></i>
           }
-          @if (condition_selected !== condition){
+          @if (propietario_selected !== propietario){
             {{$index + 1}}
           }
         </th>
-        <th><i [class]="condition.ico"></i></th>
-        <td>{{condition.name}}</td>
-        <td>{{condition.description}}</td>
+        <th></th>
+        <td>{{propietario.name}}</td>
+        <td>{{propietario.description}}</td>
       </tr>
     }
     </tbody>
