@@ -1,5 +1,5 @@
 <div class="w-[100vw] h-full bg-white relative font-airbnb">
-  <app-header [isChangeSearch]="isZoomOutSearchHeader"></app-header>
+  <app-header></app-header>
   <app-hero [visible_map]="isModalMapVisible" (map_is_close)="isModalMapVisible = false"></app-hero>
   <app-tab-bar (browse_on_map)="isModalMapVisible = $event"></app-tab-bar>
 </div>

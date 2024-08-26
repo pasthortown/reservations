@@ -1,23 +1,23 @@
-<header class="py-3 sticky top-0 z-50 bg-white">
+<header class="sticky top-0 z-50 bg-white pt-2">
   <div class="flex justify-between pr-5 2xl:pr-10 cursor-pointer">
     <img src="assets/logo_color.png" alt="logo_color" class="hidden md:block h-12 w-16" />
     <div class="hidden md:flex gap-4 items-center justify-end cursor-pointer">
       <span
-        class="text-sm font-semibold cursor-pointer px-3 py-2 rounded-3xl bg-transparent hover:bg-gray-200"
+        class="text-sm font-semibold cursor-pointer px-3 rounded-3xl bg-transparent hover:bg-gray-200"
         >Airbnb your home</span
       >
       <div
-        class="flex items-center justify-center cursor-pointer px-2 py-2 rounded-full bg-transparent hover:bg-gray-200"
+        class="flex items-center justify-center cursor-pointer px-2 rounded-full bg-transparent hover:bg-gray-200"
       >
         <img src="/img/earth.svg" class="w-4 h-4" />
       </div>
       <div
-        class="flex items-center gap-2 border py-1 px-2 rounded-3xl shadow-sm hover:shadow-gray-400"
+        class="flex items-center gap-2 border px-2 rounded-3xl shadow-sm hover:shadow-gray-400"
       >
         <img src="/img/menu-dropdown.svg" class="w-4 h-4" />
         <img src="/img/user.svg" class="w-8 h-8" />
       </div>
     </div>
   </div>
-  <app-search-header [isChangeSearch]="isChangeSearch"></app-search-header>
+  <app-search-header></app-search-header>
 </header>

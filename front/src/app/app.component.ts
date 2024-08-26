@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router';
 
 import { HeaderComponent } from './components/header/header.component';
 import { HeroComponent } from './components/hero/hero.component';
-import { SearchHeaderComponent } from './components/search-header/search-header.component';
 import { SlideMenuComponent } from './components/slide-menu/slide-menu.component';
 import { TabBarComponent } from './components/tab-bar/tab-bar.component';
 
@@ -13,7 +12,6 @@ import { TabBarComponent } from './components/tab-bar/tab-bar.component';
   imports: [
     RouterOutlet,
     SlideMenuComponent,
-    SearchHeaderComponent,
     HeaderComponent,
     HeroComponent,
     TabBarComponent
