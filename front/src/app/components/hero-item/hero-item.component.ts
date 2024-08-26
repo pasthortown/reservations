@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { HeroItem } from '../../models/models';
-
 @Component({
   selector: 'app-hero-item',
   standalone: true,
@@ -9,5 +7,9 @@ import { HeroItem } from '../../models/models';
   templateUrl: './hero-item.component.html',
 })
 export class HeroItemComponent {
-  @Input() heroItem!: HeroItem;
+  @Input('alojamiento') alojamiento!: any;
+
+  ngOnChanges() {
+    console.log(this.alojamiento);
+  }
 }

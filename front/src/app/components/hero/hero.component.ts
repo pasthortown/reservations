@@ -1,136 +1,139 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
-import { CategoryHero } from '../../models/models';
 import { HeroItemComponent } from '../hero-item/hero-item.component';
+import { CatalogService } from '../../services/catalog.service';
+import { FilesService } from '../../services/file.service';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [HeroItemComponent],
+  imports: [HeroItemComponent, HttpClientModule],
+  providers: [CatalogService, FilesService],
   templateUrl: './hero.component.html',
 })
-export class HeroComponent {
-  categoryItems: CategoryHero[] = [
-    {
-      categoryTitle: '',
-      children: [
-        {
-          img: '/img/train-x-mansion.webp',
-          title: 'Train at the X-Mansion',
-          hosted: 'Hosted by Jubilee',
-          status: 'đ961,757 per guest',
-        },
-        {
-          img: '/img/kevinhart.webp',
-          title: 'Go VIP with Kevin Hart',
-          hosted: 'Hosted by Kevin Hart',
-          status: 'Coming August 21',
-        },
-        {
-          img: '/img/doja.webp',
-          title: 'Join a living room session with Doja',
-          hosted: 'Hosted by Doja Cat',
-          status: 'Coming October',
-        },
-        {
-          img: '/img/purplerainhouse.webp',
-          title: "Stay in Prince's Purple Rain house",
-          hosted: 'Hosted by Wendy and Lisa',
-          status: 'Coming October',
-        },
-        {
-          img: '/img/janhvi.webp',
-          title: 'Live like Bollywood star Janhvi Kapoor',
-          hosted: 'Hosted by Janhvi Kapoor',
-          status: 'Sold out',
-        },
-      ],
+export class HeroComponent implements OnInit {
+  filter = '';
+  servicios: any[] = [];
+  condiciones: any[] = [];
+  propietarios: any[] = [];
+  alojamientos: any[] = [];
+  alojamientos_shown: any[] = [];
+  alojamiento_selected: any = {
+    nombre: '',
+    personas: 0,
+    metros: 0,
+    habitaciones: 0,
+    banos: 0,
+    desde_noche: 0,
+    desde_mes: 0,
+    descripcion: '',
+    ubication: {
+        lat: 0,
+        lng: 0
     },
-    {
-      categoryTitle: 'Past experiences',
-      children: [
-        {
-          img: '/img/olympicorsay.webp',
-          title: "Open the Olympic Games at Musée d'Orsay",
-          hosted: 'Hosted by Mathieu Lehanneur',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/orsay.webp',
-          title: "Wake up in the Musée d'Orsay",
-          hosted: 'Hosted by Mathieu Lehanneur',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/insideout.webp',
-          title: 'Make core memory with Inside out 2',
-          hosted: 'Hosted by Joy',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/supersuit.webp',
-          title: 'Design your Incredibles Supersuit',
-          hosted: 'Hosted by Edna Mode',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/feid.webp',
-          title: 'Go on tour with Feid',
-          hosted: 'Hosted by Feid',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/lame.webp',
-          title: 'Game with Khaby Lame',
-          hosted: 'Hosted by Khaby Lame',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/crash-x-mansion.webp',
-          title: 'Crash at the X-Mansion',
-          hosted: 'Hosted by Julbilee',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/ferrari.webp',
-          title: 'Spend the night in the Ferrari museum',
-          hosted: 'Hosted by Marc Genee',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/uphouse.webp',
-          title: 'Driff off in the Up house',
-          hosted: 'Hosted by Carl Ferdicksend',
-          status: 'Sold out',
-        },
-        {
-          img: '/img/swamp.webp',
-          title: "Shrek's swam",
-          hosted: 'Hosted by Shrek',
-          status: 'Sold out',
-        },
-      ],
-    },
-  ];
+    check_in: '',
+    check_out: '',
+    galery: [],
+    condiciones: [],
+    servicios: [],
+    images: [],
+    rate: 0,
+    comentarios: [],
+    hide: false,
+  };
 
-  @Output() scrollEvent = new EventEmitter<boolean>();
-  @Output() scrollEventHead = new EventEmitter<boolean>();
+  constructor(private catalogService: CatalogService, private fileService: FilesService) {}
 
-  lastScrollTop: number = 0;
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const st = window.scrollY;
+  ngOnInit(): void {
+    this.get_catalog();
+  }
 
-    //show/hide footer tab-bar
-    if (st > this.lastScrollTop) {
-      this.scrollEvent.emit(false);
-    } else {
-      this.scrollEvent.emit(true);
+  get_catalog() {
+    this.propietarios = [];
+    this.servicios = [];
+    this.condiciones=[];
+    this.alojamientos = [];
+    this.alojamiento_selected = {
+      nombre: '',
+      descripcion: '',
+      personas: 0,
+      metros: 0,
+      habitaciones: 0,
+      banos: 0,
+      desde_noche: 0,
+      desde_mes: 0,
+      ubication: {
+          lat: 0,
+          lng: 0
+      },
+      check_in: '',
+      check_out: '',
+      galery: [],
+      condiciones: [],
+      servicios: [],
+      images: [],
+      rate: 0,
+      comentarios: [],
+      hide: false,
+    };
+    let output_model = {
+      nombre: true,
+      personas: true,
+      metros: true,
+      habitaciones: true,
+      banos: true,
+      desde_noche: true,
+      desde_mes: true,
+      descripcion: true,
+      ubication: true,
+      check_in: true,
+      check_out: true,
+      galery: true,
+      condiciones: true,
+      servicios: true,
+      rate: true,
+      comentarios: true,
+      hide: true,
     }
-    this.lastScrollTop = st <= 0 ? 0 : st;
-    //change style header
-    if (st >= 100) this.scrollEventHead.emit(true);
-    else this.scrollEventHead.emit(false);
+    this.catalogService.get_items('propietarios', { name: true }).then( r => {
+      this.propietarios = r.response;
+    }).catch( e => console.log(e) );
+    this.catalogService.get_items('servicios', { name: true, ico: true, description: true }).then( r => {
+      this.servicios = r.response;
+    }).catch( e => console.log(e) );
+    this.catalogService.get_items('condiciones', { name: true, ico: true, description: true  }).then( r => {
+      this.condiciones = r.response;
+    }).catch( e => console.log(e) );
+    this.catalogService.get_items('alojamientos', output_model).then( r => {
+      this.alojamientos = r.response;
+      this.alojamientos.forEach((alojamiento: any) => {
+        alojamiento.images = [];
+        alojamiento.rate=0;
+        if (alojamiento.galery) {
+          if(alojamiento.galery.length > 0) {
+            alojamiento.galery.forEach((element: any) => {
+              this.fileService.get_file('fotografias_alojamientos', element).then(r => {
+                alojamiento.images.push(r.response);
+                if (r.response.favorite) {
+                  alojamiento.portada = r.response;
+                }
+              }).catch( e => console.log(e) );
+            });
+          }
+        }
+      });
+      this.filterData();
+    }).catch( e => console.log(e) );
+  }
+
+  filterData() {
+    const lowerCaseFilter = this.filter.toLowerCase();
+    this.alojamientos_shown = this.alojamientos.filter(alojamiento =>
+      Object.values(alojamiento).some((value: any) =>
+        value.toString().toLowerCase().includes(lowerCaseFilter)
+      )
+    );
   }
 }
