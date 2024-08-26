@@ -360,9 +360,11 @@ export class AlojamientosComponent implements OnInit{
       rate: this.is_new ? 0 : this.alojamiento_selected.rate,
       comentarios: this.is_new ? [] : this.alojamiento_selected.comentarios
     };
-    this.alojamiento_selected.galery.forEach((element: any) => {
-      this.fileService.delete_file('fotografias_alojamientos', element);
-    });
+    if (this.alojamiento_selected.galery) {
+      this.alojamiento_selected.galery.forEach((element: any) => {
+        this.fileService.delete_file('fotografias_alojamientos', element);
+      });
+    }
     const galeriaFiltrada = this.galeria.filter((obj, index, self) =>
       index === self.findIndex((t) => t.name === obj.name)
     );
