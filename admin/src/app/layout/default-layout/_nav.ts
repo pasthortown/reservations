@@ -41,5 +41,10 @@ export const navItems: INavData[] = [
         icon: 'nav-icon-bullet'
       }
     ]
-  }
+  },
+  {
+    name: 'Usuarios',
+    url: '/users',
+    iconComponent: { name: 'cil-user' },
+  },
 ];
