@@ -1,0 +1,11 @@
+.wallpaper {
+  margin: 0;
+  padding: 0;
+  background-image: url('./../../../../assets/city.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1000;
+}
