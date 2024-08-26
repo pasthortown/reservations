@@ -49,7 +49,7 @@
               <td><small>{{ item.name }}</small></td>
               @if(accept == 'image/*') {
                 <td>
-                  <img class="rounded mb-2" [src]="'data:' + item.type + ';base64,' + item.file_base64" style="max-height:400px; max-width:70%"/>
+                  <img class="rounded mb-2" [src]="'data:' + item.type + ';base64,' + item.file_base64" style="max-height:200px; max-width:35%"/>
                 </td>
               }
               @if(item.size > (max_file_size*1024*1024)) {

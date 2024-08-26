@@ -3,6 +3,11 @@
     <c-button-toolbar aria-label="Toolbar with button groups" role="group">
       <c-button-group aria-label="Basic example" class="me-2" role="group">
         <button (click)="new_item()" [cModalToggle]="modalXl.id" cButton color="primary" title="Nuevo"><svg cIcon [name]="'cilPlus'" [title]="'cilPlus'" size="1xl"></svg></button>
+      </c-button-group>
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button [cModalToggle]="modalXlComments.id" [disabled]="alojamiento_selected.nombre == ''" cButton color="success" title="Comentarios"><svg cIcon [name]="'cilStar'" [title]="'cilStar'" size="1xl"></svg></button>
+      </c-button-group>
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
         <button (click)="is_new = false" [cModalToggle]="modalXl.id" [disabled]="alojamiento_selected.nombre == ''" cButton color="warning" title="Editar"><svg cIcon [name]="'cilPen'" [title]="'cilPen'" size="1xl"></svg></button>
         <button (click)="delete_item(alojamiento_selected, 'alojamientos')" [disabled]="alojamiento_selected.nombre == ''" cButton color="danger" title="Eliminar"><svg cIcon [name]="'cilTrash'" [title]="'cilTrash'" size="1xl"></svg></button>
       </c-button-group>
@@ -17,6 +22,34 @@
     </c-input-group>
   </c-col>
 </c-row>
+
+<c-modal #modalXlComments id="modalXlComments" size="xl" [visible]="visible_comments" (visibleChange)="handleChangeComments($event)">
+  <c-modal-header>
+    <h5 cModalTitle>{{alojamiento_selected.nombre}}</h5>&nbsp;<app-stars [rate]="alojamiento_selected.rate"></app-stars>
+    <button cButtonClose (click)="cancelar()"></button>
+  </c-modal-header>
+  <c-modal-body>
+      <c-row class="mb-2">
+        @for(comentario of alojamiento_selected.comentarios; track $index) {
+          <c-col [sm]="12">
+            <c-card class="mb-2">
+              <c-card-header>
+                <h6>{{comentario.remitente}}</h6>
+              </c-card-header>
+              <c-card-body>
+                <p style="text-align: justify; width: 100%;">
+                  {{comentario.text}}
+                </p>
+              </c-card-body>
+              <c-card-footer style="text-align: right;">
+                <small style="width: 100%;">{{comentario.date}}</small>
+              </c-card-footer>
+            </c-card>
+          </c-col>
+        }
+      </c-row>
+  </c-modal-body>
+</c-modal>
 
 <c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
   <c-modal-header>
@@ -52,7 +85,7 @@
       <c-col [sm]="6">
         <div [cFormFloating]="true" class="mb-3">
           <select cSelect #select_propietario (change)="do_select_propietario(select_propietario.value)">
-            <option disabled selected>Seleccione al propietario del inmueble...</option>
+            <option disabled selected>Propietario del inmueble...</option>
             @for(propietario of propietarios; track $index) {
               <option [value]="propietario.item_id">{{propietario.name}}</option>
             }
@@ -153,9 +186,21 @@
       <c-badge color="danger" (click)="delete_condition(condition.item_id)"><i class="fas fa-trash"></i></c-badge>&nbsp;&nbsp;&nbsp;<i [class]="condition.ico"></i> {{condition.name}}
     </c-col>
     }
+    <c-row class="mb-2">
+      <c-col [sm]="12">
+        <app-map
+          [width]="'100%'"
+          [height]="'400px'"
+          [seleccionable]="true"
+          [markers]="[{place: alojamiento_selected, position: alojamiento_selected.ubication}]"
+          [mapCenter]="alojamiento_selected.ubication"
+          (coords_selected)="update_map_cords($event)">
+        </app-map>
+      </c-col>
+    </c-row>
     <c-row class="g-3 mb-2">
-      <c-button-toolbar aria-label="Toolbar with button groups" role="group">
-        <c-button-group aria-label="Basic example" class="m-auto" role="group">
+      <c-button-toolbar role="group">
+        <c-button-group class="m-auto" role="group">
           <button (click)="save()" cButton color="primary" title="Guardar"><svg cIcon [name]="'cilSave'" [title]="'cilSave'" size="1xl"></svg> Guardar</button>
           <button (click)="cancelar()" cButton color="danger" title="Cancelar"><svg cIcon [name]="'cilX'" [title]="'cilX'" size="1xl"></svg> Cancelar</button>
         </c-button-group>

@@ -97,12 +97,18 @@ export class AlojamientosComponent implements OnInit{
     comentarios: []
   };
   public visible = false;
+  public visible_map = false;
+  public visible_comments = false;
   is_new = false;
 
   constructor(private catalogService: CatalogService, private fileService: FilesService) {}
 
   ngOnInit(): void {
     this.get_catalog();
+  }
+
+  update_map_cords(data: any) {
+    this.alojamiento_selected.ubication = data;
   }
 
   get_catalog() {
@@ -190,6 +196,14 @@ export class AlojamientosComponent implements OnInit{
   cancelar() {
     this.visible = !this.visible;
     this.get_catalog();
+  }
+
+  handleChangeComments(event: any) {
+    this.visible_comments = event;
+  }
+
+  handleChangeMap(event: any) {
+    this.visible_map = event;
   }
 
   handleChange(event: any) {
@@ -338,12 +352,19 @@ export class AlojamientosComponent implements OnInit{
     this.alojamiento_selected.galery.forEach((element: any) => {
       this.fileService.delete_file('fotografias_alojamientos', element);
     });
-    this.fileService.upload_files('fotografias_alojamientos', this.galeria).then( r_imagenes => {
+    const galeriaFiltrada = this.galeria.filter((obj, index, self) =>
+      index === self.findIndex((t) => t.name === obj.name)
+    );
+    this.fileService.upload_files('fotografias_alojamientos', galeriaFiltrada).then( r_imagenes => {
       if (r_imagenes.status == 200) {
         alojamiento_to_save.galery = [];
-        r_imagenes.response.forEach((element: any) => {
-          alojamiento_to_save.galery.push(element.file_id)
-        });
+        for (let i = 0; i < galeriaFiltrada.length; i++) {
+          r_imagenes.response.forEach((element: any) => {
+            if (galeriaFiltrada[i].name == element.name) {
+              alojamiento_to_save.galery.push(element.file_id)
+            }
+          });
+        }
         if (this.is_new) {
           this.upload_item(alojamiento_to_save, 'alojamientos');
         } else {
