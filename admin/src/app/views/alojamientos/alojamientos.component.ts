@@ -68,6 +68,7 @@ export class AlojamientosComponent implements OnInit{
   servicios: any[] = [];
   condiciones: any[] = [];
   propietarios: any[] = [];
+  zonas: any[] = [];
   selected_service: any = null;
   selected_condition: any = null;
   selected_propietario: any = null;
@@ -83,6 +84,7 @@ export class AlojamientosComponent implements OnInit{
     desde_noche: 0,
     desde_mes: 0,
     descripcion: '',
+    zona: '',
     ubication: {
         lat: 0,
         lng: 0
@@ -127,6 +129,7 @@ export class AlojamientosComponent implements OnInit{
       banos: 0,
       desde_noche: 0,
       desde_mes: 0,
+      zona: '',
       ubication: {
           lat: 0,
           lng: 0
@@ -148,6 +151,7 @@ export class AlojamientosComponent implements OnInit{
       habitaciones: true,
       banos: true,
       desde_noche: true,
+      zona: true,
       desde_mes: true,
       descripcion: true,
       ubication: true,
@@ -160,6 +164,9 @@ export class AlojamientosComponent implements OnInit{
       comentarios: true,
       hide: true,
     }
+    this.catalogService.get_items('zonas', { name: true }).then( r => {
+      this.zonas = r.response;
+    }).catch( e => console.log(e) );
     this.catalogService.get_items('propietarios', { name: true }).then( r => {
       this.propietarios = r.response;
     }).catch( e => console.log(e) );
@@ -229,6 +236,7 @@ export class AlojamientosComponent implements OnInit{
       desde_noche: 0,
       desde_mes: 0,
       descripcion: '',
+      zona: '',
       ubication: {
           lat: 0,
           lng: 0
@@ -351,6 +359,7 @@ export class AlojamientosComponent implements OnInit{
       desde_noche: this.alojamiento_selected.desde_noche,
       desde_mes: this.alojamiento_selected.desde_mes,
       descripcion: this.alojamiento_selected.descripcion,
+      zona: this.alojamiento_selected.zona,
       ubication: this.alojamiento_selected.ubication,
       check_in: this.alojamiento_selected.check_in,
       check_out: this.alojamiento_selected.check_out,

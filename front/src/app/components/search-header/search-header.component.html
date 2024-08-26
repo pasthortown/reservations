@@ -4,28 +4,60 @@
 >
   <button cButton color="dark" title="Buscar" style="border-radius: 50%; margin: 2px;"><i class="fas fa-search"></i></button>
 
-  <div [cFormFloating]="true" class="my-3">
-    <select cSelect #select_precio>
-      <option disabled selected>Precio</option>
-      <option>Precio</option>
-      <option>Precio</option>
+  <div class="select-container">
+    <label for="select-option">Zona</label>
+    <select [(ngModel)]="filter.zona" id="select-option" [style.width]="'70px'" (change)="filterChange('sm')">
+      <option value="" selected>Todas</option>
+      @for(zona of zonas; track $index) {
+        <option [value]="zona.name">{{zona.name}}</option>
+      }
     </select>
-    <label cLabel for="floatingInput">Propietario</label>
+  </div>
+  <div class="select-container">
+    <label for="select-option">Precio</label>
+    <select [(ngModel)]="filter.precio" id="select-option" [style.width]="'70px'" (change)="filterChange('sm')">
+      <option value="" selected>Todos</option>
+      @for(precio of precios; track $index) {
+        <option [value]="precio.name">{{precio.name}}</option>
+      }
+    </select>
+  </div>
+  <div class="input-container">
+    <label for="input-text">Personas</label>
+    <input [(ngModel)]="filter.personas" type="number" id="input-text" placeholder="Personas" [style.width]="'100px'" (input)="filterChange('sm')">
   </div>
 </div>
 <!-- tablet -->
 <div class="hidden flex-col transition-search-head md:flex">
   <div
-    class="search-header flex mb-5 bg-white rounded-full border shadow-lg px-5 mx-auto max-w-[80%] justify-between items-center gap-5 xl:w-[800px]"
+    class="search-header flex mb-2 bg-white rounded-full border shadow-lg px-4 mx-auto max-w-[80%] justify-between items-center  xl:w-[800px]"
   >
-  <div [cFormFloating]="true" class="my-3">
-    <select cSelect #select_precio>
-      <option disabled selected>Precio</option>
-      <option>Precio</option>
-      <option>Precio</option>
+  <div class="select-container">
+    <label for="select-option">Zona</label>
+    <select [(ngModel)]="filter.zona" id="select-option" (change)="filterChange('lg')">
+      <option value="" selected>Todas</option>
+      @for(zona of zonas; track $index) {
+        <option [value]="zona.name">{{zona.name}}</option>
+      }
     </select>
-    <label cLabel for="floatingInput">Propietario</label>
   </div>
-  <button cButton color="dark" title="Buscar" style="border-radius: 50%; margin: 2px;"><i class="fas fa-search"></i></button>
+  <div class="select-container">
+    <label for="select-option">Precio</label>
+    <select [(ngModel)]="filter.precio"  id="select-option" (change)="filterChange('lg')">
+      <option value="" selected>Todos</option>
+      @for(precio of precios; track $index) {
+        <option [value]="precio.name">{{precio.name}}</option>
+      }
+    </select>
+  </div>
+  <div class="input-container">
+    <label for="input-text">Personas</label>
+    <input [(ngModel)]="filter.personas" type="number" id="input-text" placeholder="Personas" (input)="filterChange('lg')">
+  </div>
+  <div class="input-container">
+    <label for="input-text">Habitaciones</label>
+    <input [(ngModel)]="filter.habitaciones" type="number" id="input-text" placeholder="Habitaciones" (input)="filterChange('lg')">
+  </div>
+  <button cButton color="dark" title="Buscar" style="border-radius: 50%; margin: 2px;" (click)="filterChange('lg')"><i class="fas fa-search"></i></button>
   </div>
 </div>

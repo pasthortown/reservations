@@ -134,13 +134,24 @@
           <label cLabel for="floatingInput">Costo por Mes</label>
         </div>
       </c-col>
-      <c-col [sm]="6">
+      <c-col [sm]="4">
+        <div [cFormFloating]="true" class="mb-3">
+          <select cSelect #select_zona [(ngModel)]="alojamiento_selected.zona">
+            <option disabled selected value="">Zona del inmueble...</option>
+            @for(zona of zonas; track $index) {
+              <option [value]="zona.name">{{zona.name}}</option>
+            }
+          </select>
+          <label cLabel for="floatingInput">Zona</label>
+        </div>
+      </c-col>
+      <c-col [sm]="4">
         <div [cFormFloating]="true" class="mb-3">
           <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.check_in" placeholder="Horario Check-In" type="time"/>
           <label cLabel for="floatingInput">Horario Check-In</label>
         </div>
       </c-col>
-      <c-col [sm]="6">
+      <c-col [sm]="4">
         <div [cFormFloating]="true" class="mb-3">
           <input cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.check_out" placeholder="Horario Check-Out" type="time"/>
           <label cLabel for="floatingInput">Horario Check-Out</label>

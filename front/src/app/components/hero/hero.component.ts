@@ -58,9 +58,20 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './hero.component.html',
 })
 export class HeroComponent implements OnInit {
+  @Input('precio')  precio: string = '';
+  @Input('zona') zona: string = '';
+  @Input('personas') personas: number = 0;
+  @Input('habitaciones') habitaciones: number = 0;
+
+  filter: any = {
+    precio: '',
+    zona: '',
+    personas: 0,
+    habitaciones: 0
+  }
+
   @Input('visible_map') visible_map: boolean = false;
   @Output('map_is_close') map_is_close: EventEmitter<any> = new EventEmitter();
-  filter = '';
   markers: any[] = [];
   servicios: any[] = [];
   condiciones: any[] = [];
@@ -74,6 +85,7 @@ export class HeroComponent implements OnInit {
     metros: 0,
     habitaciones: 0,
     banos: 0,
+    zona: '',
     desde_noche: 0,
     desde_mes: 0,
     descripcion: '',
@@ -113,6 +125,7 @@ export class HeroComponent implements OnInit {
       banos: 0,
       desde_noche: 0,
       desde_mes: 0,
+      zona: '',
       ubication: {
           lat: 0,
           lng: 0
@@ -133,6 +146,7 @@ export class HeroComponent implements OnInit {
       metros: true,
       habitaciones: true,
       banos: true,
+      zona: true,
       desde_noche: true,
       desde_mes: true,
       descripcion: true,
@@ -190,11 +204,19 @@ export class HeroComponent implements OnInit {
   }
 
   filterData() {
-    const lowerCaseFilter = this.filter.toLowerCase();
+    const { precio, zona, personas, habitaciones } = this.filter;
+    const [precioMin, precioMax] = precio
+      ? precio.split('-').map((value: string) => Number.parseInt(value))
+      : [0, Infinity];
     this.alojamientos_shown = this.alojamientos.filter(alojamiento =>
-      Object.values(alojamiento).some((value: any) =>
-        value.toString().toLowerCase().includes(lowerCaseFilter)
-      )
+      (precio ?
+        (alojamiento.desde_noche >= precioMin && alojamiento.desde_noche <= precioMax) ||
+        (alojamiento.desde_mes >= precioMin && alojamiento.desde_mes <= precioMax)
+        : true
+      ) &&
+      (zona ? alojamiento.zona.toString().toLowerCase().includes(zona.toLowerCase()) : true) &&
+      (personas > 0 ? alojamiento.personas === personas : true) &&
+      (habitaciones > 0 ? alojamiento.habitaciones === habitaciones : true)
     );
   }
 
@@ -212,6 +234,7 @@ export class HeroComponent implements OnInit {
   handleChange(event: any) {
     this.visible = event;
   }
+
   marker_selected(place: any) {
     this.alojamientos.forEach((element: any) => {
       if (place.item_id == element.item_id) {
@@ -220,5 +243,15 @@ export class HeroComponent implements OnInit {
         this.visible = true;
       }
     });
+  }
+
+  ngOnChanges() {
+    this.filter = {
+      precio: this.precio,
+      zona: this.zona,
+      personas: this.personas,
+      habitaciones: this.habitaciones
+    };
+    this.filterData();
   }
 }

@@ -19,15 +19,26 @@ import { TabBarComponent } from './components/tab-bar/tab-bar.component';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'airbnb-template';
+  title = 'Luxury Reservations';
   isTabBarVisible = true;
   isZoomOutSearchHeader = false;
   isModalMapVisible = false;
+  filter: any = {
+    precio: '',
+    zona: '',
+    personas: 0,
+    habitaciones: 0
+  }
 
   handleScrollEvent(isVisible: boolean) {
     this.isTabBarVisible = isVisible;
   }
+
   handleScrollEventHead(isChange: boolean) {
     this.isZoomOutSearchHeader = isChange;
+  }
+
+  filterChange(event: any) {
+    this.filter = event;
   }
 }

@@ -1,5 +1,5 @@
 <div class="w-[100vw] h-full bg-white relative font-airbnb">
-  <app-header></app-header>
-  <app-hero [visible_map]="isModalMapVisible" (map_is_close)="isModalMapVisible = false"></app-hero>
+  <app-header (filter_change)="filterChange($event)"></app-header>
+  <app-hero [visible_map]="isModalMapVisible" (map_is_close)="isModalMapVisible = false" [habitaciones]="filter.habitaciones" [zona]="filter.zona" [precio]="filter.precio" [personas]="filter.personas"></app-hero>
   <app-tab-bar (browse_on_map)="isModalMapVisible = $event"></app-tab-bar>
 </div>

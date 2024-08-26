@@ -1,9 +1,18 @@
 <div class="w-full h-full">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-    @for (item of alojamientos_shown; track $index) {
-      <app-hero-item [alojamiento]="item"></app-hero-item>
-    }
-  </div>
+  @if(alojamientos_shown.length == 0) {
+    <c-row class="mt-5">
+      <c-col>
+        <p style="width: 100%; text-align: center;">No se encontraron resultados</p>
+      </c-col>
+    </c-row>
+  }
+  @if(alojamientos_shown.length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+        @for (item of alojamientos_shown; track $index) {
+          <app-hero-item [alojamiento]="item" (click)="visible = true; alojamiento_selected = item"></app-hero-item>
+        }
+    </div>
+  }
 </div>
 <c-modal #modalXlMap id="modalXlMap" size="xl" [fullscreen]="true" [visible]="visible_map" (visibleChange)="handleChangeMap($event)">
   <c-modal-header>
