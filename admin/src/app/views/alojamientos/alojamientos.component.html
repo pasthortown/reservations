@@ -166,7 +166,7 @@
       <c-badge color="danger" (click)="delete_service(service.item_id)"><i class="fas fa-trash"></i></c-badge>&nbsp;&nbsp;&nbsp;<i [class]="service.ico"></i> {{service.name}}
     </c-col>
     }
-    <c-col [sm]="12" class="mt-2">
+    <c-col [sm]="12" class="mt-2, mb-2">
       <h5 cLabel><b>Condiciones:</b></h5>
       <c-input-group class="mb-3">
         <button cButton color="primary" cInputGroupText for="inputGroupSelect01" (click)="add_condition(selected_condition)">
@@ -200,7 +200,7 @@
     <c-row class="g-3 mb-2">
       <c-button-toolbar role="group">
         <c-button-group class="m-auto" role="group">
-          <button [disabled]="!validated()" (click)="save()" cButton color="primary" title="Guardar"><svg cIcon [name]="'cilSave'" [title]="'cilSave'" size="1xl"></svg> Guardar</button>
+          <button (click)="save()" cButton color="primary" title="Guardar"><svg cIcon [name]="'cilSave'" [title]="'cilSave'" size="1xl"></svg> Guardar</button>
           <button (click)="cancelar()" cButton color="danger" title="Cancelar"><svg cIcon [name]="'cilX'" [title]="'cilX'" size="1xl"></svg> Cancelar</button>
         </c-button-group>
       </c-button-toolbar>
@@ -224,7 +224,21 @@
             }
           }
           <h5>{{alojamiento.nombre}}</h5>
-          <app-stars [rate]="alojamiento.rate"></app-stars>
+          <c-row>
+            <c-col [sm]="10">
+              <app-stars [rate]="alojamiento.rate"></app-stars>
+            </c-col>
+            <c-col [sm]="2" style="text-align: right;">
+              <c-badge color="dark" (click)="hide_alojamiento(alojamiento)">
+                @if(alojamiento.hide) {
+                  <i class="fas fa-eye-slash"></i>
+                }
+                @if(!alojamiento.hide) {
+                  <i class="fas fa-eye"></i>
+                }
+              </c-badge>
+            </c-col>
+          </c-row>
         </c-card-header>
         <c-card-body>
           <table cTable small>

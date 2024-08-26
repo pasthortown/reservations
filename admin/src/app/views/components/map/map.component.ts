@@ -21,6 +21,10 @@ export class MapComponent {
   @Input('mapCenter') mapCenter: google.maps.LatLngLiteral = { lat: 40.730610, lng: -73.935242 };
 
   mapOptions: google.maps.MapOptions = {
+    streetViewControl: true,
+    zoomControl: true,
+    mapTypeControl: false,
+    fullscreenControl: true,
     scrollwheel: false
   };
 

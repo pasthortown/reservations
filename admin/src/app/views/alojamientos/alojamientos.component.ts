@@ -94,11 +94,13 @@ export class AlojamientosComponent implements OnInit{
     servicios: [],
     images: [],
     rate: 0,
-    comentarios: []
+    comentarios: [],
+    hide: false,
   };
   public visible = false;
   public visible_map = false;
   public visible_comments = false;
+  files_validated = false;
   is_new = false;
 
   constructor(private catalogService: CatalogService, private fileService: FilesService) {}
@@ -136,7 +138,8 @@ export class AlojamientosComponent implements OnInit{
       servicios: [],
       images: [],
       rate: 0,
-      comentarios: []
+      comentarios: [],
+      hide: false,
     };
     let output_model = {
       nombre: true,
@@ -154,7 +157,8 @@ export class AlojamientosComponent implements OnInit{
       condiciones: true,
       servicios: true,
       rate: true,
-      comentarios: true
+      comentarios: true,
+      hide: true,
     }
     this.catalogService.get_items('propietarios', { name: true }).then( r => {
       this.propietarios = r.response;
@@ -233,7 +237,8 @@ export class AlojamientosComponent implements OnInit{
       servicios: [],
       images: [],
       rate: 0,
-      comentarios: []
+      comentarios: [],
+      hide: false
     };
     this.is_new = true;
   }
@@ -260,6 +265,7 @@ export class AlojamientosComponent implements OnInit{
   }
 
   cargar_galeria(event: any) {
+    this.files_validated = event.validated;
     if (event.validated) {
       this.galeria = event.files;
     }
@@ -378,7 +384,8 @@ export class AlojamientosComponent implements OnInit{
     this.visible = !this.visible;
   }
 
-  validated(): boolean {
-    return false;
+  hide_alojamiento(alojamiento: any) {
+    alojamiento.hide = !alojamiento.hide;
+    this.update_item(alojamiento, 'alojamientos');
   }
 }
