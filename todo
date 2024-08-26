@@ -1,7 +1,8 @@
 refactorizar el front
-construir el codigo de reservas
+construir el codigo de reservas (crear reserva en front, recibir notificacion en back, recibir mail de reserva)
 construir lo referente a validaciones y filtros
 integrar el boton de pago
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
 subir el sistema a aks
+auth
 reportes
