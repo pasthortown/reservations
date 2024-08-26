@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FooterComponent } from './../footer/footer.component';
 
 @Component({
   selector: 'app-tab-bar',
   standalone: true,
-  imports: [],
+  imports: [FooterComponent],
   templateUrl: './tab-bar.component.html',
 })
 export class TabBarComponent {

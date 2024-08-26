@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { SearchHeaderComponent } from './components/search-header/search-header.component';
@@ -17,8 +16,7 @@ import { TabBarComponent } from './components/tab-bar/tab-bar.component';
     SearchHeaderComponent,
     HeaderComponent,
     HeroComponent,
-    TabBarComponent,
-    FooterComponent,
+    TabBarComponent
   ],
   templateUrl: './app.component.html',
 })

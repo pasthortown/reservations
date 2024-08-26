@@ -1,6 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
 import { HeroItemComponent } from '../hero-item/hero-item.component';
 import { CatalogService } from '../../services/catalog.service';
 import { FilesService } from '../../services/file.service';
