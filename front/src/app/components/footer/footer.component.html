@@ -1,10 +1,5 @@
-<div class="bg-gray-200 py-4">
-  <div class="border-b-[1px] py-7">
-    <h1 class="text-xl px-5 md:px-7">Inspiration for future getaways</h1>
-    <app-slide-menu
-      [menuItems]="menuItems"
-      classForMenu="text-sm"
-    ></app-slide-menu>
+<div class="bg-gray-200 py-2">
+  <div class="border-b-[1px]">
     <div class="px-5 mt-10 grid grid-cols-2 gap-y-3 md:px-7 lg:grid-cols-3 xl:grid-cols-4" style="grid-template-columns: 200px 400px auto auto;">
       <img src="assets/logo_color.png" alt="logo_claro" style="max-width: 150px;">
       @for (popular of popularItems; track $index) {
