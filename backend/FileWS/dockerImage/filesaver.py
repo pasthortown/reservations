@@ -68,48 +68,38 @@ def upload_files(folder, files):
     toReturn = []
     for file in files:
         file_id = str(uuid.uuid4())
-        collection.insert_one({
-            "file_id": file_id,
-            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "name": file['name'],
-            "type": file['type'],
-            "size": file['size'],
-            "file_base64": file['file_base64']})
-        toReturn.append(
-            {"file_id": file_id, "name": file['name'], 'type': file['type']}
-        )
-    return {'response':toReturn, 'status':200}
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        file['file_id'] = file_id
+        file['timestamp'] = timestamp
+        collection.insert_one(file)
+        toReturn.append({"file_id": file_id, "name": file.get('name'), 'type': file.get('type')})
+    
+    return {'response': toReturn, 'status': 200}
 
 def get_file(folder, file_id):
     collection = db[folder]
-    files = collection.find({"file_id":file_id},{
-        "file_id": True, 
-        "timestamp": True,
-        "name": True, 
-        "type": True, 
-        "size": True, 
-        "file_base64": True,
-        "_id": False})
+    files = collection.find({"file_id": file_id})
     files_to_return = json.loads(json_util.dumps(files))
-    if (len(files_to_return)>0):
+    for file in files_to_return:
+        if '_id' in file:
+            del file['_id']
+    if files_to_return:
         toReturn = files_to_return[0]
         status = 200
     else:
         toReturn = 'Archivo no encontrado'
         status = 500
-    return {'response':toReturn, 'status':status}
+    return {'response': toReturn, 'status': status}
 
 def get_files(folder):
     collection = db[folder]
-    files = collection.find({}, {
-        "file_id": True, 
-        "timestamp": True,
-        "name": True, 
-        "type": True, 
-        "size": True, 
-        "_id": False})
+    files = collection.find({})
     files_to_return = json.loads(json_util.dumps(files))
-    return {'response':files_to_return, 'status':200}
+    for file in files_to_return:
+        if '_id' in file:
+            del file['_id']
+    return {'response': files_to_return, 'status': 200}
+
 
 def update_file(catalog, file_id, file):
     collection = db[catalog]

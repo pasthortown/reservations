@@ -179,6 +179,9 @@ export class AlojamientosComponent implements OnInit{
             alojamiento.galery.forEach((element: any) => {
               this.fileService.get_file('fotografias_alojamientos', element).then(r => {
                 alojamiento.images.push(r.response);
+                if (r.response.favorite) {
+                  alojamiento.portada = r.response;
+                }
               }).catch( e => console.log(e) );
             });
           }

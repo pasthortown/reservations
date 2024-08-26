@@ -44,6 +44,7 @@
           </tr>
       </thead>
       <tbody class="upload-name-style">
+        @if(accept !== 'image/*,video/*') {
           @for(item of files; track $index) {
             <tr>
               <td><small>{{ item.name }}</small></td>
@@ -67,6 +68,53 @@
               </td>
           </tr>
           }
+        }
+        @if(accept == 'image/*,video/*') {
+          <tr>
+            <td>
+              <div class="row">
+                @for(item of files; track $index) {
+                  <div class="col-2">
+                    <div class="row">
+                      @if(item.type.startsWith('image')) {
+                        <img class="rounded m-2" [src]="'data:' + item.type + ';base64,' + item.file_base64" style="height: 100px; width: 90%;"/>
+                      }
+                      @if(!item.type.startsWith('image')) {
+                        <video style="height:100px; max-width: 90%;" class="d-block w-100 m-2" controls autoplay muted loop>
+                          <source [src]="'data:' + item.type + ';base64,' + item.file_base64" [type]="item.type">
+                        </video>
+                      }
+                    </div>
+                    <div class="row">
+                      <div class="col-12" style="text-align: center;">
+                        <div class="btn-group me-2" role="group">
+                          @if(item.favorite) {
+                            <button type="button" class="btn btn-sm btn-success" title="Establecer como Favorita" [disabled]="disabled" (click)="set_favorite(item)">
+                              <i class="fas fa-star"></i>
+                            </button>
+                          }
+                          @if(!item.favorite) {
+                            <button type="button" class="btn btn-sm btn-outline-success" title="Establecer como Favorita" [disabled]="disabled" (click)="set_favorite(item)">
+                              <i class="fas fa-star"></i>
+                            </button>
+                          }
+                        </div>
+                        <div class="btn-group" role="group">
+                          <button type="button" class="btn btn-sm btn-info" title="Descargar" (click)="download(item)">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button type="button" class="btn btn-sm btn-danger" title="Eliminar" [disabled]="disabled" (click)="delete_file(item)">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>

@@ -56,6 +56,7 @@ export class FileDropComponent {
                     name: file.name,
                     type: file.type,
                     size: file.size,
+                    favorite: false,
                     file_base64: reader.result.toString().split(',')[1],
                   };
                   if (file.size > (this.max_file_size * 1024 * 1024)) {
@@ -69,6 +70,7 @@ export class FileDropComponent {
                   name: file.name,
                   type: file.type,
                   size: file.size,
+                  favorite: false,
                   file_base64: reader.result.toString().split(',')[1],
                 };
                 if (file.size > (this.max_file_size * 1024 * 1024)) {
@@ -113,5 +115,15 @@ export class FileDropComponent {
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: item.type});
     this.fileServerService.save(blob, item.name);
+  }
+
+  set_favorite(item: any) {
+    this.files.forEach((element: any) => {
+      if (element !== item) {
+        element.favorite = false;
+      } else {
+        element.favorite = true;
+      }
+    });
   }
 }
