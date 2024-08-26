@@ -2,16 +2,24 @@
 <div
   class="flex items-center justify-start max-w-96 mx-auto rounded-[50px] border px-3 shadow-lg gap-3 md:hidden"
 >
-<button cButton color="dark" title="Buscar" style="border-radius: 50%; margin: 2px;"><i class="fas fa-search"></i></button>
+  <button cButton color="dark" title="Buscar" style="border-radius: 50%; margin: 2px;"><i class="fas fa-search"></i></button>
 
+  <div [cFormFloating]="true" class="my-3">
+    <select cSelect #select_precio>
+      <option disabled selected>Precio</option>
+      <option>Precio</option>
+      <option>Precio</option>
+    </select>
+    <label cLabel for="floatingInput">Propietario</label>
+  </div>
 </div>
 <!-- tablet -->
 <div class="hidden flex-col transition-search-head md:flex">
   <div
     class="search-header flex mb-5 bg-white rounded-full border shadow-lg px-5 mx-auto max-w-[80%] justify-between items-center gap-5 xl:w-[800px]"
   >
-  <div [cFormFloating]="true" class="mb-3">
-    <select cSelect #select_precio class="mt-3">
+  <div [cFormFloating]="true" class="my-3">
+    <select cSelect #select_precio>
       <option disabled selected>Precio</option>
       <option>Precio</option>
       <option>Precio</option>
