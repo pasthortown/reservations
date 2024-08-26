@@ -213,13 +213,13 @@
     <c-col [lg]="4">
       <c-card class="mb-4" (click)="alojamiento_selected = alojamiento; galeria = alojamiento.images" [class]="{'card_selected': alojamiento_selected == alojamiento}">
         <c-card-header>
-          @if(alojamiento.images.length > 0) {
-            @if(alojamiento.images[0].type.startsWith('image')) {
-              <img class="mb-2" [cCardImg]="'top'" [src]="'data:' + alojamiento.images[0].type + ';base64,' + alojamiento.images[0].file_base64" style="max-height: 200px; min-height: 200px;">
+          @if(alojamiento.portada) {
+            @if(alojamiento.portada.type.startsWith('image')) {
+              <img class="mb-2" [cCardImg]="'top'" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" style="max-height: 200px; min-height: 200px;">
             }
-            @if(!alojamiento.images[0].type.startsWith('image')) {
+            @if(!alojamiento.portada.type.startsWith('image')) {
               <video style="height:300px; width:100%;" class="d-block w-100" controls autoplay muted loop>
-                <source [src]="'data:' + alojamiento.images[0].type + ';base64,' + alojamiento.images[0].file_base64" [type]="alojamiento.images[0].type">
+                <source [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" [type]="alojamiento.portada.type">
               </video>
             }
           }
