@@ -194,7 +194,9 @@ export class AlojamientosComponent implements OnInit{
   }
 
   cancelar() {
-    this.visible = !this.visible;
+    this.visible = false;
+    this.visible_comments = false;
+    this.visible_map = false;
     this.get_catalog();
   }
 
@@ -374,5 +376,9 @@ export class AlojamientosComponent implements OnInit{
       }
     }).catch( e => console.log(e) );
     this.visible = !this.visible;
+  }
+
+  validated(): boolean {
+    return false;
   }
 }
