@@ -1,15 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { StarsComponent } from "../stars/stars.component";
 
 @Component({
   selector: 'app-hero-item',
   standalone: true,
-  imports: [],
+  imports: [StarsComponent],
   templateUrl: './hero-item.component.html',
 })
 export class HeroItemComponent {
   @Input('alojamiento') alojamiento!: any;
-
-  ngOnChanges() {
-    console.log(this.alojamiento);
-  }
 }

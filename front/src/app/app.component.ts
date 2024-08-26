@@ -26,6 +26,7 @@ export class AppComponent {
   title = 'airbnb-template';
   isTabBarVisible = true;
   isZoomOutSearchHeader = false;
+  isModalMapVisible = false;
 
   handleScrollEvent(isVisible: boolean) {
     this.isTabBarVisible = isVisible;

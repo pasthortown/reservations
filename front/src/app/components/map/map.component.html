@@ -1,0 +1,13 @@
+<div class="row" (wheel)="onMouseWheel($event)">
+  <google-map #googleMap
+    [width]="width"
+    [height]="height"
+    [zoom]="15"
+    [options]="mapOptions"
+    [center]="mapCenter"
+    (mapClick)="onMapClick($event)">
+    @for(marker of markers; track $index) {
+      <map-marker [position]="marker.position" (mapClick)="onMarkerClick(marker.place)"></map-marker>
+    }
+  </google-map>
+</div>

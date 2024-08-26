@@ -1,16 +1,12 @@
 <div class="tab-bar py-2 shadow-md z-50" [class.hidden]="!isVisible">
   <ul class="flex items-end justify-center gap-12 text-xs">
-    <li class="flex flex-col items-center justify-center gap-1">
-      <img src="/img/search-icon.svg" class="w-[25px]" />
-      <span>Explore</span>
+    <li class="flex flex-col items-center justify-center gap-1" (click)="toggle_map_modal()">
+      <i class="fa-regular fa-map fa-2x"></i>
+      <span>Buscar en el mapa</span>
     </li>
     <li class="flex flex-col items-center justify-center gap-1">
-      <img src="/img/heart.svg" class="w-[25px]" />
-      <span>Wishlist</span>
-    </li>
-    <li class="flex flex-col items-center justify-center gap-1">
-      <img src="/img/user.svg" class="w-[25px]" />
-      <span>Login</span>
+      <i class="fa-regular fa-user-circle fa-2x"></i>
+      <span>Iniciar Sesión</span>
     </li>
   </ul>
 </div>

@@ -169,8 +169,8 @@ export class AlojamientosComponent implements OnInit{
     this.catalogService.get_items('condiciones', { name: true, ico: true, description: true  }).then( r => {
       this.condiciones = r.response;
     }).catch( e => console.log(e) );
-    this.catalogService.get_items('alojamientos', output_model).then( r => {
-      this.alojamientos = r.response;
+    this.catalogService.get_items('alojamientos', output_model).then( r_alojamientos => {
+      this.alojamientos = r_alojamientos.response;
       this.alojamientos.forEach((alojamiento: any) => {
         alojamiento.images = [];
         alojamiento.rate=0;

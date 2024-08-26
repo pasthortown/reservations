@@ -1,24 +1,74 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { HeroItemComponent } from '../hero-item/hero-item.component';
 import { CatalogService } from '../../services/catalog.service';
 import { FilesService } from '../../services/file.service';
+import { MapComponent } from "../map/map.component";
+
+import {
+  ButtonCloseDirective,
+  ButtonDirective,
+  ColComponent,
+  RowComponent,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  ModalTitleDirective,
+  ModalToggleDirective,
+  TextColorDirective,
+  ThemeDirective,
+  TableDirective,
+  TableColorDirective,
+  TableActiveDirective,
+  BorderDirective,
+  AlignDirective,
+  PaginationComponent,
+  PageItemComponent,
+  PageLinkDirective,
+  InputGroupComponent,
+  InputGroupTextDirective,
+  FormControlDirective,
+  ButtonGroupComponent,
+  ButtonToolbarComponent,
+  FormFloatingDirective,
+  FormDirective,
+  FormSelectDirective,
+  FormLabelDirective,
+  CardBodyComponent,
+  CardComponent,
+  CardFooterComponent,
+  CardGroupComponent,
+  CardHeaderComponent,
+  CardImgDirective,
+  CardLinkDirective,
+  CardSubtitleDirective,
+  CardTextDirective,
+  CardTitleDirective,
+  BadgeModule
+} from '@coreui/angular';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [HeroItemComponent, HttpClientModule],
+  imports: [
+    HeroItemComponent, BadgeModule, MapComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective],
   providers: [CatalogService, FilesService],
   templateUrl: './hero.component.html',
 })
 export class HeroComponent implements OnInit {
+  @Input('visible_map') visible_map: boolean = false;
+  @Output('map_is_close') map_is_close: EventEmitter<any> = new EventEmitter();
   filter = '';
+  markers: any[] = [];
   servicios: any[] = [];
   condiciones: any[] = [];
   propietarios: any[] = [];
   alojamientos: any[] = [];
   alojamientos_shown: any[] = [];
+  visible: boolean = false;
   alojamiento_selected: any = {
     nombre: '',
     personas: 0,
@@ -106,8 +156,20 @@ export class HeroComponent implements OnInit {
     this.catalogService.get_items('condiciones', { name: true, ico: true, description: true  }).then( r => {
       this.condiciones = r.response;
     }).catch( e => console.log(e) );
-    this.catalogService.get_items('alojamientos', output_model).then( r => {
-      this.alojamientos = r.response;
+    this.catalogService.get_items('alojamientos', output_model).then( r_alojamientos => {
+      this.markers = [];
+      this.alojamientos = r_alojamientos.response;
+      this.alojamientos.forEach((place: any) => {
+        try {
+          let new_marker_position: google.maps.LatLngLiteral = {
+            lat: place.ubication.lat,
+            lng: place.ubication.lng
+          };
+          this.markers.push({place: place, position: new_marker_position});
+        } catch (error) {
+          //ignored
+        }
+      });
       this.alojamientos.forEach((alojamiento: any) => {
         alojamiento.images = [];
         alojamiento.rate=0;
@@ -135,5 +197,29 @@ export class HeroComponent implements OnInit {
         value.toString().toLowerCase().includes(lowerCaseFilter)
       )
     );
+  }
+
+  cancelar() {
+    this.visible = false;
+    this.visible_map = false;
+    this.map_is_close.emit(false);
+    this.get_catalog();
+  }
+
+  handleChangeMap(event: any) {
+    this.visible_map = event;
+  }
+
+  handleChange(event: any) {
+    this.visible = event;
+  }
+  marker_selected(place: any) {
+    this.alojamientos.forEach((element: any) => {
+      if (place.item_id == element.item_id) {
+        this.alojamiento_selected = element;
+        this.visible_map = false;
+        this.visible = true;
+      }
+    });
   }
 }
