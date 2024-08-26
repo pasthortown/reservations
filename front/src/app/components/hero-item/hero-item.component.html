@@ -1,5 +1,5 @@
-<div class="py-5 px-6">
-  <div class="relative h-[300px] cursor-pointer img-container">
+<div class="py-3 px-3">
+  <div class="relative h-[200px] cursor-pointer img-container">
     @if(alojamiento.portada) {
       @if(alojamiento.portada.type.startsWith('image')) {
         <img class="w-full h-full object-cover rounded-lg" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64">
