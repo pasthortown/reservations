@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  luxury_net:
+    ipam:
+      config:
+        - subnet: 192.168.96.0/24
+
+services:
+  mongo:
+    image: mongo:4.2.0
+    restart: always
+    ports:
+    - "27017:27017"
+    volumes: 
+    - ./mongo_data:/data/db
+    env_file:
+    - ./variables.env
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.14
+  mongo_express:
+    image: mongo-express:latest
+    restart: always
+    ports:
+    - "9070:8081"
+    env_file:
+    - ./variables.env
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+    networks:
+      luxury_net:
+        ipv4_address: 192.168.96.15
+    links:
+    - mongo
