@@ -1,8 +1,13 @@
 refactorizar el front
-auth
-reportes
+- Perfil
+- Login y crear cuenta
+- Ver el alojamiento el detalle
+
 construir el codigo de reservas (crear reserva en front, recibir notificacion en back, recibir mail de reserva)
+auth
 
 integrar el boton de pago
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
 subir el sistema a aks
+
+reportes
