@@ -41,7 +41,7 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-      bla bla bla
+      <app-alojamiento-preview [alojamiento]="alojamiento_selected"></app-alojamiento-preview>
   </c-modal-body>
 </c-modal>
 
@@ -51,7 +51,7 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-      bla bla bla
+      <app-login></app-login>
   </c-modal-body>
 </c-modal>
 
@@ -61,6 +61,6 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-      bla bla bla
+      <app-profile></app-profile>
   </c-modal-body>
 </c-modal>
