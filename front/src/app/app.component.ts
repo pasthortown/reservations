@@ -19,7 +19,7 @@ import { TabBarComponent } from './components/tab-bar/tab-bar.component';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  title = 'Luxury Reservations';
+  title = 'Luxury Stays';
   isTabBarVisible = true;
   isZoomOutSearchHeader = false;
   isModalMapVisible = false;
