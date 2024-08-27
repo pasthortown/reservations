@@ -47,11 +47,11 @@
 
 <c-modal #modalXl id="modalXl" size="xl" [visible]="visible_login" (visibleChange)="handleChangeLogin($event)">
   <c-modal-header>
-    AUTENTICACION
+    <h2>Te damos la Bienvenida</h2>
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-      <app-login></app-login>
+      <app-login (login_done)="cancelar()"></app-login>
   </c-modal-body>
 </c-modal>
 
