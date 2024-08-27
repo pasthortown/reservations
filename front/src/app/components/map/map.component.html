@@ -7,18 +7,30 @@
     [center]="mapCenter"
     (mapClick)="onMapClick($event)">
     @for(marker of markers; track $index) {
-      <map-marker 
+      <map-marker #gmarker
         [position]="marker.position"
-        (mapClick)="onMarkerClick(marker.place)"
-        (mouseover)="onMarkerMouseOver(marker.place, marker.position)"
-        (mouseout)="onMarkerMouseOut()">
+        (mapMouseover)="mouseOver($event, marker.place)"
+        (mapClick)="markerClick(marker.place)">
       </map-marker>
     }
-
-    @if(infoWindowOpen) {
-      <map-info-window [options]="infoWindowOptions"></map-info-window>
-    }
   </google-map>
+</div>
+<div [hidden]="!mi_infowindow.visible" class="infowindow_popup"  [ngStyle]="{'top.px': mi_infowindow.pos_y, 'left.px': mi_infowindow.pos_x}">
+  <div class="row">
+    <div class="col-4">
+      <img [src]="mi_infowindow.src_img">
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <div class="col-12" style="height: 14px;">
+          <h1>{{mi_infowindow.title}}</h1>
+        </div>
+        <div class="col-12" style="height: 80px; overflow-y: auto;">
+          <p>{{mi_infowindow.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

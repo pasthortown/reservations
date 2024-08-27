@@ -1,6 +1,4 @@
 refactorizar el front
-   - burbujas mapa
-   - barra de busqueda
 auth
 reportes
 construir el codigo de reservas (crear reserva en front, recibir notificacion en back, recibir mail de reserva)

@@ -24,6 +24,7 @@
         <c-col>
           <app-map
             [seleccionable]="false"
+            [show_hints]="true"
             [width]="'100%'"
             [height]="'88vh'"
             [markers]="markers"
@@ -34,7 +35,7 @@
   </c-modal-body>
 </c-modal>
 
-<c-modal #modalXl id="modalXl" size="xl" [fullscreen]="true" [visible]="visible" (visibleChange)="handleChange($event)">
+<c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
   <c-modal-header>
     <h5 cModalTitle>{{alojamiento_selected.nombre}}</h5>
     <button cButtonClose (click)="cancelar()"></button>

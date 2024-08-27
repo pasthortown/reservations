@@ -1,24 +1,39 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-map',
   standalone: true,
   imports: [
-    GoogleMapsModule
+    GoogleMapsModule, CommonModule
   ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss'
 })
-export class MapComponent {
+export class MapComponent implements OnInit{
   @Output('coords_selected') coordsSelectedEmitter: EventEmitter<any> = new EventEmitter();
   @Output('marker_selected') markerSelectedEmitter: EventEmitter<any> = new EventEmitter();
   @ViewChild('googleMap') googleMap!: GoogleMap;
   @Input('width') width: any = '100vw';
   @Input('height') height: any = '100vh';
   @Input('seleccionable') seleccionable: boolean = false;
+  @Input('show_hints') show_hints: boolean = false;
   @Input('markers') markers: any[] = [];
   @Input('mapCenter') mapCenter: google.maps.LatLngLiteral = { lat: 40.730610, lng: -73.935242 };
+
+  mi_infowindow = {
+    pos_x: 0,
+    pos_y: 0,
+    title: '',
+    description: '',
+    src_img: '',
+    visible: false
+  };
+
+  ngOnInit(): void {
+
+  }
 
   mapOptions: google.maps.MapOptions = {
     streetViewControl: true,
@@ -27,13 +42,6 @@ export class MapComponent {
     fullscreenControl: true,
     scrollwheel: false
   };
-
-  infoWindowOptions = {
-    content: 'Aquí va la información del InfoWindow',
-    position: null as google.maps.LatLngLiteral | null,
-  };
-
-  infoWindowOpen = false;
 
   onMouseWheel(event: WheelEvent) {
     if (event.ctrlKey || event.shiftKey) {
@@ -55,18 +63,18 @@ export class MapComponent {
     }
   }
 
-  onMarkerMouseOver(place: any, position: google.maps.LatLngLiteral) {
-    console.log("hola");
-    this.infoWindowOptions.content = place;
-    this.infoWindowOptions.position = position;
-    this.infoWindowOpen = true;
-  }
-
-  onMarkerMouseOut() {
-    this.infoWindowOpen = false;
-  }
-
-  onMarkerClick(place: any) {
+  markerClick(place: any) {
     this.markerSelectedEmitter.emit(place);
+  }
+
+  mouseOver(event : any, place: any) {
+    this.mi_infowindow.visible = true;
+    this.mi_infowindow.title = place.nombre;
+    this.mi_infowindow.description = place.descripcion;
+    this.mi_infowindow.src_img = 'data:' + place.portada.type + ';base64,' + place.portada.file_base64;
+    this.mi_infowindow.pos_x = event.domEvent.clientX;
+    this.mi_infowindow.pos_y = event.domEvent.clientY;
+    console.log(this.mi_infowindow);
+    console.log(event);
   }
 }
