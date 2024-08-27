@@ -44,3 +44,13 @@
       bla bla bla
   </c-modal-body>
 </c-modal>
+
+<c-modal #modalXl id="modalXl" size="xl" [visible]="visible_login" (visibleChange)="handleChangeLogin($event)">
+  <c-modal-header>
+    AUTENTICACION
+    <button cButtonClose (click)="cancelar()"></button>
+  </c-modal-header>
+  <c-modal-body>
+      bla bla bla
+  </c-modal-body>
+</c-modal>

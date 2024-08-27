@@ -79,6 +79,7 @@ export class HeroComponent implements OnInit {
   alojamientos: any[] = [];
   alojamientos_shown: any[] = [];
   visible: boolean = false;
+  visible_login: boolean = false;
   alojamiento_selected: any = {
     nombre: '',
     personas: 0,
@@ -233,6 +234,10 @@ export class HeroComponent implements OnInit {
 
   handleChange(event: any) {
     this.visible = event;
+  }
+
+  handleChangeLogin(event: any) {
+    this.visible_login = event;
   }
 
   marker_selected(place: any) {
