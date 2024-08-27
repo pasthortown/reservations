@@ -28,6 +28,13 @@ export class MapComponent {
     scrollwheel: false
   };
 
+  infoWindowOptions = {
+    content: 'Aquí va la información del InfoWindow',
+    position: null as google.maps.LatLngLiteral | null,
+  };
+
+  infoWindowOpen = false;
+
   onMouseWheel(event: WheelEvent) {
     if (event.ctrlKey || event.shiftKey) {
       this.googleMap.googleMap!.setOptions({ scrollwheel: true });
@@ -46,6 +53,17 @@ export class MapComponent {
       this.markers.push({position: coords});
       this.coordsSelectedEmitter.emit(coords);
     }
+  }
+
+  onMarkerMouseOver(place: any, position: google.maps.LatLngLiteral) {
+    console.log("hola");
+    this.infoWindowOptions.content = place;
+    this.infoWindowOptions.position = position;
+    this.infoWindowOpen = true;
+  }
+
+  onMarkerMouseOut() {
+    this.infoWindowOpen = false;
   }
 
   onMarkerClick(place: any) {

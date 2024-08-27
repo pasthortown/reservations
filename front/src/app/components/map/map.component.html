@@ -7,7 +7,18 @@
     [center]="mapCenter"
     (mapClick)="onMapClick($event)">
     @for(marker of markers; track $index) {
-      <map-marker [position]="marker.position" (mapClick)="onMarkerClick(marker.place)"></map-marker>
+      <map-marker 
+        [position]="marker.position"
+        (mapClick)="onMarkerClick(marker.place)"
+        (mouseover)="onMarkerMouseOver(marker.place, marker.position)"
+        (mouseout)="onMarkerMouseOut()">
+      </map-marker>
+    }
+
+    @if(infoWindowOpen) {
+      <map-info-window [options]="infoWindowOptions"></map-info-window>
     }
   </google-map>
 </div>
+
+
