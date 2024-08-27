@@ -1,6 +1,4 @@
 refactorizar el front
-- Perfil
-- Login y crear cuenta
 - Ver el alojamiento el detalle
 
 construir el codigo de reservas (crear reserva en front, recibir notificacion en back, recibir mail de reserva)

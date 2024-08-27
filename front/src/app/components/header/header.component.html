@@ -6,9 +6,7 @@
         <div
           class="flex items-center gap-2 px-2 rounded-3xl shadow-md hover:shadow-gray-400" (click)="toggle_profile_modal()"
         >
-          @if(user) {
-            <span class="m-2">{{user.name}}</span>
-          }
+          <span class="m-2">{{user.fullname}}</span>
           <img src="/img/user.svg" class="w-8 h-8 my-2" />
         </div>
       }
@@ -16,9 +14,6 @@
         <div
         class="flex items-center gap-2 px-2 rounded-3xl shadow-md hover:shadow-gray-400" (click)="toggle_login_modal()"
       >
-        @if(user) {
-          <span class="m-2">{{user.name}}</span>
-        }
         <img src="/img/user.svg" class="w-8 h-8 my-2" />
       </div>
       }

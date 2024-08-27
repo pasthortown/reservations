@@ -1,1 +1,118 @@
-<p>login works!</p>
+<c-row class="justify-content-center m-10">
+  <c-col sm="12" class="p-3">
+    <c-card-group>
+      <c-card>
+        @if(opcion == 'login') {
+          <c-card-body>
+            <p class="text-body-secondary">Accede con tu cuenta</p>
+            <c-input-group class="mb-3">
+              <span cInputGroupText>
+                <i class="fas fa-envelope"></i>
+              </span>
+              <input autoComplete="username" cFormControl [(ngModel)]="data.email"  placeholder="Correo Electrónico" />
+            </c-input-group>
+            <c-input-group class="mb-4">
+              <span cInputGroupText>
+                <i class="fas fa-key"></i>
+              </span>
+              <input autoComplete="current-password"
+                cFormControl
+                [(ngModel)]="data.password"
+                placeholder="Contraseña"
+                type="password"
+                (keyup.enter)="login()"
+              />
+            </c-input-group>
+            <c-row>
+              <c-col xs="6">
+                <button cButton class="px-4" color="primary" (click)="login()">
+                  Iniciar Sesión
+                </button>
+              </c-col>
+              <c-col class="text-right" xs="6">
+                <button cButton class="px-4" color="secondary" (click)="opcion='signin'">
+                  Crear una Cuenta
+                </button>
+              </c-col>
+            </c-row>
+          </c-card-body>
+        }
+        @if(opcion == 'signin') {
+          <c-card-body>
+            <p class="text-body-secondary">Crearemos una cuenta nueva</p>
+            <div class="row">
+              <c-col sm="12">
+                <div [cFormFloating]="true" class="mb-3">
+                  <input cFormControl id="floatingInput" [(ngModel)]="data.fullname" placeholder="Nombre Completo" type="text" />
+                  <label cLabel for="floatingInput">Nombre Completo</label>
+                </div>
+              </c-col>
+              <c-col sm="12" md="12" lg="6" xl="6">
+                <div [cFormFloating]="true" class="mb-3">
+                  <input cFormControl id="floatingInput" [(ngModel)]="data.email" placeholder="Correo Electrónico" type="text" />
+                  <label cLabel for="floatingInput">Correo Electrónico</label>
+                </div>
+              </c-col>
+              <c-col sm="12" md="12" lg="6" xl="6">
+                <div [cFormFloating]="true" class="mb-3">
+                  <input cFormControl id="floatingInput" [(ngModel)]="data.identification" placeholder="Documento de Identidad" type="text" />
+                  <label cLabel for="floatingInput">Documento de Identidad</label>
+                </div>
+              </c-col>
+              <c-col sm="12" md="12" lg="6" xl="6">
+                <div [cFormFloating]="true" class="mb-3">
+                  <input cFormControl id="floatingInput" [(ngModel)]="data.phone_number" placeholder="Teléfono de Contacto" type="text" />
+                  <label cLabel for="floatingInput">Teléfono de Contacto</label>
+                </div>
+              </c-col>
+              <c-col sm="12" md="12" lg="6" xl="6">
+                <div [cFormFloating]="true" class="mb-3">
+                  <input cFormControl id="floatingInput" [ngModel]="data.borndate | date: 'y-MM-dd'" (ngModelChange)="data.borndate = $event" placeholder="Fecha de Nacimiento" type="date" />
+                  <label cLabel for="floatingInput">Fecha de Nacimiento</label>
+                </div>
+              </c-col>
+              <c-col sm="12" md="12" lg="6" xl="6">
+                <div [cFormFloating]="true" class="mb-3">
+                  <input cFormControl id="floatingInput" [(ngModel)]="data.password" placeholder="Contraseña" type="password" />
+                  <label cLabel for="floatingInput">Contraseña</label>
+                </div>
+              </c-col>
+              <c-col sm="12" md="12" lg="6" xl="6">
+                <div [cFormFloating]="true" class="mb-3">
+                  <input cFormControl id="floatingInput" [(ngModel)]="data.password_confirm" placeholder="Confirmar de Contraseña" type="password" />
+                  <label cLabel for="floatingInput">Confirmar de Contraseña</label>
+                </div>
+              </c-col>
+            </div>
+            <c-row>
+              <c-col xs="6">
+                <button [disabled]="data.password != data.password_confirm || data.password == ''" cButton class="px-4" color="primary" (click)="signin()">
+                  Crear Cuenta
+                </button>
+              </c-col>
+              <c-col class="text-right" xs="6">
+                <button cButton class="px-4" color="secondary" (click)="opcion='login'">
+                  Acceder con mi cuenta
+                </button>
+              </c-col>
+            </c-row>
+          </c-card-body>
+        }
+      </c-card>
+      @if(isScreenSmOrLarger) {
+        <c-card class="py-5" style="background-color: rgb(233, 233, 233);">
+          <c-card-body class="text-center">
+            <div>
+              <div style="width: 100%; text-align: center;">
+                <img src="http://localhost:9090/assets/logo_color.png" width="50%" style="display: inline;"/>
+              </div>
+              <p style="text-align: justify;">
+                ¡Bienvenidos a Luxury Stays! Descubre los mejores departamentos de arriendo en España, donde el lujo y la comodidad se encuentran en cada rincón. Explora nuestra exclusiva selección de propiedades y encuentra el lugar perfecto para tu próxima estadía. Tu experiencia de alojamiento en España comienza aquí. ¡Bienvenidos a un nuevo estándar de lujo!
+              </p>
+            </div>
+          </c-card-body>
+        </c-card>
+      }
+    </c-card-group>
+  </c-col>
+</c-row>
