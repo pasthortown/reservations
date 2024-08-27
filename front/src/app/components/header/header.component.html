@@ -2,14 +2,27 @@
   <div class="flex justify-between pr-5 2xl:pr-10 cursor-pointer">
     <img src="assets/logo_color.png" alt="logo_color" class="hidden md:block h-16 w-auto" />
     <div class="hidden md:flex gap-2 items-center justify-end cursor-pointer">
-      <div
-        class="flex items-center gap-2 px-2 rounded-3xl shadow-md hover:shadow-gray-400"
+      @if(user) {
+        <div
+          class="flex items-center gap-2 px-2 rounded-3xl shadow-md hover:shadow-gray-400" (click)="toggle_profile_modal()"
+        >
+          @if(user) {
+            <span class="m-2">{{user.name}}</span>
+          }
+          <img src="/img/user.svg" class="w-8 h-8 my-2" />
+        </div>
+      }
+      @if(!user) {
+        <div
+        class="flex items-center gap-2 px-2 rounded-3xl shadow-md hover:shadow-gray-400" (click)="toggle_login_modal()"
       >
-        @if(username != '') {
-          <span class="m-2">{{username}}</span>
+        @if(user) {
+          <span class="m-2">{{user.name}}</span>
         }
         <img src="/img/user.svg" class="w-8 h-8 my-2" />
       </div>
+      }
+
     </div>
   </div>
   <app-search-header (filter_change)="filterChange($event)"></app-search-header>

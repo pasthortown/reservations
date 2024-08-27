@@ -72,6 +72,11 @@ export class HeroComponent implements OnInit {
 
   @Input('visible_map') visible_map: boolean = false;
   @Output('map_is_close') map_is_close: EventEmitter<any> = new EventEmitter();
+  @Input('visible_login') visible_login: boolean = false;
+  @Output('login_is_close') login_is_close: EventEmitter<any> = new EventEmitter();
+  @Input('visible_profile') visible_profile: boolean = false;
+  @Output('profile_is_close') profile_is_close: EventEmitter<any> = new EventEmitter();
+
   markers: any[] = [];
   servicios: any[] = [];
   condiciones: any[] = [];
@@ -79,7 +84,6 @@ export class HeroComponent implements OnInit {
   alojamientos: any[] = [];
   alojamientos_shown: any[] = [];
   visible: boolean = false;
-  visible_login: boolean = false;
   alojamiento_selected: any = {
     nombre: '',
     personas: 0,
@@ -106,7 +110,6 @@ export class HeroComponent implements OnInit {
   };
 
   constructor(private catalogService: CatalogService, private fileService: FilesService) {}
-
 
   ngOnInit(): void {
     this.get_catalog();
@@ -224,7 +227,11 @@ export class HeroComponent implements OnInit {
   cancelar() {
     this.visible = false;
     this.visible_map = false;
+    this.visible_login = false;
+    this.visible_profile = false;
     this.map_is_close.emit(false);
+    this.login_is_close.emit(false);
+    this.profile_is_close.emit(false);
     this.get_catalog();
   }
 
@@ -238,6 +245,10 @@ export class HeroComponent implements OnInit {
 
   handleChangeLogin(event: any) {
     this.visible_login = event;
+  }
+
+  handleChangeProfile(event: any) {
+    this.visible_profile = event;
   }
 
   marker_selected(place: any) {

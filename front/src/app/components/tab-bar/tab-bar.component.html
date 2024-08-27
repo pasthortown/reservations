@@ -6,9 +6,17 @@
       <i class="fa-regular fa-map fa-2x"></i>
       <span>Buscar en el mapa</span>
     </li>
-    <li class="flex flex-col items-center justify-center gap-1">
-      <i class="fa-regular fa-user-circle fa-2x"></i>
-      <span>Iniciar Sesión</span>
-    </li>
+    @if(user) {
+      <li class="flex flex-col items-center justify-center gap-1" (click)="logout()">
+        <i class="fa-regular fa-user-circle fa-2x"></i>
+        <span>Cerrar Sesión</span>
+      </li>
+    }
+    @if(!user) {
+      <li class="flex flex-col items-center justify-center gap-1" (click)="toggle_login_modal()">
+        <i class="fa-regular fa-user-circle fa-2x"></i>
+        <span>Iniciar Sesión</span>
+      </li>
+    }
   </ul>
 </div>

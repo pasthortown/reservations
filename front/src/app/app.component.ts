@@ -23,6 +23,9 @@ export class AppComponent {
   isTabBarVisible = true;
   isZoomOutSearchHeader = false;
   isModalMapVisible = false;
+  isModalLoginVisible = false;
+  isModalProfileVisible = false;
+
   filter: any = {
     precio: '',
     zona: '',
