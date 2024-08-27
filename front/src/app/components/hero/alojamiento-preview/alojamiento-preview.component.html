@@ -1,1 +1,115 @@
-<p>alojamiento-preview works!</p>
+<div>
+    <div class="relative h-[200px] cursor-pointer img-container">
+    @if(alojamiento.portada) {
+      @if(alojamiento.portada.type.startsWith('image')) {
+        <img class="w-full h-full object-cover rounded-lg" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64">
+      }
+      @if(!alojamiento.portada.type.startsWith('image')) {
+        <video class="w-full h-full object-cover rounded-lg" controls autoplay muted loop>
+          <source [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" [type]="alojamiento.portada.type">
+        </video>
+      }
+    }
+  </div>
+
+  <div class="flex">
+      <div class="alojamiento-zona">
+         <h2>{{alojamiento.zona}}</h2>
+         <span class="host"><b>Anfitrión:</b> Luis Salazar</span>
+      </div>
+    
+      <div class="cards">
+          <div class="alojamiento-card">
+              <div class="alojamiento-precio">
+                  <span><b>{{alojamiento.desde_noche}}$ por noche</b></span>
+              </div>
+              <button class="btn-solicitar">Solicitar</button>
+          </div>
+          <div class="alojamiento-card">
+              <div class="alojamiento-precio">
+                  <span><b>{{alojamiento.desde_mes}}$ por mes</b></span>
+              </div>
+              <button class="btn-solicitar">Solicitar</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="services">
+    <h2>Servicios</h2>
+    <ul>
+        @for (servicio of alojamiento.servicios; track $index) {
+            <li>
+              <span>
+                <i [class]="servicio.ico" class="icono"></i> {{servicio.name}}
+              </span>
+            </li>
+        }
+    </ul>
+  </div>
+
+  <div class="services">
+    <h2>Condiciones</h2>
+    <ul>
+        @for (condicion of alojamiento.condiciones; track $index) {
+            <li>
+              <span>
+                <i [class]="condicion.ico" class="icono"></i> {{condicion.name}}
+              </span>
+            </li>
+        }
+    </ul>
+  </div>
+
+  <div class="services">
+    <h2>Descripción del alojamiento</h2>
+    <p>{{alojamiento.descripcion}}</p>
+  </div>
+
+  <div class="descriptions">
+    <div class="alojamiento-card">
+      <span>
+        <i class="fa-solid fa-person-walking-luggage"></i>
+        Huespedes: {{alojamiento.personas}}
+      </span>
+    </div>
+  
+    <div class="alojamiento-card">
+      <span>
+        <i class="fa-solid fa-door-open"></i>
+        Habitaciones: {{alojamiento.habitaciones}}
+      </span>
+    </div>
+  
+    <div class="alojamiento-card">
+      <span>
+        <i class="fa-solid fa-toilet"></i>        
+        Baños: {{alojamiento.banos}}
+      </span>
+    </div>
+
+    <div class="alojamiento-card">
+      <span>
+        <i class="fa-solid fa-ruler"></i>        
+        {{alojamiento.metros}}m2
+      </span>
+    </div>
+    
+  </div>
+
+  <div class="horario">
+    <h2>Horario disponible</h2>
+    <div class="checkin">
+      <div>
+        <label for="checkIn">Check In:</label>
+        <input id="checkIn" type="time">
+      </div>
+      
+      <div>
+        <label for="checkOut">Check Out:</label>
+        <input id="checkOut" type="time">
+      </div>
+    </div>
+  </div>
+  
+</div>
+
