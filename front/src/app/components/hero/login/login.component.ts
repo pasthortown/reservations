@@ -5,7 +5,6 @@ import { NgStyle } from '@angular/common';
 import { IconDirective } from '@coreui/icons-angular';
 import { ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -20,19 +19,20 @@ export class LoginComponent {
   @Output('login_done') login_done: EventEmitter<any> = new EventEmitter();
   isScreenSmOrLarger: boolean = true;
   opcion = 'login';
-  data: any = { email: '', password: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
+  data: any = { email: '', password: '', password_confirm: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService) {
     this.isScreenSmOrLarger = window.innerWidth > 1200;
   }
 
   signin() {
-    this.authService.register(this.data).then( r => {
+    let new_user = { email: this.data.email, password: this.data.password, fullname: this.data.fullname, identification: this.data.identification, phone_number: this.data.phone_number, borndate: this.data.borndate };
+    this.authService.register(new_user).then( r => {
       if (r.status == 200) {
         this.login();
       } else {
         sessionStorage.clear();
-        this.data = { email: '', password: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
+        this.data = { email: '', password: '', password_confirm: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
       }
     }).catch( e => console.log(e) );
   }
@@ -42,11 +42,11 @@ export class LoginComponent {
       if (r.status == 200) {
         sessionStorage.setItem('user', JSON.stringify(r.userdata) as string);
         sessionStorage.setItem('token', r.token as string);
-        this.data = { email: '', password: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
+        this.data = { email: '', password: '', password_confirm: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
         this.login_done.emit(true);
       } else {
         sessionStorage.clear();
-        this.data = { email: '', password: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
+        this.data = { email: '', password: '', password_confirm: '', fullname: '', identification: '', phone_number: '', borndate: '1986-09-15' };
       }
     }).catch( e => console.log(e) );
   }

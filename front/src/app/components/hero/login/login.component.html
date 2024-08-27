@@ -86,7 +86,7 @@
             </div>
             <c-row>
               <c-col xs="6">
-                <button cButton class="px-4" color="primary" (click)="signin()">
+                <button [disabled]="data.password != data.password_confirm || data.password == ''" cButton class="px-4" color="primary" (click)="signin()">
                   Crear Cuenta
                 </button>
               </c-col>
