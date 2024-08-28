@@ -6,3 +6,11 @@ cambiar el codigo que uso para guardar images, para que almacene en un blob stor
 subir el sistema a aks
 
 reportes
+
+id_alojamiento
+id_cliente
+fecha_in
+fecha_out
+horario
+costo
+DATOS DE RESERVA
