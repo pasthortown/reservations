@@ -83,6 +83,7 @@ export class AlojamientosComponent implements OnInit{
     banos: 0,
     desde_noche: 0,
     desde_mes: 0,
+    propietario: '',
     descripcion: '',
     zona: '',
     ubication: {
@@ -136,6 +137,7 @@ export class AlojamientosComponent implements OnInit{
       },
       check_in: '',
       check_out: '',
+      propietario: '',
       galery: [],
       condiciones: [],
       servicios: [],
@@ -159,6 +161,7 @@ export class AlojamientosComponent implements OnInit{
       check_out: true,
       galery: true,
       condiciones: true,
+      propietario: true,
       servicios: true,
       rate: true,
       comentarios: true,
@@ -236,6 +239,7 @@ export class AlojamientosComponent implements OnInit{
       desde_noche: 0,
       desde_mes: 0,
       descripcion: '',
+      propietario: '',
       zona: '',
       ubication: {
           lat: 0,
@@ -298,13 +302,6 @@ export class AlojamientosComponent implements OnInit{
     });
   }
 
-  do_select_propietario(propietario_id: string) {
-    this.propietarios.forEach((propietario: any) => {
-      if (propietario.item_id == propietario_id) {
-        this.selected_propietario = propietario;
-      }
-    });
-  }
   add_condition(condition: any) {
     if (this.selected_condition == null) {
       return;
@@ -363,6 +360,7 @@ export class AlojamientosComponent implements OnInit{
       ubication: this.alojamiento_selected.ubication,
       check_in: this.alojamiento_selected.check_in,
       check_out: this.alojamiento_selected.check_out,
+      propietario: this.alojamiento_selected.propietario,
       galery: [],
       condiciones: this.alojamiento_selected.condiciones,
       servicios: this.alojamiento_selected.servicios,

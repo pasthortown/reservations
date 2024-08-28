@@ -95,6 +95,7 @@ export class HeroComponent implements OnInit {
     banos: 0,
     zona: '',
     desde_noche: 0,
+    propietario: '',
     desde_mes: 0,
     descripcion: '',
     ubication: {
@@ -126,6 +127,7 @@ export class HeroComponent implements OnInit {
     this.alojamiento_selected = {
       nombre: '',
       descripcion: '',
+      propietario: '',
       personas: 0,
       metros: 0,
       habitaciones: 0,
@@ -160,6 +162,7 @@ export class HeroComponent implements OnInit {
       ubication: true,
       check_in: true,
       check_out: true,
+      propietario: true,
       galery: true,
       condiciones: true,
       servicios: true,
@@ -167,7 +170,7 @@ export class HeroComponent implements OnInit {
       comentarios: true,
       hide: true,
     }
-    this.catalogService.get_items('propietarios', { name: true }).then( r => {
+    this.catalogService.get_items('propietarios', { name: true, photo_id: true, description: true }).then( r => {
       this.propietarios = r.response;
     }).catch( e => console.log(e) );
     this.catalogService.get_items('servicios', { name: true, ico: true, description: true }).then( r => {

@@ -1,115 +1,188 @@
-<div>
-    <div class="relative h-[200px] cursor-pointer img-container">
-    @if(alojamiento.portada) {
-      @if(alojamiento.portada.type.startsWith('image')) {
-        <img class="w-full h-full object-cover rounded-lg" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64">
-      }
-      @if(!alojamiento.portada.type.startsWith('image')) {
-        <video class="w-full h-full object-cover rounded-lg" controls autoplay muted loop>
-          <source [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" [type]="alojamiento.portada.type">
-        </video>
-      }
-    }
-  </div>
-
-  <div class="flex">
-      <div class="alojamiento-zona">
-         <h2>{{alojamiento.zona}}</h2>
-         <span class="host"><b>Anfitrión:</b> Luis Salazar</span>
-      </div>
-    
-      <div class="cards">
-          <div class="alojamiento-card">
-              <div class="alojamiento-precio">
-                  <span><b>{{alojamiento.desde_noche}}$ por noche</b></span>
-              </div>
-              <button class="btn-solicitar">Solicitar</button>
+<c-row class="my-3">
+  <c-col sm="12">
+    <div class="relative w-full h-96 overflow-hidden">
+      <div class="flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+        @for (slide of alojamiento.images; track $index) {
+          <div class="min-w-full h-96 flex-shrink-0 flex justify-center items-center">
+            @if(slide.type.startsWith('image')) {
+              <img [src]="'data:' + slide.type + ';base64,' + slide.file_base64" class="object-cover w-full h-full">
+            }
+            @if(!slide.type.startsWith('image')) {
+              <video class="object-cover w-full h-full" controls autoplay muted loop>
+                <source [src]="'data:' + slide.type + ';base64,' + slide.file_base64" [type]="slide.type">
+              </video>
+            }
           </div>
-          <div class="alojamiento-card">
-              <div class="alojamiento-precio">
-                  <span><b>{{alojamiento.desde_mes}}$ por mes</b></span>
-              </div>
-              <button class="btn-solicitar">Solicitar</button>
-          </div>
+        }
       </div>
-  </div>
+      <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2" (click)="prevSlide()">
+        &#10094;
+      </button>
+      <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-2" (click)="nextSlide()">
+        &#10095;
+      </button>
+    </div>
 
-  <div class="services">
-    <h2>Servicios</h2>
-    <ul>
-        @for (servicio of alojamiento.servicios; track $index) {
-            <li>
-              <span>
-                <i [class]="servicio.ico" class="icono"></i> {{servicio.name}}
-              </span>
-            </li>
-        }
-    </ul>
-  </div>
+  </c-col>
+</c-row>
 
-  <div class="services">
-    <h2>Condiciones</h2>
-    <ul>
-        @for (condicion of alojamiento.condiciones; track $index) {
-            <li>
-              <span>
-                <i [class]="condicion.ico" class="icono"></i> {{condicion.name}}
-              </span>
-            </li>
-        }
-    </ul>
-  </div>
+<c-row class="mt-3">
+  <c-col sm="12">
+    <h3>Descripción del alojamiento</h3>
+  </c-col>
+  <c-col sm="12">
+    <p style="text-align: justify;">{{alojamiento.descripcion}}</p>
+  </c-col>
+</c-row>
 
-  <div class="services">
-    <h2>Descripción del alojamiento</h2>
-    <p>{{alojamiento.descripcion}}</p>
-  </div>
-
-  <div class="descriptions">
-    <div class="alojamiento-card">
-      <span>
+<c-row>
+  <div class="col-sm-12 col-md-6 col-lg-3">
+    <c-card>
+      <span class="p-3">
         <i class="fa-solid fa-person-walking-luggage"></i>
         Huespedes: {{alojamiento.personas}}
       </span>
-    </div>
-  
-    <div class="alojamiento-card">
-      <span>
+    </c-card>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-3">
+    <c-card>
+      <span class="p-3">
         <i class="fa-solid fa-door-open"></i>
         Habitaciones: {{alojamiento.habitaciones}}
       </span>
-    </div>
-  
-    <div class="alojamiento-card">
-      <span>
-        <i class="fa-solid fa-toilet"></i>        
+    </c-card>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-3">
+    <c-card>
+      <span class="p-3">
+        <i class="fa-solid fa-toilet"></i>
         Baños: {{alojamiento.banos}}
       </span>
-    </div>
-
-    <div class="alojamiento-card">
-      <span>
-        <i class="fa-solid fa-ruler"></i>        
+    </c-card>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-3">
+    <c-card>
+      <span class="p-3">
+        <i class="fa-solid fa-ruler"></i>
         {{alojamiento.metros}}m2
       </span>
-    </div>
-    
+    </c-card>
   </div>
+</c-row>
+<c-row>
+  <c-col sm="12">
+    <h3>Costos</h3>
+  </c-col>
+  <c-col xs="6">
+    <button cButton class="px-4 mr-2" color="primary">
+      {{alojamiento.desde_noche}} por noche
+    </button>
+    <button cButton class="px-4" color="primary">
+      {{alojamiento.desde_mes}} por mes
+    </button>
+  </c-col>
+</c-row>
 
-  <div class="horario">
-    <h2>Horario disponible</h2>
-    <div class="checkin">
-      <div>
-        <label for="checkIn">Check In:</label>
-        <input id="checkIn" type="time">
-      </div>
-      
-      <div>
-        <label for="checkOut">Check Out:</label>
-        <input id="checkOut" type="time">
-      </div>
-    </div>
-  </div>
-  
-</div>
+<c-row class="my-3">
+  <c-col sm="12">
+    <h3>Servicios</h3>
+  </c-col>
+  @for (service of alojamiento.servicios; track $index) {
+    <c-col sm="12">
+      <span>
+        <i [class]="service.ico" class="icono"></i> {{service.name}}
+      </span>
+    </c-col>
+  }
+</c-row>
+
+<c-row class="my-3">
+  <c-col sm="12">
+    <h3>Condiciones</h3>
+  </c-col>
+  @for (condicion of alojamiento.condiciones; track $index) {
+    <c-col sm="12">
+      <span>
+        <i [class]="condicion.ico" class="icono"></i> {{condicion.name}}
+      </span>
+    </c-col>
+  }
+</c-row>
+
+<c-row class="my-3">
+  <c-col sm="12">
+    <h3>Horarios de Check</h3>
+  </c-col>
+  <c-col xs="12">
+    <b>Check In:</b>
+    {{alojamiento.check_in}}
+  </c-col>
+  <c-col xs="12">
+    <b>Check Out:</b>
+    {{alojamiento.check_out}}
+  </c-col>
+</c-row>
+
+@if( propietario ) {
+  <c-row class="my-3">
+    <c-col sm="12">
+      <h3>Conozca a su anfitrión</h3>
+    </c-col>
+    <c-col md="6">
+      <c-row>
+        <c-col style="text-align: center;">
+          @if( propietario.photo ) {
+            <img class="mb-2" [src]="'data:' + propietario.photo.type + ';base64,' + propietario.photo.file_base64" style="display: inline; max-height: 100px; min-height: 100px; border-radius: 50%;"><br/>
+            {{propietario.name}}
+          }
+        </c-col>
+      </c-row>
+      <c-row>
+        <c-col></c-col>
+      </c-row>
+    </c-col>
+    <c-col md="6">
+      <p style="text-align: justify;">{{propietario.description}}</p>
+    </c-col>
+  </c-row>
+}
+
+<c-row class="my-3">
+  <c-col sm="12">
+    <h3>Ubicación</h3>
+  </c-col>
+  <c-col sm="12">
+    <h5>Zona: {{alojamiento.zona}}</h5>
+  </c-col>
+  <c-col sm="12">
+    <app-map [show_hints]="false" [seleccionable]="false" [width]="'100%'" [height]="'400px'" [markers]="[{place: alojamiento, position: alojamiento.ubication}]" [mapCenter]="alojamiento.ubication"></app-map>
+  </c-col>
+</c-row>
+
+<c-row class="my-3">
+  <c-col sm="12">
+    <h3>Comentarios</h3>
+  </c-col>
+  <c-col sm="12">
+    <h5>Calificación: <app-stars [rate]="alojamiento.rate"></app-stars></h5>
+  </c-col>
+  @for(comentario of alojamiento.comentarios; track $index) {
+    <c-col [sm]="12">
+      <c-card class="mb-2">
+        <c-card-header>
+          <h6>{{comentario.remitente}}</h6>
+        </c-card-header>
+        <c-card-body>
+          <p style="text-align: justify; width: 100%;">
+            {{comentario.text}}
+          </p>
+        </c-card-body>
+        <c-card-footer style="text-align: right;">
+          <small style="width: 100%;">{{comentario.date}}</small>
+        </c-card-footer>
+      </c-card>
+    </c-col>
+  }
+</c-row>
+
 

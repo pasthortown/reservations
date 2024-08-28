@@ -83,7 +83,7 @@
       </c-col>
       <c-col [sm]="6">
         <div [cFormFloating]="true" class="mb-3">
-          <select cSelect #select_propietario (change)="do_select_propietario(select_propietario.value)">
+          <select cSelect #select_propietario [(ngModel)]="alojamiento_selected.propietario">
             <option disabled selected>Propietario del inmueble...</option>
             @for(propietario of propietarios; track $index) {
               <option [value]="propietario.item_id">{{propietario.name}}</option>

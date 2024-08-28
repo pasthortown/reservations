@@ -43,44 +43,44 @@
             <div class="row">
               <c-col sm="12">
                 <div [cFormFloating]="true" class="mb-3">
-                  <input cFormControl id="floatingInput" [(ngModel)]="data.fullname" placeholder="Nombre Completo" type="text" />
-                  <label cLabel for="floatingInput">Nombre Completo</label>
+                  <input cFormControl  [(ngModel)]="data.fullname" placeholder="Nombre Completo" type="text" />
+                  <label cLabel >Nombre Completo</label>
                 </div>
               </c-col>
               <c-col sm="12" md="12" lg="6" xl="6">
                 <div [cFormFloating]="true" class="mb-3">
-                  <input cFormControl id="floatingInput" [(ngModel)]="data.email" placeholder="Correo Electrónico" type="text" />
-                  <label cLabel for="floatingInput">Correo Electrónico</label>
+                  <input cFormControl  [(ngModel)]="data.email" placeholder="Correo Electrónico" type="text" />
+                  <label cLabel >Correo Electrónico</label>
                 </div>
               </c-col>
               <c-col sm="12" md="12" lg="6" xl="6">
                 <div [cFormFloating]="true" class="mb-3">
-                  <input cFormControl id="floatingInput" [(ngModel)]="data.identification" placeholder="Documento de Identidad" type="text" />
-                  <label cLabel for="floatingInput">Documento de Identidad</label>
+                  <input cFormControl  [(ngModel)]="data.identification" placeholder="Documento de Identidad" type="text" />
+                  <label cLabel >Documento de Identidad</label>
                 </div>
               </c-col>
               <c-col sm="12" md="12" lg="6" xl="6">
                 <div [cFormFloating]="true" class="mb-3">
-                  <input cFormControl id="floatingInput" [(ngModel)]="data.phone_number" placeholder="Teléfono de Contacto" type="text" />
-                  <label cLabel for="floatingInput">Teléfono de Contacto</label>
+                  <input cFormControl  [(ngModel)]="data.phone_number" placeholder="Teléfono de Contacto" type="text" />
+                  <label cLabel >Teléfono de Contacto</label>
                 </div>
               </c-col>
               <c-col sm="12" md="12" lg="6" xl="6">
                 <div [cFormFloating]="true" class="mb-3">
-                  <input cFormControl id="floatingInput" [ngModel]="data.borndate | date: 'y-MM-dd'" (ngModelChange)="data.borndate = $event" placeholder="Fecha de Nacimiento" type="date" />
-                  <label cLabel for="floatingInput">Fecha de Nacimiento</label>
+                  <input cFormControl  [ngModel]="data.borndate | date: 'y-MM-dd'" (ngModelChange)="data.borndate = $event" placeholder="Fecha de Nacimiento" type="date" />
+                  <label cLabel >Fecha de Nacimiento</label>
                 </div>
               </c-col>
               <c-col sm="12" md="12" lg="6" xl="6">
                 <div [cFormFloating]="true" class="mb-3">
-                  <input cFormControl id="floatingInput" [(ngModel)]="data.password" placeholder="Contraseña" type="password" />
-                  <label cLabel for="floatingInput">Contraseña</label>
+                  <input cFormControl  [(ngModel)]="data.password" placeholder="Contraseña" type="password" />
+                  <label cLabel >Contraseña</label>
                 </div>
               </c-col>
               <c-col sm="12" md="12" lg="6" xl="6">
                 <div [cFormFloating]="true" class="mb-3">
-                  <input cFormControl id="floatingInput" [(ngModel)]="data.password_confirm" placeholder="Confirmar de Contraseña" type="password" />
-                  <label cLabel for="floatingInput">Confirmar de Contraseña</label>
+                  <input cFormControl  [(ngModel)]="data.password_confirm" placeholder="Confirmar de Contraseña" type="password" />
+                  <label cLabel >Confirmar de Contraseña</label>
                 </div>
               </c-col>
             </div>

@@ -68,13 +68,13 @@ export class MapComponent implements OnInit{
   }
 
   mouseOver(event : any, place: any) {
-    this.mi_infowindow.visible = true;
-    this.mi_infowindow.title = place.nombre;
-    this.mi_infowindow.description = place.descripcion;
-    this.mi_infowindow.src_img = 'data:' + place.portada.type + ';base64,' + place.portada.file_base64;
-    this.mi_infowindow.pos_x = event.domEvent.clientX;
-    this.mi_infowindow.pos_y = event.domEvent.clientY;
-    console.log(this.mi_infowindow);
-    console.log(event);
+    if (this.show_hints) {
+      this.mi_infowindow.visible = true;
+      this.mi_infowindow.title = place.nombre;
+      this.mi_infowindow.description = place.descripcion;
+      this.mi_infowindow.src_img = 'data:' + place.portada.type + ';base64,' + place.portada.file_base64;
+      this.mi_infowindow.pos_x = event.domEvent.clientX;
+      this.mi_infowindow.pos_y = event.domEvent.clientY;
+    }
   }
 }

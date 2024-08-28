@@ -21,9 +21,26 @@ export class ProfileComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.data = JSON.parse(sessionStorage.getItem('user') as string);
-    this.data.password = '';
-    this.data.password_confirm = '';
+    this.startPolling();
+  }
+
+  startPolling() {
+    setInterval(() => {
+      this.updateUser();
+    }, 1000);
+  }
+
+  updateUser() {
+    try {
+      let user: any = JSON.parse(sessionStorage.getItem('user') as string);
+    if (user) {
+      this.data = user;
+      this.data.password = '';
+      this.data.password_confirm = '';
+    }
+    } catch (error) {
+      //
+    }
   }
 
   update_profile() {
