@@ -1,1 +1,113 @@
-<p>reservation works!</p>
+<div class="row px-5">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-md-4 col-sm-12">
+        @if(alojamiento.portada) {
+          @if(alojamiento.portada.type.startsWith('image')) {
+            <img class="w-full h-full object-cover rounded-lg" [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64">
+          }
+          @if(!alojamiento.portada.type.startsWith('image')) {
+            <video class="w-full h-full object-cover rounded-lg" controls autoplay muted loop>
+              <source [src]="'data:' + alojamiento.portada.type + ';base64,' + alojamiento.portada.file_base64" [type]="alojamiento.portada.type">
+            </video>
+          }
+        }
+      </div>
+      <div class="col-md-8 col-sm-12">
+        <div class="row">
+          <div class="col-12">
+            <h5>{{alojamiento.zona}}</h5>
+          </div>
+          <div class="col-12 mb-3">
+            <app-stars [rate]="alojamiento.rate"></app-stars>
+          </div>
+          <div class="col-12">
+            <p style="width: 100%; text-align: justify;">{{alojamiento.descripcion}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-12 col-lg-6">
+        <div class="row">
+          <div class="col-12 mt-3">
+            <h3>Fechas</h3>
+          </div>
+          <div class="col-12">
+            <div [cFormFloating]="true" class="mb-3">
+              <input cFormControl id="floatingInput" [ngModel]="fecha_check_in | date: 'y-MM-dd'" (ngModelChange)="fecha_check_in = $event" placeholder="Fecha Check-In" type="date" (input)="calcular_noches()"/>
+              <label cLabel for="floatingInput">Fecha de Check-In</label>
+              <small>Horario de Check-In: {{alojamiento.check_in}}</small>
+            </div>
+          </div>
+          <div class="col-12">
+            <div [cFormFloating]="true" class="mb-3">
+              <input cFormControl id="floatingInput" [ngModel]="fecha_check_out | date: 'y-MM-dd'" (ngModelChange)="fecha_check_out = $event" placeholder="Fecha Check-Out" type="date" (input)="calcular_noches()"/>
+              <label cLabel for="floatingInput">Fecha de Check-Out</label>
+              <small>Horario de Check-Out: {{alojamiento.check_out}}</small>
+            </div>
+          </div>
+          <div class="col-12 mt-5">
+            <h3>Huéspedes</h3>
+          </div>
+          <div class="col-12">
+            <div [cFormFloating]="true" class="mb-3">
+              <input cFormControl id="floatingInput" [(ngModel)]="fecha_check_out" placeholder="Huéspedes" type="number"/>
+              <label cLabel for="floatingInput">Huéspedes</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-6">
+        <div class="row">
+          <div class="col-12 mt-3">
+            <c-card class="mb-4">
+              <c-card-header>
+                <h3>Información de Pago</h3>
+              </c-card-header>
+              <c-card-body>
+                <div class="row">
+                  <table class="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Cantidad de noches:</th><td>{{noches}}</td>
+                      </tr>
+                      <tr>
+                        <th>Total:</th><td>{{ total | number:'1.2-2' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-6">
+                    <b>Costo por noche: </b>{{alojamiento.desde_noche}}
+                  </div>
+                  <div class="col-6">
+                    <b>Costo por mes: </b>{{alojamiento.desde_mes}}
+                  </div>
+                </div>
+              </c-card-body>
+              <c-card-footer>
+                <div class="row mt-3">
+                  <c-button-toolbar role="group">
+                    <c-button-group class="m-auto" role="group">
+                      <button  cButton color="primary" title="Pagar"><i class="fas fa-credit-card"></i> Pagar</button>
+                    </c-button-group>
+                  </c-button-toolbar>
+                </div>
+              </c-card-footer>
+            </c-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <c-button-toolbar role="group">
+        <c-button-group class="m-auto" role="group">
+          <button  cButton color="primary" title="Reservar" (click)="do_reservation()"><i class="fas fa-calendar-plus"></i> Reservar</button>
+          <button  cButton color="danger" title="Cancelar" (click)="cancelar()"><i class="fas fa-times"></i> Cancelar</button>
+        </c-button-group>
+      </c-button-toolbar>
+    </div>
+  </div>
+</div>

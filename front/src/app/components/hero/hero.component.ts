@@ -51,12 +51,15 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AlojamientoPreviewComponent } from './alojamiento-preview/alojamiento-preview.component';
+import { ReservationComponent } from "../reservation/reservation.component";
 
 @Component({
   selector: 'app-hero',
   standalone: true,
   imports: [
-    LoginComponent, ProfileComponent, AlojamientoPreviewComponent, HeroItemComponent, BadgeModule, MapComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective],
+    ReservationComponent, LoginComponent, ProfileComponent, AlojamientoPreviewComponent, HeroItemComponent, BadgeModule, MapComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective,
+    ReservationComponent
+],
   providers: [CatalogService, FilesService],
   templateUrl: './hero.component.html',
 })
@@ -79,6 +82,8 @@ export class HeroComponent implements OnInit {
   @Output('login_is_close') login_is_close: EventEmitter<any> = new EventEmitter();
   @Input('visible_profile') visible_profile: boolean = false;
   @Output('profile_is_close') profile_is_close: EventEmitter<any> = new EventEmitter();
+
+  visible_reservation: boolean = false;
 
   markers: any[] = [];
   servicios: any[] = [];
@@ -235,10 +240,20 @@ export class HeroComponent implements OnInit {
     this.visible_map = false;
     this.visible_login = false;
     this.visible_profile = false;
+    this.visible_reservation = false;
     this.map_is_close.emit(false);
     this.login_is_close.emit(false);
     this.profile_is_close.emit(false);
     this.get_catalog();
+  }
+
+  show_reservation_modal(event: any) {
+    this.visible = false;
+    this.visible_reservation = true;
+  }
+
+  handleChangeReservation(event: any) {
+    this.visible_reservation = event;
   }
 
   handleChangeMap(event: any) {

@@ -69,14 +69,14 @@
     </div>
   </c-row>
   <c-row>
-    <c-col sm="12">
+    <c-col sm="12 mt-3">
       <h3>Costos</h3>
     </c-col>
-    <c-col xs="6">
-      <button cButton class="px-4 mr-2" color="primary">
+    <c-col xs="12">
+      <button cButton class="px-4 mr-2 mt-2" color="primary" (click)="toggle_reservation_modal()">
         {{alojamiento.desde_noche}} por noche
       </button>
-      <button cButton class="px-4" color="primary">
+      <button cButton class="px-4 mt-2" color="primary" (click)="toggle_reservation_modal()">
         {{alojamiento.desde_mes}} por mes
       </button>
     </c-col>
@@ -157,6 +157,14 @@
     <c-col sm="12">
       <app-map [show_hints]="false" [seleccionable]="false" [width]="'100%'" [height]="'400px'" [markers]="[{place: alojamiento, position: alojamiento.ubication}]" [mapCenter]="alojamiento.ubication"></app-map>
     </c-col>
+  </c-row>
+  <c-row class="my-3">
+    <c-button-toolbar role="group">
+      <c-button-group class="m-auto" role="group">
+        <button  cButton color="primary" title="Reservar" (click)="toggle_reservation_modal()"><i class="fas fa-calendar-plus"></i> Reservar</button>
+        <button  cButton color="danger" title="Cancelar" (click)="cancelar()"><i class="fas fa-times"></i> Cancelar</button>
+      </c-button-group>
+    </c-button-toolbar>
   </c-row>
   <c-row class="my-3">
     <c-col sm="12">

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { CarouselComponent, ThemeDirective, CarouselInnerComponent, CarouselItemComponent, CarouselControlComponent, CarouselIndicatorsComponent, CarouselCaptionComponent, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent, ThemeDirective, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective } from '@coreui/angular';
 import { FilesService } from '../../../services/file.service';
 import { MapComponent } from "../../map/map.component";
 import { StarsComponent } from "../../stars/stars.component";
@@ -9,13 +9,15 @@ import { RouterLink } from '@angular/router';
   selector: 'app-alojamiento-preview',
   standalone: true,
   providers:[FilesService],
-  imports: [RouterLink, ThemeDirective, CarouselComponent, CarouselInnerComponent, CarouselItemComponent, CarouselControlComponent, CarouselIndicatorsComponent, CarouselCaptionComponent, MapComponent, StarsComponent, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective],
+  imports: [ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent, RouterLink, ThemeDirective, MapComponent, StarsComponent, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective],
   templateUrl: './alojamiento-preview.component.html',
   styleUrl: './alojamiento-preview.component.css'
 })
 export class AlojamientoPreviewComponent {
   currentIndex = 0;
 
+  @Output('show_reservation_modal') show_reservation_modal: EventEmitter<any> = new EventEmitter();
+  @Output('cancel_modal') cancel_modal: EventEmitter<any> = new EventEmitter();
   @Input('propietarios')  propietarios: any[] = [];
   @Input('alojamiento')  alojamiento: any = {
     nombre: '',
@@ -49,7 +51,6 @@ export class AlojamientoPreviewComponent {
 
   ngOnChanges() {
     if (this.alojamiento.propietario != '') {
-      console.log(this.alojamiento);
       this.propietarios.forEach((element: any) => {
         if (element.item_id == this.alojamiento.propietario) {
           this.propietario = element;
@@ -67,5 +68,13 @@ export class AlojamientoPreviewComponent {
 
   nextSlide() {
     this.currentIndex = (this.currentIndex === this.alojamiento.images.length - 1) ? 0 : this.currentIndex + 1;
+  }
+
+  cancelar() {
+    this.cancel_modal.emit(true);
+  }
+
+  toggle_reservation_modal() {
+    this.show_reservation_modal.emit(true);
   }
 }

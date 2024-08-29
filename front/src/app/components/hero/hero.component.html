@@ -41,7 +41,17 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-      <app-alojamiento-preview [alojamiento]="alojamiento_selected" [propietarios]="propietarios"></app-alojamiento-preview>
+      <app-alojamiento-preview [alojamiento]="alojamiento_selected" [propietarios]="propietarios" (show_reservation_modal)="show_reservation_modal($event)" (cancel_modal)="cancelar()"></app-alojamiento-preview>
+  </c-modal-body>
+</c-modal>
+
+<c-modal #modalXlReservation id="modalXlReservation" size="xl" [visible]="visible_reservation" (visibleChange)="handleChangeReservation($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Reservar - {{alojamiento_selected.nombre}}</h5>
+    <button cButtonClose (click)="cancelar()"></button>
+  </c-modal-header>
+  <c-modal-body>
+      <app-reservation [alojamiento]="alojamiento_selected" (cancel_modal)="cancelar()"></app-reservation>
   </c-modal-body>
 </c-modal>
 
