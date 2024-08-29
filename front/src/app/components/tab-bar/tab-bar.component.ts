@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FooterComponent } from './../footer/footer.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tab-bar',
@@ -41,6 +42,18 @@ export class TabBarComponent implements OnInit{
   }
 
   logout() {
-    sessionStorage.clear();
+    Swal.fire({
+      title: 'Cerrar Sesión!',
+      text: 'Esta seguro que desea cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, deseo cerrar sesión!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        sessionStorage.clear();
+      }
+    });
   }
 }

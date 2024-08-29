@@ -218,6 +218,16 @@ export class HeroComponent implements OnInit {
     }).catch( e => console.log(e) );
   }
 
+  show_login() {
+    this.cancelar();
+    this.visible_login = true;
+  }
+
+  do_reservation(event: any) {
+    console.log(event);
+    // hacer todo para guardar la reserva
+  }
+
   filterData() {
     const { precio, zona, personas, habitaciones } = this.filter;
     const [precioMin, precioMax] = precio

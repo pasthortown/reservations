@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { StarsComponent } from "../stars/stars.component";
 import { ThemeDirective, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent } from '@coreui/angular';
@@ -14,8 +15,11 @@ import { CommonModule } from '@angular/common';
 export class ReservationComponent {
   @Input('type_of_reservation')  type_of_reservation: string = '';
   @Output('cancel_modal') cancel_modal: EventEmitter<any> = new EventEmitter();
+  @Output('login_modal') login_modal: EventEmitter<any> = new EventEmitter();
+  @Output('reservation') reservation: EventEmitter<any> = new EventEmitter();
   noches: number = 0;
   meses: number = 0;
+  huespedes: number = 0;
   fecha_check_in: string = '1986-09-15';
   fecha_check_out: string = '1986-09-15';
   total: number = 0;
@@ -44,6 +48,7 @@ export class ReservationComponent {
     hide: false,
     propietario: '',
   };
+  user: any = null;
 
   constructor() {
     const today = new Date();
@@ -67,6 +72,15 @@ export class ReservationComponent {
 
   ngOnChanges() {
     this.calcular_noches();
+    this.updateUser();
+  }
+
+  updateUser() {
+    try {
+      this.user = JSON.parse(sessionStorage.getItem('user') as string);
+    } catch (error) {
+      this.user = null;
+    }
   }
 
   calcular_noches() {
@@ -89,7 +103,35 @@ export class ReservationComponent {
   }
 
   do_reservation() {
-    // aqui hacer la reserva
-    this.cancel_modal.emit(true);
+    if (this.user) {
+      let reserva: any = {
+        client_id: this.user.item_id,
+        alojamiento: this.alojamiento,
+        total: this.total,
+        huespedes: this.huespedes,
+        fecha_in: this.fecha_check_in,
+        fecha_out: this.fecha_check_out,
+        noches: this.noches
+      }
+      this.reservation.emit(reserva);
+      this.cancel_modal.emit(true);
+    } else {
+      Swal.fire({
+        title: 'Usuario no autenticado!',
+        text: 'Para continuar, por favor inicia sesión',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, deseo continuar!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.login_modal.emit(true);
+        } else {
+          this.cancel_modal.emit(true);
+        }
+      });
+    }
+
   }
 }

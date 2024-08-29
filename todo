@@ -1,11 +1,10 @@
 preparar datos de reserva
- - id_alojamiento
- - id_cliente
  - corregir bug de fecha
  - buscar calendario o identificar posibles conflictos con fechas ya reservadas
  - boton de pago
  - integrar con el crm
 
+corregir filtro de personas si hay 4 habitaciones y somos 2 igual debe mostrar
 auth
 
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
