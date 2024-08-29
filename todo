@@ -1,16 +1,14 @@
-construir el codigo de reservas (crear reserva en front, recibir notificacion en back, recibir mail de reserva)
+preparar datos de reserva
+ - id_alojamiento
+ - id_cliente
+ - corregir bug de fecha
+ - buscar calendario o identificar posibles conflictos con fechas ya reservadas
+ - boton de pago
+ - integrar con el crm
+
 auth
 
-integrar el boton de pago
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
 subir el sistema a aks
 
 reportes
-
-id_alojamiento
-id_cliente
-fecha_in
-fecha_out
-horario
-costo
-DATOS DE RESERVA
