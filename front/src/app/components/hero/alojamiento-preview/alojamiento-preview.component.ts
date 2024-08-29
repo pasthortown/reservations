@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 })
 export class AlojamientoPreviewComponent {
   currentIndex = 0;
+
   @Input('propietarios')  propietarios: any[] = [];
   @Input('alojamiento')  alojamiento: any = {
     nombre: '',
