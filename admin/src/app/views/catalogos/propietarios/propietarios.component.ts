@@ -38,6 +38,7 @@ import { IconDirective } from '@coreui/icons-angular';
 import { FormsModule } from '@angular/forms';
 import { FileDropComponent } from '../../components/file-drop/file-drop.component';
 import { FilesService } from 'src/app/services/file.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-propietarios',
@@ -126,9 +127,23 @@ export class PropietariosComponent {
   }
 
   delete_item(item: any, catalog: string) {
-    this.catalogService.delete_item(catalog, item.item_id).then(r => {
-      this.get_catalog();
-    }).catch( e => console.log(e) );
+    Swal.fire({
+      title: 'Confirmación de Seguridad!',
+      text: 'Está seguro de continuar con la eliminación del elemento?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, deseo borrarlo!"
+    }).then((result) => {
+        if(result.isConfirmed){
+          this.catalogService.delete_item(catalog, item.item_id).then(r => {
+            this.get_catalog();
+          }).catch( e => console.log(e) );
+        } else {
+          this.get_catalog();
+        }
+    })
   }
 
   upload_item(item: any, catalog: string) {
