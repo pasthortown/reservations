@@ -81,29 +81,35 @@
       </button>
     </c-col>
   </c-row>
-  <c-row class="my-3">
-    <c-col sm="12">
-      <h3>Servicios</h3>
+  <c-row>
+    <c-col lg="6">
+      <c-row class="my-3">
+        <c-col sm="12">
+          <h3>Servicios</h3>
+        </c-col>
+        @for (service of alojamiento.servicios; track $index) {
+          <c-col sm="12">
+            <span>
+              <i [class]="service.ico" class="icono"></i> {{service.name}}
+            </span>
+          </c-col>
+        }
+      </c-row>
     </c-col>
-    @for (service of alojamiento.servicios; track $index) {
-      <c-col sm="12">
-        <span>
-          <i [class]="service.ico" class="icono"></i> {{service.name}}
-        </span>
-      </c-col>
-    }
-  </c-row>
-  <c-row class="my-3">
-    <c-col sm="12">
-      <h3>Condiciones</h3>
+    <c-col lg="6">
+      <c-row class="my-3">
+        <c-col sm="12">
+          <h3>Condiciones</h3>
+        </c-col>
+        @for (condicion of alojamiento.condiciones; track $index) {
+          <c-col sm="12">
+            <span>
+              <i [class]="condicion.ico" class="icono"></i> {{condicion.name}}
+            </span>
+          </c-col>
+        }
+      </c-row>
     </c-col>
-    @for (condicion of alojamiento.condiciones; track $index) {
-      <c-col sm="12">
-        <span>
-          <i [class]="condicion.ico" class="icono"></i> {{condicion.name}}
-        </span>
-      </c-col>
-    }
   </c-row>
   <c-row class="my-3">
     <c-col sm="12">
