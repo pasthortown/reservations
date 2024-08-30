@@ -11,9 +11,9 @@
       </div>
       <c-button-toolbar role="group">
         <c-button-group class="m-auto" role="group">
-          <button  cButton color="primary" title="Mes" (click)="switchToView(CalendarView.Month)">Mes</button>
-          <button  cButton color="primary" title="Semana" (click)="switchToView(CalendarView.Week)">Semana</button>
-          <button  cButton color="primary" title="Día" (click)="switchToView(CalendarView.Day)">Día</button>
+          <button  cButton [color]="currentView === 'month' ? 'primary' : 'secondary'" title="Mes" (click)="switchToView(CalendarView.Month)">Mes</button>
+          <button  cButton [color]="currentView === 'week' ? 'primary' : 'secondary'" title="Semana" (click)="switchToView(CalendarView.Week)">Semana</button>
+          <button  cButton [color]="currentView === 'day' ? 'primary' : 'secondary'" title="Día" (click)="switchToView(CalendarView.Day)">Día</button>
         </c-button-group>
 
         <c-button-group class="m-auto pl-2" role="group">
