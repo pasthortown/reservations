@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
+import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { ButtonDirective, ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent, ThemeDirective } from '@coreui/angular';
 
-import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
+export enum CalendarView {
+  Month = 'month',
+  Week = 'week',
+  Day = 'day',
+}
 
 interface Appointment {
   uuid?: string;
@@ -13,18 +18,15 @@ interface Appointment {
   color?: string;
 }
 
-export enum CalendarView {
-  Month = 'month',
-  Week = 'week',
-  Day = 'day',
-}
-
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  selector: 'app-schedule',
+  standalone: true,
+  imports: [CommonModule, DragDropModule, ButtonDirective, ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent, ThemeDirective],
+  templateUrl: './schedule.component.html',
+  styleUrl: './schedule.component.css'
 })
-export class CalendarComponent {
+
+export class ScheduleComponent {
   viewDate: Date = new Date();
   selectedDate: Date | null = null;
   selectedStartTime: string | undefined;
@@ -215,7 +217,7 @@ export class CalendarComponent {
 
   public CalendarView = CalendarView;
 
-  constructor(public dialog: MatDialog) {
+  constructor() {
     this.appointments.forEach((appointment) => {
       appointment.color = this.getRandomColor();
     });
@@ -387,7 +389,6 @@ export class CalendarComponent {
       this.selectedDate = new Date();
     }
     this.selectedStartTime = startTime;
-    this.openDialog();
   }
 
   generateUUID(): string {
@@ -437,34 +438,6 @@ export class CalendarComponent {
     if (index > -1) {
       this.appointments.splice(index, 1);
     }
-  }
-
-  openDialog(): void {
-    const hour = new Date().getHours();
-    const minutes = new Date().getMinutes();
-    const h = hour < 10 ? `0${hour}` : hour;
-    const m = minutes < 10 ? `0${minutes}` : minutes;
-    const dialogRef = this.dialog.open(AppointmentDialogComponent, {
-      width: '500px',
-      panelClass: 'dialog-container',
-      data: {
-        date: this.selectedDate,
-        title: '',
-        startTime: this.selectedStartTime || `${h}:${m}`,
-        endTime: this.selectedStartTime || `${h}:${m}`,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.addAppointment(
-          result.date,
-          result.title,
-          result.startTime,
-          result.endTime
-        );
-      }
-    });
   }
 
   getAppointmentsForDate(day: Date, timeSlots: string[]) {
@@ -517,27 +490,5 @@ export class CalendarComponent {
     const b = Math.floor(Math.random() * 256);
     const a = 0.4;
     return `rgba(${r},${g},${b},${a})`;
-  }
-
-  editAppointment(appointment: Appointment, event: Event) {
-    event.preventDefault();
-    const dialogRef = this.dialog.open(AppointmentDialogComponent, {
-      width: '500px',
-      panelClass: 'dialog-container',
-      data: appointment,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        const index = this.appointments.findIndex(
-          (appointment) => appointment.uuid === result.uuid
-        );
-        if (result.remove) {
-          this.appointments.splice(index, 1);
-        } else {
-          this.appointments[index] = result;
-        }
-      }
-    });
   }
 }
