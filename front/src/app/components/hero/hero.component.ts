@@ -95,6 +95,7 @@ export class HeroComponent implements OnInit {
   alojamiento_selected: any = {
     nombre: '',
     personas: 0,
+    reservas: [],
     metros: 0,
     habitaciones: 0,
     banos: 0,
@@ -138,6 +139,7 @@ export class HeroComponent implements OnInit {
       descripcion: '',
       propietario: '',
       personas: 0,
+      reservas: [],
       metros: 0,
       habitaciones: 0,
       banos: 0,
@@ -217,6 +219,21 @@ export class HeroComponent implements OnInit {
             });
           }
         }
+        let reserva_output_model: any = {
+          client_id: true,
+          alojamiento_id: true,
+          total: true,
+          huespedes: true,
+          fecha_in: true,
+          fecha_out: true,
+          noches: true
+        }
+        alojamiento.reservas = [];
+        this.catalogService.search_items('reservas', 'alojamiento_id', alojamiento.item_id, reserva_output_model).then(r_reserva => {
+          if(r_reserva.status == 200) {
+            alojamiento.reservas = r_reserva.response;
+          }
+        }).catch( e => console.log(e) );
       });
       this.filterData();
     }).catch( e => console.log(e) );

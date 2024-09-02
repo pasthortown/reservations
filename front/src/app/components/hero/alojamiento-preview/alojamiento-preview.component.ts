@@ -35,6 +35,7 @@ export class AlojamientoPreviewComponent {
     },
     check_in: '',
     check_out: '',
+    reservas: [],
     galery: [],
     condiciones: [],
     servicios: [],

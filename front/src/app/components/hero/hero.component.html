@@ -51,7 +51,7 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-      <app-reservation [alojamiento]="alojamiento_selected" (cancel_modal)="cancelar()" (login_modal)="show_login()" (reservation)="do_reservation($event)"></app-reservation>
+      <app-reservation [alojamiento]="alojamiento_selected" (cancel_modal)="cancelar()" (login_modal)="show_login()" (reservation)="do_reservation($event)" [reservas]="alojamiento_selected.reservas"></app-reservation>
   </c-modal-body>
 </c-modal>
 

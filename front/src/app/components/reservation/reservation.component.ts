@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { StarsComponent } from "../stars/stars.component";
 import { ThemeDirective, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent } from '@coreui/angular';
 import { FormsModule } from '@angular/forms';
@@ -25,12 +25,14 @@ export class ReservationComponent {
   fecha_check_in: Date | null = null;
   fecha_check_out: Date | null = null;
   total: number = 0;
+  disponible: boolean = false;
 
   @Input('alojamiento')  alojamiento: any = {
     nombre: '',
     personas: 0,
     metros: 0,
     habitaciones: 0,
+    reservas: [],
     banos: 0,
     zona: '',
     desde_noche: 0,
@@ -52,6 +54,9 @@ export class ReservationComponent {
     propietario: '',
   };
   user: any = null;
+
+  @Input('reservas')  reservas: any[] = [];
+
   agenda: any[] = [];
 
   constructor() {
@@ -70,6 +75,17 @@ export class ReservationComponent {
     } else if (!this.fecha_check_out && selectedDate >= this.fecha_check_in) {
       this.fecha_check_out = selectedDate;
       this.populateAgenda();
+      if (!this.disponible) {
+        Swal.fire({
+          title: 'Fecha no disponible',
+          text: 'No es posible reservar en esa fecha',
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Aceptar"
+        });
+      }
     } else {
       this.fecha_check_in = selectedDate;
       this.fecha_check_out = null;
@@ -77,19 +93,41 @@ export class ReservationComponent {
   }
 
   populateAgenda() {
-    if (this.fecha_check_in && this.fecha_check_out) {
-      this.agenda = [];
-      const current = new Date(this.fecha_check_in);
-      while (current <= this.fecha_check_out) {
-        this.agenda.push({
-          date: new Date(current),
-          title: 'Reservado',
-          startTime: '00:01',
-          endTime: '23:59',
-        });
-        current.setDate(current.getDate() + 1);
-      }
+    this.agenda = [];
+    this.disponible = true;
+    this.draw_reservas();
+    if (this.fecha_check_in && this.fecha_check_out && this.disponible) {
+      this.set_range_events(this.fecha_check_in, this.fecha_check_out, 'rgba(0, 255, 0, 0.4)', 'Reservado');
       this.calcular_noches();
+    }
+  }
+
+  draw_reservas() {
+    this.agenda = [];
+    this.reservas.forEach((reserva: any) => {
+      this.set_range_events(reserva.fecha_in, reserva.fecha_out, 'rgba(255, 0, 0, 0.4)', 'Ocupado');
+      if (this.fecha_check_in && this.fecha_check_out) {
+        let c1: boolean = this.fecha_check_in > reserva.fecha_in && this.fecha_check_in < reserva.fecha_out;
+        let c2: boolean = this.fecha_check_out > reserva.fecha_in && this.fecha_check_out < reserva.fecha_out;
+        let c3: boolean = this.fecha_check_in < reserva.fecha_in && this.fecha_check_out > reserva.fecha_out;
+        if (c1 || c2 || c3) {
+          this.disponible = false;
+        }
+      }
+    });
+  }
+
+  set_range_events(fecha_inicio: Date, fecha_fin: Date, color: string, message: string) {
+    const current = new Date(fecha_inicio);
+    while (current <= fecha_fin) {
+      this.agenda.push({
+        date: new Date(current),
+        title: message,
+        startTime: '00:01',
+        endTime: '23:59',
+        color: color
+      });
+      current.setDate(current.getDate() + 1);
     }
   }
 
@@ -106,6 +144,7 @@ export class ReservationComponent {
 
   ngOnChanges() {
     this.updateUser();
+    this.draw_reservas();
   }
 
   updateUser() {
@@ -137,13 +176,13 @@ export class ReservationComponent {
     if (this.user) {
       let reserva: any = {
         client_id: this.user.item_id,
-        alojamiento: this.alojamiento,
+        alojamiento_id: this.alojamiento.item_id,
         total: this.total,
         huespedes: this.huespedes,
         fecha_in: this.fecha_check_in,
         fecha_out: this.fecha_check_out,
         noches: this.noches
-      }
+      };
       this.reservation.emit(reserva);
       this.cancel_modal.emit(true);
     } else {

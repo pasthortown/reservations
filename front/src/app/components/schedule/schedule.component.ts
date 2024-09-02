@@ -30,7 +30,9 @@ export class ScheduleComponent {
 
   constructor() {
     this.appointments.forEach((appointment) => {
-      appointment.color = this.getRandomColor();
+      if (!appointment.color) {
+        appointment.color = this.getRandomColor();
+      }
     });
     this.generateView(this.currentView, this.viewDate);
     this.generateTimeSlots();
