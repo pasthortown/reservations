@@ -52,6 +52,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AlojamientoPreviewComponent } from './alojamiento-preview/alojamiento-preview.component';
 import { ReservationComponent } from "../reservation/reservation.component";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-hero',
@@ -223,8 +224,16 @@ export class HeroComponent implements OnInit {
   }
 
   do_reservation(event: any) {
-    console.log(event);
-    // hacer todo para guardar la reserva
+    this.catalogService.upload_items('reservas', [event]).then( r => {
+      Swal.fire({
+        title: 'Reserva realizada satisfactoriamente',
+        text: 'Te esperamos en tu visita.',
+        icon: 'success',
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Aceptar"
+      });
+    }).catch( e => console.log(e) );
   }
 
   filterData() {
@@ -239,8 +248,8 @@ export class HeroComponent implements OnInit {
         : true
       ) &&
       (zona ? alojamiento.zona.toString().toLowerCase().includes(zona.toLowerCase()) : true) &&
-      (personas > 0 ? alojamiento.personas === personas : true) &&
-      (habitaciones > 0 ? alojamiento.habitaciones === habitaciones : true)
+      (personas > 0 ? alojamiento.personas >= personas : true) &&
+      (habitaciones > 0 ? alojamiento.habitaciones >= habitaciones : true)
     );
   }
 

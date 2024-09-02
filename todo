@@ -4,7 +4,10 @@ preparar datos de reserva
  - boton de pago
  - integrar con el crm
 
-corregir filtro de personas si hay 4 habitaciones y somos 2 igual debe mostrar
+Reservas
+ - actualizacion
+ - anulacion
+ 
 auth
 
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
