@@ -5,9 +5,13 @@ preparar datos de reserva
  - integrar con el crm
 
 Reservas
- - actualizacion
- - anulacion
- 
+    USER
+    - actualizacion
+    - anulacion
+    ADMIN
+    - visualizacion
+    - anulacion
+
 auth
 
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
