@@ -109,9 +109,9 @@ export class ReservationComponent {
       const date_out = new Date(reserva.fecha_out);
       this.set_range_events(date_in, date_out, 'rgba(255, 0, 0, 0.4)', 'Ocupado');
       if (this.fecha_check_in && this.fecha_check_out) {
-        let c1: boolean = this.fecha_check_in > date_in && this.fecha_check_in < date_out;
-        let c2: boolean = this.fecha_check_out > date_in && this.fecha_check_out < date_out;
-        let c3: boolean = this.fecha_check_in < date_in && this.fecha_check_out > date_out;
+        let c1: boolean = this.fecha_check_in >= date_in && this.fecha_check_in <= date_out;
+        let c2: boolean = this.fecha_check_out >= date_in && this.fecha_check_out <= date_out;
+        let c3: boolean = this.fecha_check_in <= date_in && this.fecha_check_out >= date_out;
         if (c1 || c2 || c3) {
           this.disponible = false;
         }
