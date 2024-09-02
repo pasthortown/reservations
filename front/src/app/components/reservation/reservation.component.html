@@ -28,27 +28,20 @@
       </div>
     </div>
     <div class="row mt-3">
-      <div class="col-md-12 col-lg-6">
+      <div class="col-12 mt-3">
+        <h3>Días de su visita</h3>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-8 m-auto">
+        <app-schedule [show_toolbar]="false" [view]="'month'" (select_date)="calendar_selected_date($event)" [appointments]="agenda"></app-schedule>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
         <div class="row">
-          <div class="col-12 mt-3">
-            <h3>Fechas</h3>
-          </div>
-          <div class="col-12">
-            <div [cFormFloating]="true" class="mb-3">
-              <input cFormControl id="floatingInput" [ngModel]="fecha_check_in | date: 'y-MM-dd'" (ngModelChange)="fecha_check_in = $event" placeholder="Fecha Check-In" type="date" (input)="calcular_noches()"/>
-              <label cLabel for="floatingInput">Fecha de Check-In</label>
-              <small>Horario de Check-In: {{alojamiento.check_in}}</small>
-            </div>
-          </div>
-          <div class="col-12">
-            <div [cFormFloating]="true" class="mb-3">
-              <input cFormControl id="floatingInput" [ngModel]="fecha_check_out | date: 'y-MM-dd'" (ngModelChange)="fecha_check_out = $event" placeholder="Fecha Check-Out" type="date" (input)="calcular_noches()"/>
-              <label cLabel for="floatingInput">Fecha de Check-Out</label>
-              <small>Horario de Check-Out: {{alojamiento.check_out}}</small>
-            </div>
-          </div>
           <div class="col-12 mt-5">
-            <h3>Huéspedes</h3>
+            <h3>Cantidad de Huéspedes</h3>
           </div>
           <div class="col-12">
             <div [cFormFloating]="true" class="mb-3">
@@ -58,7 +51,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-12 col-lg-6">
+      <div class="col-12">
         <div class="row">
           <div class="col-12 mt-3">
             <c-card class="mb-4">

@@ -4,11 +4,12 @@ import { StarsComponent } from "../stars/stars.component";
 import { ThemeDirective, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective, ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent } from '@coreui/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ScheduleComponent } from '../schedule/schedule.component';
 
 @Component({
   selector: 'app-reservation',
   standalone: true,
-  imports: [CommonModule, StarsComponent,  ButtonCloseDirective, ButtonDirective,  FormsModule, ButtonGroupComponent, ButtonToolbarComponent, ThemeDirective, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective],
+  imports: [ScheduleComponent, CommonModule, StarsComponent,  ButtonCloseDirective, ButtonDirective,  FormsModule, ButtonGroupComponent, ButtonToolbarComponent, ThemeDirective, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.css'
 })
@@ -17,12 +18,14 @@ export class ReservationComponent {
   @Output('cancel_modal') cancel_modal: EventEmitter<any> = new EventEmitter();
   @Output('login_modal') login_modal: EventEmitter<any> = new EventEmitter();
   @Output('reservation') reservation: EventEmitter<any> = new EventEmitter();
+
   noches: number = 0;
   meses: number = 0;
   huespedes: number = 0;
-  fecha_check_in: string = '1986-09-15';
-  fecha_check_out: string = '1986-09-15';
+  fecha_check_in: Date | null = null;
+  fecha_check_out: Date | null = null;
   total: number = 0;
+
   @Input('alojamiento')  alojamiento: any = {
     nombre: '',
     personas: 0,
@@ -49,14 +52,45 @@ export class ReservationComponent {
     propietario: '',
   };
   user: any = null;
+  agenda: any[] = [];
 
   constructor() {
     const today = new Date();
-    this.fecha_check_in = this.formatDate(today);
+    this.fecha_check_in = null;
     const threeDaysLater = new Date(today);
     threeDaysLater.setDate(today.getDate() + 3);
-    this.fecha_check_out = this.formatDate(threeDaysLater);
-    this.calcular_noches();
+    this.fecha_check_out = null;
+  }
+
+  calendar_selected_date(event: any) {
+    let selectedDate: Date = event.date
+    if (!this.fecha_check_in || (this.fecha_check_in && this.fecha_check_out)) {
+      this.fecha_check_in = selectedDate;
+      this.fecha_check_out = null;
+    } else if (!this.fecha_check_out && selectedDate >= this.fecha_check_in) {
+      this.fecha_check_out = selectedDate;
+      this.populateAgenda();
+    } else {
+      this.fecha_check_in = selectedDate;
+      this.fecha_check_out = null;
+    }
+  }
+
+  populateAgenda() {
+    if (this.fecha_check_in && this.fecha_check_out) {
+      this.agenda = [];
+      const current = new Date(this.fecha_check_in);
+      while (current <= this.fecha_check_out) {
+        this.agenda.push({
+          date: new Date(current),
+          title: 'Reservado',
+          startTime: '00:01',
+          endTime: '23:59',
+        });
+        current.setDate(current.getDate() + 1);
+      }
+      this.calcular_noches();
+    }
   }
 
   formatDate(date: Date): string {
@@ -71,7 +105,6 @@ export class ReservationComponent {
   }
 
   ngOnChanges() {
-    this.calcular_noches();
     this.updateUser();
   }
 
@@ -84,14 +117,12 @@ export class ReservationComponent {
   }
 
   calcular_noches() {
-    const date1 = new Date(this.fecha_check_in);
-    const date2 = new Date(this.fecha_check_out);
-    const differenceInTime = date2.getTime() - date1.getTime();
-    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
-    this.noches = differenceInDays;
-    const monthsOf30Days = differenceInDays / 30;
-    this.meses = monthsOf30Days;
-    this.calcular_total();
+    if (this.fecha_check_in && this.fecha_check_out) {
+      const diffInMs = this.fecha_check_out.getTime() - this.fecha_check_in.getTime();
+      const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+      this.noches = diffInDays;
+      this.calcular_total();
+    }
   }
 
   calcular_total() {

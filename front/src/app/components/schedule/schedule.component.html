@@ -9,17 +9,18 @@
           <h2 class="calendar-month">{{ viewDate | date : "d MMMM" }}<span>{{ viewDate | date : "y" }}</span></h2><span class="calendar-dayname">{{ viewDate | date : "EEEE" }}</span>
         }
       </div>
-      <c-button-toolbar role="group">
-        <c-button-group class="m-auto" role="group">
-          <button  cButton [color]="currentView === 'month' ? 'primary' : 'secondary'" title="Mes" (click)="switchToView(CalendarView.Month)">Mes</button>
-          <button  cButton [color]="currentView === 'week' ? 'primary' : 'secondary'" title="Semana" (click)="switchToView(CalendarView.Week)">Semana</button>
-          <button  cButton [color]="currentView === 'day' ? 'primary' : 'secondary'" title="Día" (click)="switchToView(CalendarView.Day)">Día</button>
-        </c-button-group>
-
+        <c-button-toolbar role="group">
+          @if(show_toolbar) {
+            <c-button-group class="m-auto" role="group">
+              <button  cButton class="btn-sm" [color]="currentView === 'month' ? 'primary' : 'secondary'" title="Mes" (click)="switchToView('month')">Mes</button>
+              <button  cButton class="btn-sm" [color]="currentView === 'week' ? 'primary' : 'secondary'" title="Semana" (click)="switchToView('week')">Semana</button>
+              <button  cButton class="btn-sm" [color]="currentView === 'day' ? 'primary' : 'secondary'" title="Día" (click)="switchToView('day')">Día</button>
+            </c-button-group>
+          }
         <c-button-group class="m-auto pl-2" role="group">
-          <button  cButton color="primary" title="Anterior" (click)="previous()"><i class="fa-solid fa-angle-left"></i></button>
-          <button  cButton color="primary" title="Ahora" (click)="viewToday()">Ahora</button>
-          <button  cButton color="primary" title="Siguiente" (click)="next()"><i class="fa-solid fa-angle-right"></i></button>
+          <button  cButton color="primary" class="btn-sm" title="Anterior" (click)="previous()"><i class="fa-solid fa-angle-left"></i></button>
+          <button  cButton color="primary" class="btn-sm" title="Ahora" (click)="viewToday()">Ahora</button>
+          <button  cButton color="primary" class="btn-sm" title="Siguiente" (click)="next()"><i class="fa-solid fa-angle-right"></i></button>
         </c-button-group>
       </c-button-toolbar>
     </div>
@@ -47,6 +48,7 @@
               @for(date of week; track $index) {
                 <td
                   cdkDropList
+                  [cdkDropListDisabled]="!dropable"
                   (cdkDropListDropped)="drop($event, date)"
                   [cdkDropListData]="appointments"
                   [class.today]="isToday(date)"
@@ -71,6 +73,7 @@
                             class="appointment"
                             cdkDrag
                             cdkDragHandle
+                            [cdkDragDisabled]="!dropable"
                             [cdkDragData]="appointment"
                             [ngStyle]="{ 'background-color': appointment.color }"
                           >
@@ -116,6 +119,7 @@
               @for(day of weekDays; track $index) {
                 <td
                 cdkDropList
+                [cdkDropListDisabled]="!dropable"
                 (cdkDropListDropped)="drop($event, monthDays[$index], timeSlot)"
                 [cdkDropListData]="appointments"
               >
@@ -132,6 +136,7 @@
                     class="appointment"
                     cdkDrag
                     cdkDragHandle
+                    [cdkDragDisabled]="!dropable"
                     [cdkDragData]="appointment"
                     [ngStyle]="{ 'background-color': appointment.color }"
                   >
@@ -163,6 +168,7 @@
               </td>
               <td
                 cdkDropList
+                [cdkDropListDisabled]="!dropable"
                 (cdkDropListDropped)="drop($event, monthDays[0], slot)"
                 [cdkDropListData]="appointments"
               >
@@ -179,6 +185,7 @@
                     class="appointment"
                     cdkDrag
                     cdkDragHandle
+                    [cdkDragDisabled]="!dropable"
                     [cdkDragData]="appointment"
                     [ngStyle]="{ 'background-color': appointment.color }"
                   >

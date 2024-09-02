@@ -1,6 +1,5 @@
 preparar datos de reserva
- - corregir bug de fecha
- - buscar calendario o identificar posibles conflictos con fechas ya reservadas
+ - mostrar agenda existente y controlar que no se seleccione si ya tiene una agenda existente
  - boton de pago
  - integrar con el crm
 

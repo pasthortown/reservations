@@ -124,6 +124,10 @@ export class HeroComponent implements OnInit {
     this.get_catalog();
   }
 
+  calendar_event(event: any) {
+    console.log(event);
+  }
+
   get_catalog() {
     this.propietarios = [];
     this.servicios = [];
