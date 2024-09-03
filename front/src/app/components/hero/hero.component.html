@@ -87,6 +87,6 @@
     <button cButtonClose (click)="cancelar()"></button>
   </c-modal-header>
   <c-modal-body>
-      <app-experiences></app-experiences>
+      <app-experiences [is_visible]="visible_experience" [alojamientos]="alojamientos"></app-experiences>
   </c-modal-body>
 </c-modal>

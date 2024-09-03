@@ -4,7 +4,6 @@ preparar datos de reserva
 
 Reservas
     USER
-    - actualizacion
     - anulacion
     - comentarios
     ADMIN
