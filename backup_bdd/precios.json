@@ -1,0 +1,10 @@
+{"_id":{"$oid":"66733e59a3cef1852aab641c"},"name":"100-300","item_id":"c6cc7efa-e5c2-488a-ac26-57c4d27e7422","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab641d"},"name":"300-500","item_id":"9cad9b85-2fa3-4f9e-aa23-a679a173cf7d","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab641e"},"name":"500-700","item_id":"fd182726-21d4-44fb-b925-882745e4e682","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab641f"},"name":"700-900","item_id":"7a15f898-51fe-4581-941f-fef2be6e60d5","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab6420"},"name":"900-1100","item_id":"ec797cc8-a230-434b-8814-5bfe8d3c7687","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab6421"},"name":"1100-1300","item_id":"f8589fc9-f13f-4702-8d4c-98c1187c6bb9","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab6422"},"name":"1300-1500","item_id":"dd5ba958-86a6-475d-90c9-197bceb4c1c9","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab6423"},"name":"1500-1700","item_id":"80dae2c5-59d6-426d-ad3d-70a88c711b31","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab6424"},"name":"1700-1900","item_id":"377f2938-d3de-478a-a1c2-5bbb3a278b66","timestamp":"2024-06-19 15:23:53"}
+{"_id":{"$oid":"66733e59a3cef1852aab6425"},"name":"1900-2000","item_id":"faa5ecda-877f-46a1-87bd-2a06d27a0730","timestamp":"2024-06-19 15:23:53"}

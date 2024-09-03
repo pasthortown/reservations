@@ -66,6 +66,8 @@ services:
   mongo:
     image: mongo:4.2.0
     restart: always
+    ports:
+      - 27017:27017
     volumes: 
     - ./mongo_data:/data/db
     env_file:
