@@ -7,10 +7,10 @@
           @for (slide of alojamiento.images; track $index) {
             <div class="min-w-full h-96 flex-shrink-0 flex justify-center items-center">
               @if(slide.type.startsWith('image')) {
-                <img [src]="'data:' + slide.type + ';base64,' + slide.file_base64" class="object-cover w-full h-full">
+                <img [src]="'data:' + slide.type + ';base64,' + slide.file_base64" class="w-auto h-full">
               }
               @if(!slide.type.startsWith('image')) {
-                <video class="object-cover w-full h-full" controls autoplay muted loop>
+                <video class="w-auto h-full" controls autoplay muted loop>
                   <source [src]="'data:' + slide.type + ';base64,' + slide.file_base64" [type]="slide.type">
                 </video>
               }
@@ -133,7 +133,7 @@
         <c-row>
           <c-col style="text-align: center;">
             @if( propietario.photo ) {
-              <img class="mb-2" [src]="'data:' + propietario.photo.type + ';base64,' + propietario.photo.file_base64" style="display: inline; max-height: 100px; min-height: 100px; border-radius: 50%;"><br/>
+              <img class="mb-2" [src]="'data:' + propietario.photo.type + ';base64,' + propietario.photo.file_base64" style="display: inline; max-height: 200px; min-height: 100px; border-radius: 50%;"><br/>
               {{propietario.name}}
             }
           </c-col>
