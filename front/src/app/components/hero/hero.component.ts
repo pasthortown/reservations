@@ -53,12 +53,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { AlojamientoPreviewComponent } from './alojamiento-preview/alojamiento-preview.component';
 import { ReservationComponent } from "../reservation/reservation.component";
 import Swal from 'sweetalert2';
+import { ExperiencesComponent } from '../experiences/experiences.component';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
   imports: [
-    ReservationComponent, LoginComponent, ProfileComponent, AlojamientoPreviewComponent, HeroItemComponent, BadgeModule, MapComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective
+    ExperiencesComponent, ReservationComponent, LoginComponent, ProfileComponent, AlojamientoPreviewComponent, HeroItemComponent, BadgeModule, MapComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective
 ],
   providers: [CatalogService, FilesService],
   templateUrl: './hero.component.html',
@@ -77,14 +78,16 @@ export class HeroComponent implements OnInit {
   }
 
   @Input('visible_map') visible_map: boolean = false;
+  @Input('visible_experience') visible_experience: boolean = false;
   @Output('map_is_close') map_is_close: EventEmitter<any> = new EventEmitter();
   @Input('visible_login') visible_login: boolean = false;
   @Output('login_is_close') login_is_close: EventEmitter<any> = new EventEmitter();
+  @Output('experience_is_close') experience_is_close: EventEmitter<any> = new EventEmitter();
   @Input('visible_profile') visible_profile: boolean = false;
   @Output('profile_is_close') profile_is_close: EventEmitter<any> = new EventEmitter();
 
   visible_reservation: boolean = false;
-
+  user: any = null;
   markers: any[] = [];
   servicios: any[] = [];
   condiciones: any[] = [];
@@ -123,10 +126,6 @@ export class HeroComponent implements OnInit {
 
   ngOnInit(): void {
     this.get_catalog();
-  }
-
-  calendar_event(event: any) {
-    console.log(event);
   }
 
   get_catalog() {
@@ -280,6 +279,8 @@ export class HeroComponent implements OnInit {
     this.visible_login = false;
     this.visible_profile = false;
     this.visible_reservation = false;
+    this.visible_experience = false;
+    this.experience_is_close.emit(false);
     this.map_is_close.emit(false);
     this.login_is_close.emit(false);
     this.profile_is_close.emit(false);
@@ -293,6 +294,11 @@ export class HeroComponent implements OnInit {
 
   handleChangeReservation(event: any) {
     this.visible_reservation = event;
+  }
+
+  handleChangeExperience(event: any) {
+    this.visible_experience = event;
+    console.log(this.visible_experience);
   }
 
   handleChangeMap(event: any) {

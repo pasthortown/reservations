@@ -7,6 +7,10 @@
       <span>Buscar en el mapa</span>
     </li>
     @if(user) {
+      <li class="flex flex-col items-center justify-center gap-1" (click)="toggle_experience_modal()">
+        <i class="fa-solid fa-bell-concierge fa-2x"></i>
+        <span>Mis Experiencias</span>
+      </li>
       <li class="flex flex-col items-center justify-center gap-1" (click)="logout()">
         <i class="fa-regular fa-user-circle fa-2x"></i>
         <span>Cerrar Sesión</span>

@@ -25,6 +25,7 @@ export class AppComponent {
   isModalMapVisible = false;
   isModalLoginVisible = false;
   isModalProfileVisible = false;
+  isModalExperienceVisible = false;
 
   filter: any = {
     precio: '',

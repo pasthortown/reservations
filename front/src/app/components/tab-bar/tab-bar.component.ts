@@ -12,6 +12,7 @@ export class TabBarComponent implements OnInit{
   @Input() isVisible = true;
   @Output('browse_on_map') browse_on_map: EventEmitter<any> = new EventEmitter();
   @Output('open_login_modal') open_login_modal: EventEmitter<any> = new EventEmitter();
+  @Output('open_experience_modal') open_experience_modal: EventEmitter<any> = new EventEmitter();
 
   user: any = null;
 
@@ -31,6 +32,10 @@ export class TabBarComponent implements OnInit{
     } catch (error) {
       this.user = null;
     }
+  }
+
+  toggle_experience_modal() {
+    this.open_experience_modal.emit(true);
   }
 
   toggle_map_modal() {

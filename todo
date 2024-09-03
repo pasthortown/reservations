@@ -6,6 +6,7 @@ Reservas
     USER
     - actualizacion
     - anulacion
+    - comentarios
     ADMIN
     - visualizacion
     - anulacion

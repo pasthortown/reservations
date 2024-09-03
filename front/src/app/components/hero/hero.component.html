@@ -14,7 +14,7 @@
     </div>
   }
 </div>
-<c-modal #modalXlMap id="modalXlMap" size="xl" [fullscreen]="true" [visible]="visible_map" (visibleChange)="handleChangeMap($event)">
+<c-modal #modalXlMap id="modalXlMap" [backdrop]="'static'" size="xl" [fullscreen]="true" [visible]="visible_map" (visibleChange)="handleChangeMap($event)">
   <c-modal-header>
     <h5 cModalTitle>Luxury Stays - Inmuebles disponibles</h5>
     <button cButtonClose (click)="cancelar()"></button>
@@ -22,21 +22,26 @@
   <c-modal-body>
       <c-row class="mb-2">
         <c-col>
-          <app-map
-            [seleccionable]="false"
-            [show_hints]="true"
-            [width]="'100%'"
-            [height]="'88vh'"
-            [markers]="markers"
-            [mapCenter]="markers[0].position"
-            (marker_selected)="marker_selected($event)">
-          </app-map>
+          @if (markers.length > 0){
+            <app-map
+              [seleccionable]="false"
+              [show_hints]="true"
+              [width]="'100%'"
+              [height]="'88vh'"
+              [markers]="markers"
+              [mapCenter]="markers[0].position"
+              (marker_selected)="marker_selected($event)">
+            </app-map>
+          }
+          @if (markers.length == 0){
+            No existen alojamientos cargados
+          }
         </c-col>
       </c-row>
   </c-modal-body>
 </c-modal>
 
-<c-modal #modalXl id="modalXl" size="xl" [visible]="visible" (visibleChange)="handleChange($event)">
+<c-modal #modalXl id="modalXl" size="xl" [backdrop]="'static'" [visible]="visible" (visibleChange)="handleChange($event)">
   <c-modal-header>
     <h5 cModalTitle>{{alojamiento_selected.nombre}}</h5>
     <button cButtonClose (click)="cancelar()"></button>
@@ -46,7 +51,7 @@
   </c-modal-body>
 </c-modal>
 
-<c-modal #modalXlReservation id="modalXlReservation" size="xl" [visible]="visible_reservation" (visibleChange)="handleChangeReservation($event)">
+<c-modal #modalXlReservation id="modalXlReservation" [backdrop]="'static'" size="xl" [visible]="visible_reservation" (visibleChange)="handleChangeReservation($event)">
   <c-modal-header>
     <h5 cModalTitle>Reservar - {{alojamiento_selected.nombre}}</h5>
     <button cButtonClose (click)="cancelar()"></button>
@@ -56,7 +61,7 @@
   </c-modal-body>
 </c-modal>
 
-<c-modal #modalXl id="modalXl" size="xl" [visible]="visible_login" (visibleChange)="handleChangeLogin($event)">
+<c-modal #modalXlLogin id="modalXlLogin" size="xl" [backdrop]="'static'" [visible]="visible_login" (visibleChange)="handleChangeLogin($event)">
   <c-modal-header>
     <h2>Te damos la Bienvenida</h2>
     <button cButtonClose (click)="cancelar()"></button>
@@ -66,7 +71,7 @@
   </c-modal-body>
 </c-modal>
 
-<c-modal #modalXl id="modalXl" size="xl" [visible]="visible_profile" (visibleChange)="handleChangeProfile($event)">
+<c-modal #modalXlProfile id="modalXlProfile" size="xl" [visible]="visible_profile" [backdrop]="'static'" (visibleChange)="handleChangeProfile($event)">
   <c-modal-header>
     Actualización del Perfil
     <button cButtonClose (click)="cancelar()"></button>
@@ -76,3 +81,12 @@
   </c-modal-body>
 </c-modal>
 
+<c-modal #modalXlExperience id="modalXlExperience" [backdrop]="'static'" size="xl" [visible]="visible_experience" (visibleChange)="handleChangeExperience($event)">
+  <c-modal-header>
+    <h5 cModalTitle>Mis Experiencias</h5>
+    <button cButtonClose (click)="cancelar()"></button>
+  </c-modal-header>
+  <c-modal-body>
+      <app-experiences></app-experiences>
+  </c-modal-body>
+</c-modal>
