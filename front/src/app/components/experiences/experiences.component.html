@@ -2,8 +2,8 @@
   <c-col [sm]="7">
     <c-button-toolbar aria-label="Toolbar with button groups" role="group">
       <c-button-group aria-label="Basic example" class="me-2" role="group">
-        <button cButton color="danger" title="Eliminar" (click)="delete_reserva()"><i class="fas fa-trash"></i></button>
-        <button cButton color="primary" title="Comentarios" (click)="add_comment()"><i class="fa-solid fa-bullhorn"></i></button>
+        <button cButton color="danger" title="Eliminar" (click)="delete_reserva()" [disabled]="reserva_selected == null || reserva_selected.pago == true || reserva_selected.timein < fecha_actual"><i class="fas fa-trash"></i></button>
+        <button cButton color="primary" title="Comentarios" (click)="add_comment()" [disabled]="reserva_selected == null || reserva_selected.pago == false || reserva_selected.timeout < fecha_actual"><i class="fa-solid fa-bullhorn"></i></button>
       </c-button-group>
     </c-button-toolbar>
   </c-col>
@@ -13,7 +13,8 @@
     <table class="table">
       <thead>
         <tr style="text-align: center;">
-          <th class="col-4">Alojamiento</th>
+          <th class="col-1"></th>
+          <th class="col-3">Alojamiento</th>
           <th class="col-2">Fechas</th>
           <th class="col-2">Número de Noches</th>
           <th class="col-2">Cantidad de Huéspedes</th>
@@ -22,7 +23,12 @@
       </thead>
       <tbody>
         @for(reserva of reservas; track $index) {
-          <tr style="text-align: center;">
+          <tr style="text-align: center;" (click)="reserva_selected = reserva">
+            <td class="col-1">
+              @if(reserva_selected == reserva) {
+                <i class="fa-regular fa-hand-point-right"></i>
+              }
+            </td>
             <td>
               @if(reserva.alojamiento) {
                 <div class="row">

@@ -29,6 +29,7 @@ export class ReservasComponent {
     let reserva_output_model: any = {
       alojamiento_id: true,
       total: true,
+      pago: true,
       huespedes: true,
       fecha_in: true,
       fecha_out: true,
@@ -58,6 +59,6 @@ export class ReservasComponent {
 
   ngOnInit() {
     this.get_reservations();
-  }  
+  }
 
 }

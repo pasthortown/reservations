@@ -3,9 +3,6 @@ preparar datos de reserva
  - integrar con el crm
 
 Reservas
-    USER
-    - anulacion
-    - comentarios
     ADMIN
     - visualizacion
     - anulacion

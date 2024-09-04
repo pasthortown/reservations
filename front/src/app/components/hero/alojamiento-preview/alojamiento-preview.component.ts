@@ -4,12 +4,13 @@ import { FilesService } from '../../../services/file.service';
 import { MapComponent } from "../../map/map.component";
 import { StarsComponent } from "../../stars/stars.component";
 import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-alojamiento-preview',
   standalone: true,
   providers:[FilesService],
-  imports: [ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent, RouterLink, ThemeDirective, MapComponent, StarsComponent, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective],
+  imports: [CommonModule, ButtonCloseDirective, ButtonGroupComponent, ButtonToolbarComponent, RouterLink, ThemeDirective, MapComponent, StarsComponent, CardFooterComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, ContainerComponent, FormFloatingDirective, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonDirective],
   templateUrl: './alojamiento-preview.component.html',
   styleUrl: './alojamiento-preview.component.css'
 })
@@ -60,6 +61,7 @@ export class AlojamientoPreviewComponent {
           }).catch( e => console.log(e) );
         }
       });
+      console.log(this.alojamiento);
     }
   }
 

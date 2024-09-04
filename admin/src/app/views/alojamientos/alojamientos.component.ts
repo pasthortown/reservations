@@ -202,6 +202,7 @@ export class AlojamientosComponent implements OnInit{
         let reserva_output_model: any = {
           client_id: true,
           alojamiento_id: true,
+          pago: true,
           total: true,
           huespedes: true,
           fecha_in: true,

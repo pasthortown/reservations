@@ -180,6 +180,7 @@ export class ReservationComponent {
         client_id: this.user.item_id,
         alojamiento_id: this.alojamiento.item_id,
         total: this.total,
+        pagado: false,
         huespedes: this.huespedes,
         fecha_in: this.fecha_check_in,
         fecha_out: this.fecha_check_out,

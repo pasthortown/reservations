@@ -205,7 +205,6 @@ export class HeroComponent implements OnInit {
       });
       this.alojamientos.forEach((alojamiento: any) => {
         alojamiento.images = [];
-        alojamiento.rate=0;
         if (alojamiento.galery) {
           if(alojamiento.galery.length > 0) {
             alojamiento.galery.forEach((element: any) => {
@@ -221,6 +220,7 @@ export class HeroComponent implements OnInit {
         let reserva_output_model: any = {
           client_id: true,
           alojamiento_id: true,
+          pago: true,
           total: true,
           huespedes: true,
           fecha_in: true,
@@ -298,7 +298,6 @@ export class HeroComponent implements OnInit {
 
   handleChangeExperience(event: any) {
     this.visible_experience = event;
-    console.log(this.visible_experience);
   }
 
   handleChangeMap(event: any) {
