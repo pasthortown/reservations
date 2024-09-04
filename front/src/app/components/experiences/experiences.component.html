@@ -3,7 +3,7 @@
     <c-button-toolbar aria-label="Toolbar with button groups" role="group">
       <c-button-group aria-label="Basic example" class="me-2" role="group">
         <button cButton color="danger" title="Eliminar" (click)="delete_reserva()" [disabled]="reserva_selected == null || reserva_selected.pago == true || reserva_selected.timein < fecha_actual"><i class="fas fa-trash"></i></button>
-        <button cButton color="primary" title="Comentarios" (click)="add_comment()" [disabled]="reserva_selected == null || reserva_selected.pago == false || reserva_selected.timeout < fecha_actual"><i class="fa-solid fa-bullhorn"></i></button>
+        <button cButton color="primary" title="Comentarios" (click)="add_comment()" [disabled]="reserva_selected == null || reserva_selected.pago == false || reserva_selected.timeout > fecha_actual"><i class="fa-solid fa-bullhorn"></i></button>
       </c-button-group>
     </c-button-toolbar>
   </c-col>
