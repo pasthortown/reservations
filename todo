@@ -2,9 +2,5 @@ preparar datos de reserva
  - boton de pago
  - integrar con el crm
 
-auth
-
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
 subir el sistema a aks
-
-reportes
