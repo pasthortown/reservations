@@ -52,6 +52,7 @@ import {
 import { IconDirective } from '@coreui/icons-angular';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-alojamientos',
@@ -60,7 +61,7 @@ import Swal from 'sweetalert2';
   styleUrl: './alojamientos.component.scss',
   providers:[CatalogService, FilesService],
   imports: [
-    BadgeModule, MapComponent, FileDropComponent, StarsComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, IconDirective, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink]
+    CommonModule, BadgeModule, MapComponent, FileDropComponent, StarsComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardGroupComponent, CardHeaderComponent, CardImgDirective, CardLinkDirective, CardSubtitleDirective, CardTextDirective, CardTitleDirective, FormFloatingDirective, FormDirective, FormSelectDirective, FormsModule, ButtonGroupComponent, ButtonToolbarComponent, IconDirective, HttpClientModule, InputGroupComponent, InputGroupTextDirective, FormControlDirective, FormLabelDirective, PaginationComponent, PageItemComponent, PageLinkDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, TextColorDirective, ThemeDirective, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalBodyComponent, ModalFooterComponent, ModalToggleDirective, RouterLink]
 })
 export class AlojamientosComponent implements OnInit{
   filter = '';
@@ -185,8 +186,10 @@ export class AlojamientosComponent implements OnInit{
     this.catalogService.get_items('alojamientos', output_model).then( r_alojamientos => {
       this.alojamientos = r_alojamientos.response;
       this.alojamientos.forEach((alojamiento: any) => {
+        if (!alojamiento.comentarios) {
+          alojamiento.comentarios = [];
+        }
         alojamiento.images = [];
-        alojamiento.rate=0;
         if (alojamiento.galery) {
           if(alojamiento.galery.length > 0) {
             alojamiento.galery.forEach((element: any) => {

@@ -61,7 +61,6 @@ export class AlojamientoPreviewComponent {
           }).catch( e => console.log(e) );
         }
       });
-      console.log(this.alojamiento);
     }
   }
 

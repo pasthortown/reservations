@@ -208,6 +208,33 @@
         </app-map>
       </c-col>
     </c-row>
+
+    <c-row class="my-3">
+      <c-col sm="12">
+        <h3>Comentarios</h3>
+      </c-col>
+      <c-col sm="12">
+        <h5>Calificación: <app-stars [rate]="alojamiento_selected.rate"></app-stars></h5>
+      </c-col>
+      @for(comentario of alojamiento_selected.comentarios; track $index) {
+        <c-col [sm]="12">
+          <c-card class="mb-2">
+            <c-card-header>
+              <h6>{{comentario.remitente}}</h6>
+            </c-card-header>
+            <c-card-body>
+              <p style="text-align: justify; width: 100%;">
+                {{comentario.texto}}
+              </p>
+            </c-card-body>
+            <c-card-footer style="text-align: right;">
+              <small style="width: 100%;">{{comentario.timestamp | date: 'y-MM-dd HH:mm' }}</small>
+            </c-card-footer>
+          </c-card>
+        </c-col>
+      }
+    </c-row>
+
     <c-row class="g-3 mb-2">
       <c-button-toolbar role="group">
         <c-button-group class="m-auto" role="group">
@@ -237,7 +264,8 @@
           <h5>{{alojamiento.nombre}}</h5>
           <c-row>
             <c-col [sm]="10">
-              <app-stars [rate]="alojamiento.rate"></app-stars>
+              <app-stars [rate]="alojamiento.rate"></app-stars>&nbsp;
+              <span class="badge text-bg-dark">{{alojamiento.comentarios.length}}</span>
             </c-col>
             <c-col [sm]="2" style="text-align: right;">
               <c-badge color="dark" (click)="hide_alojamiento(alojamiento)">

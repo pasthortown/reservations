@@ -1,67 +1,95 @@
 <c-row class="g-3 mb-2">
-  </c-row>
-  <div class="row">
-    <div class="col-12" style="max-height: 75vh; overflow-y: auto;">
-      <table class="table">
-        <thead>
-          <tr style="text-align: center;">
-            <th class="col-4">Alojamiento</th>
-            <th class="col-2">Fechas</th>
-            <th class="col-2">Número de Noches</th>
-            <th class="col-2">Cantidad de Huéspedes</th>
-            <th class="col-2">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for(reserva of reservas; track $index) {
-            <tr style="text-align: center;">
-              <td>
-                @if(reserva.alojamiento) {
-                  <div class="row">
-                    <div class="col-12" style="text-align: center;">
-                      @if(reserva.alojamiento.portada) {
-                        @if(reserva.alojamiento.portada.type.startsWith('image')) {
-                          <img class="w-25 h-auto object-cover rounded-lg" style="display: inline;" [src]="'data:' + reserva.alojamiento.portada.type + ';base64,' + reserva.alojamiento.portada.file_base64">
-                        }
-                        @if(!reserva.alojamiento.portada.type.startsWith('image')) {
-                          <video class="w-25 h-auto object-cover rounded-lg" style="display: inline;" controls autoplay muted loop>
-                            <source [src]="'data:' + reserva.alojamiento.portada.type + ';base64,' + reserva.alojamiento.portada.file_base64" [type]="reserva.alojamiento.portada.type">
-                          </video>
-                        }
-                      }
-                    </div>
-                    <div class="col-12">
-                      <small><b>{{reserva.alojamiento.nombre}}</b></small>
-                    </div>
-                  </div>
-                }
-              </td>
-              <td>
-                <div class="row">
-                  <div class="col-12">
-                    <b>Entrada:</b> {{reserva.fecha_in}}
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <b>Salida:</b> {{reserva.fecha_out}}
-                  </div>
-                </div>
-              </td>
-              <td>
-                {{reserva.noches}}
-              </td>
-              <td>
-                {{reserva.huespedes}}
-              </td>
-              <td>
-                {{reserva.total}}
-              </td>
-            </tr>
+  <c-col [sm]="7">
+    <c-button-toolbar aria-label="Toolbar with button groups" role="group">
+      <c-button-group aria-label="Basic example" class="me-2" role="group">
+        <button cButton color="danger" title="Eliminar" (click)="delete_reserva()" [disabled]="reserva_selected == null || reserva_selected.pago == true || reserva_selected.timein < fecha_actual"><i class="fas fa-trash"></i></button>
+        @if(reserva_selected) {
+          @if(reserva_selected.pago) {
+            <button cButton color="danger" title="Reserva No Pagada" (click)="change_payed_state(false)" [disabled]="reserva_selected == null || reserva_selected.timeout > fecha_actual"><i class="fa-solid fa-money-bill-1-wave"></i></button>
           }
-        </tbody>
-      </table>
-    </div>
+          @if(!reserva_selected.pago) {
+            <button cButton color="success" title="Reserva Pagada" (click)="change_payed_state(true)" [disabled]="reserva_selected == null || reserva_selected.timeout > fecha_actual"><i class="fa-solid fa-money-bill-1-wave"></i></button>
+          }
+        }
+      </c-button-group>
+    </c-button-toolbar>
+  </c-col>
+</c-row>
+
+<div class="row">
+  <div class="col-12" style="max-height: 75vh; overflow-y: auto;">
+    <table class="table">
+      <thead>
+        <tr style="text-align: center;">
+          <th class="col-1"></th>
+          <th class="col-3">Alojamiento</th>
+          <th class="col-2">Fechas</th>
+          <th class="col-2">Número de Noches</th>
+          <th class="col-2">Cantidad de Huéspedes</th>
+          <th class="col-2">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(reserva of reservas; track $index) {
+          <tr style="text-align: center;" (click)="reserva_selected = reserva">
+            <td class="col-1">
+              @if(reserva_selected == reserva) {
+                <i class="fa-regular fa-hand-point-right"></i>
+              }
+            </td>
+            <td>
+              @if(reserva.alojamiento) {
+                <div class="row">
+                  <div class="col-12" style="text-align: center;">
+                    @if(reserva.alojamiento.portada) {
+                      @if(reserva.alojamiento.portada.type.startsWith('image')) {
+                        <img class="w-25 h-auto object-cover rounded-lg" style="display: inline;" [src]="'data:' + reserva.alojamiento.portada.type + ';base64,' + reserva.alojamiento.portada.file_base64">
+                      }
+                      @if(!reserva.alojamiento.portada.type.startsWith('image')) {
+                        <video class="w-25 h-auto object-cover rounded-lg" style="display: inline;" controls autoplay muted loop>
+                          <source [src]="'data:' + reserva.alojamiento.portada.type + ';base64,' + reserva.alojamiento.portada.file_base64" [type]="reserva.alojamiento.portada.type">
+                        </video>
+                      }
+                    }
+                  </div>
+                  <div class="col-12">
+                    <small><b>{{reserva.alojamiento.nombre}}</b></small>
+                  </div>
+                </div>
+              }
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-12">
+                  <b>Entrada:</b> {{reserva.fecha_in | date: 'yyyy-MM-dd'}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <b>Salida:</b> {{reserva.fecha_out | date: 'yyyy-MM-dd'}}
+                </div>
+              </div>
+            </td>
+            <td>
+              {{reserva.noches}}
+            </td>
+            <td>
+              {{reserva.huespedes}}
+            </td>
+            <td>
+              {{reserva.total}}&nbsp;
+              @if(reserva.pago) {
+                <span class="badge text-bg-success">Pagado</span>
+              }
+              @if(!reserva.pago) {
+                <span class="badge text-bg-danger">No Pagado</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
   </div>
-  
-  
+</div>
+
+

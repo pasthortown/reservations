@@ -2,11 +2,6 @@ preparar datos de reserva
  - boton de pago
  - integrar con el crm
 
-Reservas
-    ADMIN
-    - visualizacion
-    - anulacion
-
 auth
 
 cambiar el codigo que uso para guardar images, para que almacene en un blob storage
