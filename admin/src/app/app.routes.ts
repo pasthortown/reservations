@@ -34,6 +34,11 @@ export const routes: Routes = [
         path: 'dashboard',
         canActivate: [AuthGuard],
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
+      },
+      {
+        path: 'reservas',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./views/reservas/routes').then((m) => m.routes)
       }
     ]
   },
