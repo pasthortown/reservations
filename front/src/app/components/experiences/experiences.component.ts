@@ -164,7 +164,13 @@ export class ExperiencesComponent {
       huespedes: true,
       fecha_in: true,
       fecha_out: true,
-      noches: true
+      noches: true,
+      user: {
+        fullname: this.user.fullname,
+        identification: this.user.identification,
+        phone_number: this.user.phone_number,
+        email: this.user.email
+      }
     };
     this.reservas = [];
     if (all) {

@@ -37,12 +37,13 @@ import {
 import Swal from 'sweetalert2';
 import { FilesService } from 'src/app/services/file.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-reservas',
   standalone: true,
   imports: [HttpClientModule, CommonModule, ButtonCloseDirective, ButtonDirective, ColComponent, RowComponent, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TextColorDirective, ThemeDirective, TableDirective, TableColorDirective, TableActiveDirective, BorderDirective, AlignDirective, PaginationComponent, PageItemComponent, PageLinkDirective, InputGroupComponent, InputGroupTextDirective, FormControlDirective, ButtonGroupComponent, ButtonToolbarComponent, FormFloatingDirective, FormDirective, FormSelectDirective, FormLabelDirective ],
-  providers: [CatalogService, FilesService],
+  providers: [CatalogService, FilesService, AuthService],
   templateUrl: './reservas.component.html',
   styleUrl: './reservas.component.scss'
 })
@@ -52,7 +53,7 @@ export class ReservasComponent implements OnInit{
   reservas: any[] = [];
   fecha_actual: number = new Date().getTime();
 
-  constructor(private catalogService: CatalogService, private fileService: FilesService) {}
+  constructor(private authService: AuthService, private catalogService: CatalogService, private fileService: FilesService) {}
 
   get_reservations() {
     let reserva_output_model: any = {

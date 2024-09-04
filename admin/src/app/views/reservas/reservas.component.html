@@ -23,9 +23,8 @@
         <tr style="text-align: center;">
           <th class="col-1"></th>
           <th class="col-3">Alojamiento</th>
-          <th class="col-2">Fechas</th>
-          <th class="col-2">Número de Noches</th>
-          <th class="col-2">Cantidad de Huéspedes</th>
+          <th class="col-3">Datos de Reserva</th>
+          <th class="col-3">Datos del Cliente</th>
           <th class="col-2">Total</th>
         </tr>
       </thead>
@@ -63,18 +62,34 @@
                 <div class="col-12">
                   <b>Entrada:</b> {{reserva.fecha_in | date: 'yyyy-MM-dd'}}
                 </div>
-              </div>
-              <div class="row">
                 <div class="col-12">
                   <b>Salida:</b> {{reserva.fecha_out | date: 'yyyy-MM-dd'}}
+                </div>
+                <div class="col-12">
+                  <b>Huéspedes:</b> {{reserva.huespedes}}
+                </div>
+                <div class="col-12">
+                  <b>Noches:</b> {{reserva.noches}}
                 </div>
               </div>
             </td>
             <td>
-              {{reserva.noches}}
-            </td>
-            <td>
-              {{reserva.huespedes}}
+              @if (reserva.user) {
+                <div class="row">
+                  <div class="col-12">
+                    <b>Cliente:</b> {{reserva.user.fullname}}
+                  </div>
+                  <div class="col-12">
+                    <b>Identificación:</b> {{reserva.user.identification}}
+                  </div>
+                  <div class="col-12">
+                    <b>Teléfono:</b> {{reserva.user.phone_number}}
+                  </div>
+                  <div class="col-12">
+                    <b>e-mail:</b> {{reserva.user.email}}
+                  </div>
+                </div>
+              }
             </td>
             <td>
               {{reserva.total}}&nbsp;
