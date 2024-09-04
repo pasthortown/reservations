@@ -64,7 +64,8 @@ export class ReservasComponent implements OnInit{
       huespedes: true,
       fecha_in: true,
       fecha_out: true,
-      noches: true
+      noches: true,
+      user: true
     };
     this.reservas = [];
     this.catalogService.get_items('reservas', reserva_output_model).then(r_reserva => {

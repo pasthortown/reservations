@@ -184,7 +184,13 @@ export class ReservationComponent {
         huespedes: this.huespedes,
         fecha_in: this.fecha_check_in,
         fecha_out: this.fecha_check_out,
-        noches: this.noches
+        noches: this.noches,
+        user: {
+          fullname: this.user.fullname,
+          identification: this.user.identification,
+          phone_number: this.user.phone_number,
+          email: this.user.email
+        }
       };
       this.reservation.emit(reserva);
       this.cancel_modal.emit(true);
