@@ -59,10 +59,10 @@ export class ExperiencesComponent {
     }
     if (this.user) {
       if( this.user.fullname) {
-        this.get_reservations(true);
+        this.get_reservations(false);
       }
     } else {
-      this.get_reservations(false);
+      this.get_reservations(true);
     }
   }
 
