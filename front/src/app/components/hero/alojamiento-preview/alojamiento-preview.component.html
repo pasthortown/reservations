@@ -171,13 +171,13 @@
       <h3>Comentarios</h3>
     </c-col>
     <c-col sm="12">
-      <h5>Calificación: <app-stars [rate]="alojamiento.rate"></app-stars></h5>
+      <h5>Calificación promedio: <app-stars [rate]="alojamiento.rate"></app-stars></h5>
     </c-col>
     @for(comentario of alojamiento.comentarios; track $index) {
       <c-col [sm]="12">
         <c-card class="mb-2">
           <c-card-header>
-            <h6>{{comentario.remitente}}</h6>
+            <h6>{{comentario.remitente}}&nbsp;&nbsp;<app-stars [rate]="comentario.rate"></app-stars></h6>
           </c-card-header>
           <c-card-body>
             <p style="text-align: justify; width: 100%;">

@@ -94,7 +94,7 @@
       </c-col>
       <c-col [sm]="12">
         <div [cFormFloating]="true" class="mb-3">
-          <textarea cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.descripcion" placeholder="Descripción" type="text"></textarea>
+          <textarea cFormControl id="floatingInput" [(ngModel)]="alojamiento_selected.descripcion" placeholder="Descripción" type="text" style="height: 120px;"></textarea>
           <label cLabel for="floatingInput">Descripción</label>
         </div>
       </c-col>
@@ -214,13 +214,13 @@
         <h3>Comentarios</h3>
       </c-col>
       <c-col sm="12">
-        <h5>Calificación: <app-stars [rate]="alojamiento_selected.rate"></app-stars></h5>
+        <h5>Calificación promedio: <app-stars [rate]="alojamiento_selected.rate"></app-stars></h5>
       </c-col>
       @for(comentario of alojamiento_selected.comentarios; track $index) {
         <c-col [sm]="12">
           <c-card class="mb-2">
             <c-card-header>
-              <h6>{{comentario.remitente}}</h6>
+              <h6>{{comentario.remitente}}&nbsp;&nbsp;<app-stars [rate]="comentario.rate"></app-stars></h6>
             </c-card-header>
             <c-card-body>
               <p style="text-align: justify; width: 100%;">

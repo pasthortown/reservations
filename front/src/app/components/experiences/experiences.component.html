@@ -69,7 +69,13 @@
               {{reserva.huespedes}}
             </td>
             <td>
-              {{reserva.total}}
+              {{reserva.total}}&nbsp;
+              @if(reserva.pago) {
+                <span class="badge text-bg-success">Pagado</span>
+              }
+              @if(!reserva.pago) {
+                <span class="badge text-bg-danger">No Pagado</span>
+              }
             </td>
           </tr>
         }
