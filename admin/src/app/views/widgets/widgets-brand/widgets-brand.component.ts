@@ -27,6 +27,7 @@ export class WidgetsBrandComponent implements AfterContentInit {
     private changeDetectorRef: ChangeDetectorRef
   ) {}
 
+  @Input('alojamientos') alojamientos: any[] = [];
   @Input() withCharts?: boolean;
   // @ts-ignore
   chartOptions = {
