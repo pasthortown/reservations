@@ -1,7 +1,10 @@
+import { HttpClientModule } from '@angular/common/http';
 import { DOCUMENT, NgStyle } from '@angular/common';
 import { Component, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
+import { FilesService } from 'src/app/services/file.service';
+import { CatalogService } from 'src/app/services/catalog.service';
 import {
   AvatarComponent,
   ButtonDirective,
@@ -24,7 +27,6 @@ import { IconDirective } from '@coreui/icons-angular';
 
 import { WidgetsBrandComponent } from '../widgets/widgets-brand/widgets-brand.component';
 import { WidgetsDropdownComponent } from '../widgets/widgets-dropdown/widgets-dropdown.component';
-import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
 
 interface IUser {
   name: string;
@@ -40,101 +42,32 @@ interface IUser {
   color: string;
 }
 
+interface IChartProps {
+  data?: [];
+  labels?: any;
+  options?: ChartOptions;
+  colors?: any;
+  type: string;
+  legend?: any;
+
+  [propName: string]: any;
+}
+
 @Component({
   templateUrl: 'dashboard.component.html',
   styleUrls: ['dashboard.component.scss'],
+  providers:[CatalogService, FilesService],
   standalone: true,
-  imports: [WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective, AvatarComponent]
+  imports: [HttpClientModule, WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective, AvatarComponent]
 })
-export class DashboardComponent implements OnInit {
 
+export class DashboardComponent implements OnInit {
+  alojamientos: any[] = [];
   readonly #destroyRef: DestroyRef = inject(DestroyRef);
   readonly #document: Document = inject(DOCUMENT);
   readonly #renderer: Renderer2 = inject(Renderer2);
-  readonly #chartsData: DashboardChartsData = inject(DashboardChartsData);
 
-  public users: IUser[] = [
-    {
-      name: 'Yiorgos Avraamu',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Us',
-      usage: 50,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Mastercard',
-      activity: '10 sec ago',
-      avatar: './assets/images/avatars/1.jpg',
-      status: 'success',
-      color: 'success'
-    },
-    {
-      name: 'Avram Tarasios',
-      state: 'Recurring ',
-      registered: 'Jan 1, 2021',
-      country: 'Br',
-      usage: 10,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Visa',
-      activity: '5 minutes ago',
-      avatar: './assets/images/avatars/2.jpg',
-      status: 'danger',
-      color: 'info'
-    },
-    {
-      name: 'Quintin Ed',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'In',
-      usage: 74,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Stripe',
-      activity: '1 hour ago',
-      avatar: './assets/images/avatars/3.jpg',
-      status: 'warning',
-      color: 'warning'
-    },
-    {
-      name: 'Enéas Kwadwo',
-      state: 'Sleep',
-      registered: 'Jan 1, 2021',
-      country: 'Fr',
-      usage: 98,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Paypal',
-      activity: 'Last month',
-      avatar: './assets/images/avatars/4.jpg',
-      status: 'secondary',
-      color: 'danger'
-    },
-    {
-      name: 'Agapetus Tadeáš',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Es',
-      usage: 22,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'ApplePay',
-      activity: 'Last week',
-      avatar: './assets/images/avatars/5.jpg',
-      status: 'success',
-      color: 'primary'
-    },
-    {
-      name: 'Friderik Dávid',
-      state: 'New',
-      registered: 'Jan 1, 2021',
-      country: 'Pl',
-      usage: 43,
-      period: 'Jun 11, 2021 - Jul 10, 2021',
-      payment: 'Amex',
-      activity: 'Yesterday',
-      avatar: './assets/images/avatars/6.jpg',
-      status: 'info',
-      color: 'dark'
-    }
-  ];
-
-  public mainChart: IChartProps = { type: 'line' };
+  public mainChart: any = {};
   public mainChartRef: WritableSignal<any> = signal(undefined);
   #mainChartRefEffect = effect(() => {
     if (this.mainChartRef()) {
@@ -146,18 +79,80 @@ export class DashboardComponent implements OnInit {
     trafficRadio: new FormControl('Month')
   });
 
+  constructor(private catalogService: CatalogService, private fileService: FilesService) {}
+
   ngOnInit(): void {
+    this.get_catalog();
     this.initCharts();
     this.updateChartOnColorModeChange();
   }
 
+  get_catalog() {
+    this.alojamientos = [];
+    let output_model = {
+      nombre: true,
+      personas: true,
+      metros: true,
+      habitaciones: true,
+      banos: true,
+      desde_noche: true,
+      zona: true,
+      desde_mes: true,
+      descripcion: true,
+      ubication: true,
+      check_in: true,
+      check_out: true,
+      galery: true,
+      condiciones: true,
+      propietario: true,
+      servicios: true,
+      rate: true,
+      comentarios: true,
+      hide: true,
+    }
+    this.catalogService.get_items('alojamientos', output_model).then( r_alojamientos => {
+      this.alojamientos = r_alojamientos.response;
+      this.alojamientos.forEach((alojamiento: any) => {
+        if (!alojamiento.comentarios) {
+          alojamiento.comentarios = [];
+        }
+        alojamiento.images = [];
+        if (alojamiento.galery) {
+          if(alojamiento.galery.length > 0) {
+            alojamiento.galery.forEach((element: any) => {
+              this.fileService.get_file('fotografias_alojamientos', element).then(r => {
+                alojamiento.images.push(r.response);
+                if (r.response.favorite) {
+                  alojamiento.portada = r.response;
+                }
+              }).catch( e => console.log(e) );
+            });
+          }
+        }
+        let reserva_output_model: any = {
+          client_id: true,
+          alojamiento_id: true,
+          pago: true,
+          total: true,
+          huespedes: true,
+          fecha_in: true,
+          fecha_out: true,
+          noches: true
+        }
+        alojamiento.reservas = [];
+        this.catalogService.search_items('reservas', 'alojamiento_id', alojamiento.item_id, reserva_output_model).then(r_reserva => {
+          alojamiento.reservas = r_reserva.response;
+        }).catch( e => console.log(e) );
+      });
+    }).catch( e => console.log(e) );
+  }
+
   initCharts(): void {
-    this.mainChart = this.#chartsData.mainChart;
+    //this.mainChart = [];
   }
 
   setTrafficPeriod(value: string): void {
     this.trafficRadioGroup.setValue({ trafficRadio: value });
-    this.#chartsData.initMainChart(value);
     this.initCharts();
   }
 
@@ -181,8 +176,6 @@ export class DashboardComponent implements OnInit {
     if (this.mainChartRef()) {
       setTimeout(() => {
         const options: ChartOptions = { ...this.mainChart.options };
-        const scales = this.#chartsData.getScales();
-        this.mainChartRef().options.scales = { ...options.scales, ...scales };
         this.mainChartRef().update();
       });
     }
